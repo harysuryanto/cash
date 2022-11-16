@@ -1,0 +1,2 @@
+# Cash 💵
+Cash flow logger.
