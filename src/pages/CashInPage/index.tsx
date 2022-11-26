@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {colors} from '../../utils/colors';
 
-const CashInScreen = () => {
+const CashInPage = () => {
   return (
     <View style={styles.container}>
       <CashInListTile cash={4000} dateTime={1666958617333} />
@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CashInScreen;
+export default CashInPage;

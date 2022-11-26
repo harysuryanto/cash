@@ -7,9 +7,9 @@ import {
 } from 'react-native';
 import {AppBar} from '../../components';
 import {colors} from '../../utils/colors';
-import CashInScreen from '../CashInScreen';
+import CashInPage from '../CashInPage';
 
-const HomeScreen = () => {
+const HomePage = () => {
   return (
     <ScrollView style={styles.container}>
       <AppBar />
@@ -26,7 +26,7 @@ const HomeScreen = () => {
         <View style={{width: 20}} />
         <MenuItem title="Catat Uang Keluar" />
       </View>
-      <CashInScreen />
+      <CashInPage />
     </ScrollView>
   );
 };
@@ -77,4 +77,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default HomePage;
