@@ -13,30 +13,28 @@ import {colors} from '../../utils/colors';
 
 const HomeScreen = (props: any) => {
   return (
-    <SafeAreaView>
-      <ScrollView style={styles.container}>
-        <AppBar />
-        <View style={styles.balanceContainer}>
-          <Text style={styles.balance}>Rp230.000</Text>
-          <Text style={styles.title}>Saldo</Text>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            marginHorizontal: 30,
-          }}>
-          <TouchableOpacity
-            style={{flex: 1}}
-            onPress={() => props.navigation.navigate('CashInScreen')}>
-            <MenuItem title="Catat Uang Masuk" iconPath={IconPaths.cashIn} />
-          </TouchableOpacity>
-          <View style={{width: 20}} />
-          <TouchableOpacity style={{flex: 1}}>
-            <MenuItem title="Catat Uang Keluar" iconPath={IconPaths.cashOut} />
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <ScrollView style={styles.container}>
+      <AppBar />
+      <View style={styles.balanceContainer}>
+        <Text style={styles.balance}>Rp230.000</Text>
+        <Text style={styles.title}>Saldo</Text>
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          marginHorizontal: 30,
+        }}>
+        <TouchableOpacity
+          style={{flex: 1}}
+          onPress={() => props.navigation.navigate('CashInScreen')}>
+          <MenuItem title="Catat Uang Masuk" iconPath={IconPaths.cashIn} />
+        </TouchableOpacity>
+        <View style={{width: 20}} />
+        <TouchableOpacity style={{flex: 1}}>
+          <MenuItem title="Catat Uang Keluar" iconPath={IconPaths.cashOut} />
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 };
 
