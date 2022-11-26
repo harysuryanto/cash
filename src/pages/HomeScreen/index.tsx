@@ -1,4 +1,6 @@
 import {
+  Image,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -6,35 +8,47 @@ import {
   View,
 } from 'react-native';
 import {AppBar} from '../../components';
+import {IconPaths} from '../../constants';
 import {colors} from '../../utils/colors';
-import CashInScreen from '../CashInScreen';
 
-const HomeScreen = () => {
+const HomeScreen = (props: any) => {
   return (
-    <ScrollView style={styles.container}>
-      <AppBar />
-      <View style={styles.balanceContainer}>
-        <Text style={styles.balance}>Rp230.000</Text>
-        <Text style={styles.title}>Saldo</Text>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          marginHorizontal: 30,
-        }}>
-        <MenuItem title="Catat Uang Masuk" />
-        <View style={{width: 20}} />
-        <MenuItem title="Catat Uang Keluar" />
-      </View>
-      <CashInScreen />
-    </ScrollView>
+    <SafeAreaView>
+      <ScrollView style={styles.container}>
+        <AppBar />
+        <View style={styles.balanceContainer}>
+          <Text style={styles.balance}>Rp230.000</Text>
+          <Text style={styles.title}>Saldo</Text>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginHorizontal: 30,
+          }}>
+          <TouchableOpacity
+            style={{flex: 1}}
+            onPress={() => props.navigation.navigate('CashInScreen')}>
+            <MenuItem title="Catat Uang Masuk" iconPath={IconPaths.cashIn} />
+          </TouchableOpacity>
+          <View style={{width: 20}} />
+          <TouchableOpacity style={{flex: 1}}>
+            <MenuItem title="Catat Uang Keluar" iconPath={IconPaths.cashOut} />
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
-const MenuItem = ({title}: {title: string}) => {
+const MenuItem = ({
+  title,
+  iconPath: icon,
+}: {
+  title: string;
+  iconPath: IconPaths;
+}) => {
   return (
-    <TouchableOpacity
-      onPress={() => alert('hai')}
+    <View
       style={{
         alignItems: 'center',
         borderColor: colors.border,
@@ -43,15 +57,12 @@ const MenuItem = ({title}: {title: string}) => {
         flex: 1,
         padding: 40,
       }}>
-      <View
-        style={{
-          backgroundColor: colors.yellow,
-          height: 50,
-          marginBottom: 15,
-          width: 50,
-        }}></View>
+      <Image
+        style={{width: 50, height: 50, marginBottom: 15}}
+        source={{uri: icon}}
+      />
       <Text>{title}</Text>
-    </TouchableOpacity>
+    </View>
   );
 };
 
