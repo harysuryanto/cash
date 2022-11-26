@@ -1,4 +1,4 @@
-import HomePage from './HomePage';
-import CashInPage from './CashInPage';
+import HomeScreen from './HomeScreen';
+import CashInScreen from './CashInScreen';
 
-export {HomePage, CashInPage};
+export {HomeScreen, CashInScreen};
