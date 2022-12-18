@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import {BottomSheet} from 'react-native-btr';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {Cash} from '../../interfaces/cash';
 import {colors} from '../../utils/colors';
 
@@ -65,7 +66,7 @@ const CashInScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <FlatList
         style={{flex: 1}}
         data={cashInList}
@@ -99,14 +100,15 @@ const CashInScreen = () => {
               setInputAmount('');
             }}
             keyboardType="number-pad"
+            style={{borderWidth: 1, borderColor: 'blue'}}
           />
         </View>
       </BottomSheet>
-    </View>
+    </SafeAreaView>
   );
 };
 
-const CashInListTile = ({id, date, type, category, amount, notes}: Cash) => {
+const CashInListTile = (cash: Cash) => {
   return (
     <View
       style={{
@@ -122,15 +124,15 @@ const CashInListTile = ({id, date, type, category, amount, notes}: Cash) => {
           justifyContent: 'center',
           alignItems: 'center',
           padding: 4,
-          backgroundColor: type === 'out' ? 'lightblue' : 'lightgreen',
+          backgroundColor: cash.type === 'out' ? 'lightblue' : 'lightgreen',
           borderRadius: 16,
         }}>
-        <Text>{type.toUpperCase()}</Text>
+        <Text>{cash.type.toUpperCase()}</Text>
       </View>
       <View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text>Rp{amount}</Text>
-          {type === 'out' && (
+          <Text>Rp{cash.amount}</Text>
+          {cash.type === 'out' && (
             <Text
               style={{
                 marginStart: 12,
@@ -140,14 +142,15 @@ const CashInListTile = ({id, date, type, category, amount, notes}: Cash) => {
                 backgroundColor: '#ddd',
                 borderRadius: 16,
               }}>
-              {category}
+              {cash.category}
             </Text>
           )}
         </View>
         <Text>
-          {date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()},{' '}
-          {date.getHours()}:{date.getMinutes()}
-          {notes && ' • ' + notes}
+          {cash.date.getDate()}/{cash.date.getMonth() + 1}/
+          {cash.date.getFullYear()}, {cash.date.getHours()}:
+          {cash.date.getMinutes()}
+          {cash.notes && ' • ' + cash.notes}
         </Text>
       </View>
     </View>
@@ -157,7 +160,6 @@ const CashInListTile = ({id, date, type, category, amount, notes}: Cash) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 50,
   },
   balanceContainer: {
     alignItems: 'center',

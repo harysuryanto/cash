@@ -1,6 +1,5 @@
 import {
   Image,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -10,31 +9,34 @@ import {
 import {AppBar} from '../../components';
 import {IconPaths} from '../../constants';
 import {colors} from '../../utils/colors';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const HomeScreen = (props: any) => {
   return (
-    <ScrollView style={styles.container}>
-      <AppBar />
-      <View style={styles.balanceContainer}>
-        <Text style={styles.balance}>Rp230.000</Text>
-        <Text style={styles.title}>Saldo</Text>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          marginHorizontal: 30,
-        }}>
-        <TouchableOpacity
-          style={{flex: 1}}
-          onPress={() => props.navigation.navigate('CashInScreen')}>
-          <MenuItem title="Catat Uang Masuk" iconPath={IconPaths.cashIn} />
-        </TouchableOpacity>
-        <View style={{width: 20}} />
-        <TouchableOpacity style={{flex: 1}}>
-          <MenuItem title="Catat Uang Keluar" iconPath={IconPaths.cashOut} />
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <AppBar />
+        <View style={styles.balanceContainer}>
+          <Text style={styles.balance}>Rp230.000</Text>
+          <Text style={styles.title}>Saldo</Text>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginHorizontal: 30,
+          }}>
+          <TouchableOpacity
+            style={{flex: 1}}
+            onPress={() => props.navigation.navigate('CashInScreen')}>
+            <MenuItem title="Catat Uang Masuk" iconPath={IconPaths.cashIn} />
+          </TouchableOpacity>
+          <View style={{width: 20}} />
+          <TouchableOpacity style={{flex: 1}}>
+            <MenuItem title="Catat Uang Keluar" iconPath={IconPaths.cashOut} />
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
