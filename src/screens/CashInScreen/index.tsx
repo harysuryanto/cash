@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {
   Button,
   FlatList,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -9,15 +10,16 @@ import {
 } from 'react-native';
 import {BottomSheet} from 'react-native-btr';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Cash} from '../../interfaces/cash';
+import {Cash, CashCategory, CashType} from '../../interfaces/cash';
 import {colors} from '../../utils/colors';
+import {SelectList} from 'react-native-dropdown-select-list';
 
 const CashInScreen = () => {
   const [cashInList, setCashInList] = useState<Array<Cash>>([
     {
       id: 1,
       date: new Date('2022/10/26'),
-      type: 'in',
+      type: CashType.In,
       category: null,
       amount: 3000,
       notes: 'Gajian',
@@ -25,28 +27,33 @@ const CashInScreen = () => {
     {
       id: 2,
       date: new Date(),
-      type: 'out',
-      category: 'basic needs',
+      type: CashType.Out,
+      category: CashCategory.BasicNeeds,
       amount: 4000,
     },
     {
       id: 3,
       date: new Date(),
-      type: 'out',
-      category: 'desire',
+      type: CashType.Out,
+      category: CashCategory.Desire,
       amount: 5000,
       notes: 'Donation',
     },
     {
       id: 4,
       date: new Date(),
-      type: 'out',
-      category: 'investment',
+      type: CashType.Out,
+      category: CashCategory.Investment,
       amount: 6000,
       notes: 'Deposit Ajaib',
     },
   ]);
-  const [inputAmount, setInputAmount] = useState('');
+  const [cashAmount, setCashAmount] = useState('');
+  const [selectedType, setSelectedType] = useState<CashType>(CashType.In);
+  const [selectedCategory, setSelectedCategory] = useState<CashCategory>(
+    CashCategory.BasicNeeds,
+  );
+  const [notes, setNotes] = useState('');
   const [visible, setVisible] = useState(false);
 
   const handleSubmit = () => {
@@ -54,11 +61,19 @@ const CashInScreen = () => {
     temp.push({
       id: new Date().getMilliseconds(),
       date: new Date(),
-      type: 'in',
-      category: null,
-      amount: Number.parseFloat(inputAmount),
+      type: selectedType,
+      category: selectedCategory,
+      amount: Number.parseFloat(cashAmount),
     });
     setCashInList(temp);
+
+    toggleBottomNavigationView();
+    setCashAmount('');
+    setSelectedType(CashType.In);
+    setSelectedCategory(CashCategory.BasicNeeds);
+    setNotes('');
+
+    alert(cashInList);
   };
 
   const toggleBottomNavigationView = () => {
@@ -73,35 +88,69 @@ const CashInScreen = () => {
         renderItem={({item}) => (
           <CashInListTile
             id={item.id}
-            amount={item.amount}
             date={item.date}
-            category={item.category}
             type={item.type}
+            category={item.category}
+            amount={item.amount}
             notes={item.notes}
           />
         )}
         keyExtractor={item => item.id.toString()}
       />
       <Button title="Add" onPress={toggleBottomNavigationView} />
+      <Button
+        title="Show JSON"
+        onPress={() => alert(JSON.stringify(cashInList))}
+      />
       <BottomSheet
         visible={visible}
         onBackButtonPress={toggleBottomNavigationView}
         onBackdropPress={toggleBottomNavigationView}>
         <View style={styles.bottomNavigationView}>
-          <Text>Insert cash amount</Text>
-          <TextInput
-            autoFocus={true}
-            placeholder="Insert cash amount"
-            value={inputAmount.toString()}
-            onChangeText={text => setInputAmount(text)}
-            onSubmitEditing={() => {
-              handleSubmit();
-              toggleBottomNavigationView();
-              setInputAmount('');
-            }}
-            keyboardType="number-pad"
-            style={{borderWidth: 1, borderColor: 'blue'}}
-          />
+          <ScrollView>
+            <Text>Amount</Text>
+            <TextInput
+              placeholder="Insert cash amount"
+              value={cashAmount}
+              onChangeText={text => setCashAmount(text)}
+              keyboardType="number-pad"
+              style={{borderWidth: 1, borderColor: 'blue'}}
+            />
+            <Text>Type</Text>
+            <SelectList
+              data={[
+                {key: CashType.In, value: 'In'},
+                {key: CashType.Out, value: 'Out'},
+              ]}
+              setSelected={setSelectedType}
+              save="key"
+            />
+            <Text>Category</Text>
+            <SelectList
+              data={[
+                {key: 'basic needs', value: 'Basic needs'},
+                {key: 'desire', value: 'Desire'},
+                {key: 'investment', value: 'Investment'},
+              ]}
+              setSelected={setSelectedCategory}
+              save="key"
+            />
+            <Text>Notes</Text>
+            <TextInput
+              placeholder="Notes (optional)"
+              value={notes}
+              numberOfLines={3}
+              textAlignVertical="top"
+              onChangeText={text => setNotes(text)}
+              style={{borderWidth: 1, borderColor: 'blue'}}
+            />
+            <Button
+              title="Save"
+              onPress={() => {
+                handleSubmit();
+              }}
+            />
+          </ScrollView>
         </View>
       </BottomSheet>
     </SafeAreaView>
@@ -124,7 +173,8 @@ const CashInListTile = (cash: Cash) => {
           justifyContent: 'center',
           alignItems: 'center',
           padding: 4,
-          backgroundColor: cash.type === 'out' ? 'lightblue' : 'lightgreen',
+          backgroundColor:
+            cash.type === CashType.Out ? 'lightblue' : 'lightgreen',
           borderRadius: 16,
         }}>
         <Text>{cash.type.toUpperCase()}</Text>
@@ -132,7 +182,7 @@ const CashInListTile = (cash: Cash) => {
       <View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text>Rp{cash.amount}</Text>
-          {cash.type === 'out' && (
+          {cash.type === CashType.Out && (
             <Text
               style={{
                 marginStart: 12,
@@ -179,8 +229,10 @@ const styles = StyleSheet.create({
   },
   bottomNavigationView: {
     backgroundColor: '#fff',
-    width: '100%',
-    height: 250,
+    borderTopEndRadius: 30,
+    borderTopStartRadius: 30,
+    paddingVertical: 30,
+    paddingHorizontal: 20,
   },
 });
 
