@@ -13,7 +13,8 @@ export interface Cash {
   id: number;
   date: Date;
   type: CashType;
-  category: CashCategory | null; // It must be null if type is CashType.In
+  /** `category` must be null if `type: CashType.In` */
+  category: CashCategory | null;
   amount: number;
   notes?: string;
 }
