@@ -13,6 +13,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {Cash, CashCategory, CashType} from '../../interfaces/cash';
 import {colors} from '../../utils/colors';
 import {SelectList} from 'react-native-dropdown-select-list';
+import CashListTile from './components/CashListTile';
 
 const CashInScreen = () => {
   const [cashInList, setCashInList] = useState<Array<Cash>>([
@@ -72,8 +73,6 @@ const CashInScreen = () => {
     setSelectedType(CashType.In);
     setSelectedCategory(CashCategory.BasicNeeds);
     setNotes('');
-
-    alert(cashInList);
   };
 
   const toggleBottomNavigationView = () => {
@@ -86,7 +85,7 @@ const CashInScreen = () => {
         style={{flex: 1}}
         data={cashInList}
         renderItem={({item}) => (
-          <CashInListTile
+          <CashListTile
             id={item.id}
             date={item.date}
             type={item.type}
@@ -154,56 +153,6 @@ const CashInScreen = () => {
         </View>
       </BottomSheet>
     </SafeAreaView>
-  );
-};
-
-const CashInListTile = (cash: Cash) => {
-  return (
-    <View
-      style={{
-        flexDirection: 'row',
-        marginHorizontal: 10,
-        marginBottom: 10,
-      }}>
-      <View
-        style={{
-          width: 40,
-          height: 40,
-          marginEnd: 12,
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: 4,
-          backgroundColor:
-            cash.type === CashType.Out ? 'lightblue' : 'lightgreen',
-          borderRadius: 16,
-        }}>
-        <Text>{cash.type.toUpperCase()}</Text>
-      </View>
-      <View>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text>Rp{cash.amount}</Text>
-          {cash.type === CashType.Out && (
-            <Text
-              style={{
-                marginStart: 12,
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingHorizontal: 8,
-                backgroundColor: '#ddd',
-                borderRadius: 16,
-              }}>
-              {cash.category}
-            </Text>
-          )}
-        </View>
-        <Text>
-          {cash.date.getDate()}/{cash.date.getMonth() + 1}/
-          {cash.date.getFullYear()}, {cash.date.getHours()}:
-          {cash.date.getMinutes()}
-          {cash.notes && ' • ' + cash.notes}
-        </Text>
-      </View>
-    </View>
   );
 };
 
