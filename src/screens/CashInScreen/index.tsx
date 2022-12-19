@@ -14,6 +14,7 @@ import {Cash, CashCategory, CashType} from '../../interfaces/cash';
 import {colors} from '../../utils/colors';
 import {SelectList} from 'react-native-dropdown-select-list';
 import CashListTile from './components/CashListTile';
+import Space from '../../components/Space';
 
 const CashInScreen = () => {
   const [cashInList, setCashInList] = useState<Array<Cash>>([
@@ -113,8 +114,15 @@ const CashInScreen = () => {
               value={cashAmount}
               onChangeText={text => setCashAmount(text)}
               keyboardType="number-pad"
-              style={{borderWidth: 1, borderColor: 'blue'}}
+              style={{
+                borderWidth: 1,
+                borderColor: 'grey',
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+                borderRadius: 10,
+              }}
             />
+            <Space height={10} />
             <Text>Type</Text>
             <SelectList
               data={[
@@ -124,6 +132,7 @@ const CashInScreen = () => {
               setSelected={setSelectedType}
               save="key"
             />
+            <Space height={10} />
             <Text>Category</Text>
             <SelectList
               data={[
@@ -134,6 +143,7 @@ const CashInScreen = () => {
               setSelected={setSelectedCategory}
               save="key"
             />
+            <Space height={10} />
             <Text>Notes</Text>
             <TextInput
               placeholder="Notes (optional)"
@@ -141,8 +151,15 @@ const CashInScreen = () => {
               numberOfLines={3}
               textAlignVertical="top"
               onChangeText={text => setNotes(text)}
-              style={{borderWidth: 1, borderColor: 'blue'}}
+              style={{
+                borderWidth: 1,
+                borderColor: 'grey',
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+                borderRadius: 10,
+              }}
             />
+            <Space height={20} />
             <Button
               title="Save"
               onPress={() => {
