@@ -1,8 +1,19 @@
+export enum CashCategory {
+  BasicNeeds = 'basic needs',
+  Desire = 'desire',
+  Investment = 'investment',
+}
+
+export enum CashType {
+  In = 'in',
+  Out = 'out',
+}
+
 export interface Cash {
   id: number;
   date: Date;
-  type: 'in' | 'out';
-  category: 'basic needs' | 'desire' | 'investment' | null; // It is null if type is 'in'
+  type: CashType;
+  category: CashCategory | null; // It must be null if type is CashType.In
   amount: number;
   notes?: string;
 }
