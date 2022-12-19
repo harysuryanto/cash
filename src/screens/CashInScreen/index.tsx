@@ -51,10 +51,8 @@ const CashInScreen = () => {
     },
   ]);
   const [cashAmount, setCashAmount] = useState('');
-  const [selectedType, setSelectedType] = useState<CashType>(CashType.In);
-  const [selectedCategory, setSelectedCategory] = useState<CashCategory>(
-    CashCategory.BasicNeeds,
-  );
+  const [selectedType, setSelectedType] = useState<CashType>();
+  const [selectedCategory, setSelectedCategory] = useState<CashCategory>();
   const [notes, setNotes] = useState('');
   const [visible, setVisible] = useState(false);
 
@@ -63,8 +61,8 @@ const CashInScreen = () => {
     temp.push({
       id: new Date().getMilliseconds(),
       date: new Date(),
-      type: selectedType,
-      category: selectedCategory,
+      type: selectedType!,
+      category: selectedCategory ?? null,
       amount: Number.parseFloat(cashAmount),
     });
     setCashInList(temp);
@@ -133,16 +131,20 @@ const CashInScreen = () => {
               save="key"
             />
             <Space height={10} />
-            <Text>Category</Text>
-            <SelectList
-              data={[
-                {key: 'basic needs', value: 'Basic needs'},
-                {key: 'desire', value: 'Desire'},
-                {key: 'investment', value: 'Investment'},
-              ]}
-              setSelected={setSelectedCategory}
-              save="key"
-            />
+            {selectedType === CashType.Out && (
+              <>
+                <Text>Category</Text>
+                <SelectList
+                  data={[
+                    {key: 'basic needs', value: 'Basic needs'},
+                    {key: 'desire', value: 'Desire'},
+                    {key: 'investment', value: 'Investment'},
+                  ]}
+                  setSelected={setSelectedCategory}
+                  save="key"
+                />
+              </>
+            )}
             <Space height={10} />
             <Text>Notes</Text>
             <TextInput
@@ -160,12 +162,7 @@ const CashInScreen = () => {
               }}
             />
             <Space height={20} />
-            <Button
-              title="Save"
-              onPress={() => {
-                handleSubmit();
-              }}
-            />
+            <Button title="Save" onPress={handleSubmit} />
           </ScrollView>
         </View>
       </BottomSheet>
