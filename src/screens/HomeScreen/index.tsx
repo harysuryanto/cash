@@ -6,10 +6,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {AppBar} from '../../components';
 import {IconPaths} from '../../constants';
 import {colors} from '../../utils/colors';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import AppBar from '../../components/AppBar';
 
 const HomeScreen = (props: any) => {
   return (
