@@ -64,6 +64,7 @@ const CashInScreen = () => {
       type: selectedType!,
       category: selectedCategory ?? null,
       amount: Number.parseFloat(cashAmount),
+      notes: notes,
     });
     setCashInList(temp);
 
@@ -123,6 +124,10 @@ const CashInScreen = () => {
             <Space height={10} />
             <Text>Type</Text>
             <SelectList
+              defaultOption={{
+                key: selectedType,
+                value: selectedType,
+              }}
               data={[
                 {key: CashType.In, value: 'In'},
                 {key: CashType.Out, value: 'Out'},
@@ -135,6 +140,10 @@ const CashInScreen = () => {
               <>
                 <Text>Category</Text>
                 <SelectList
+                  defaultOption={{
+                    key: selectedCategory,
+                    value: selectedCategory,
+                  }}
                   data={[
                     {key: 'basic needs', value: 'Basic needs'},
                     {key: 'desire', value: 'Desire'},
@@ -161,8 +170,15 @@ const CashInScreen = () => {
                 borderRadius: 10,
               }}
             />
-            <Space height={20} />
-            <Button title="Save" onPress={handleSubmit} />
+            {cashAmount !== '' &&
+              (selectedType === CashType.In ||
+                (selectedType === CashType.Out &&
+                  selectedCategory !== undefined)) && (
+                <>
+                  <Space height={20} />
+                  <Button title="Save" onPress={handleSubmit} />
+                </>
+              )}
           </ScrollView>
         </View>
       </BottomSheet>
