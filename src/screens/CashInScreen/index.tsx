@@ -14,7 +14,7 @@ import {Cash, CashCategory, CashType} from '../../interfaces/cash';
 import {colors} from '../../utils/colors';
 import {SelectList} from 'react-native-dropdown-select-list';
 import CashListTile from './components/CashListTile';
-import Space from '../../components/Space';
+import Gap from '../../components/Gap';
 
 const CashInScreen = () => {
   const [cashInList, setCashInList] = useState<Array<Cash>>([
@@ -121,7 +121,7 @@ const CashInScreen = () => {
                 borderRadius: 10,
               }}
             />
-            <Space height={10} />
+            <Gap height={10} />
             <Text>Type</Text>
             <SelectList
               defaultOption={{
@@ -135,7 +135,7 @@ const CashInScreen = () => {
               setSelected={setSelectedType}
               save="key"
             />
-            <Space height={10} />
+            <Gap height={10} />
             {selectedType === CashType.Out && (
               <>
                 <Text>Category</Text>
@@ -154,7 +154,7 @@ const CashInScreen = () => {
                 />
               </>
             )}
-            <Space height={10} />
+            <Gap height={10} />
             <Text>Notes</Text>
             <TextInput
               placeholder="Notes (optional)"
@@ -175,7 +175,7 @@ const CashInScreen = () => {
                 (selectedType === CashType.Out &&
                   selectedCategory !== undefined)) && (
                 <>
-                  <Space height={20} />
+                  <Gap height={20} />
                   <Button title="Save" onPress={handleSubmit} />
                 </>
               )}
