@@ -14,6 +14,7 @@ import {
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 import Gap from '../../components/Gap';
+import {MenuGridTile} from './components/MenuGridTile';
 
 const HomeScreen = (props: any) => {
   return (
@@ -28,31 +29,14 @@ const HomeScreen = (props: any) => {
           <TouchableOpacity
             style={{flex: 1}}
             onPress={() => props.navigation.navigate('CashFlowScreen')}>
-            <MenuItem title="Catat Aliran Uang" faIcon={faMoneyBillTransfer} />
+            <MenuGridTile
+              title="Catat Aliran Uang"
+              faIcon={faMoneyBillTransfer}
+            />
           </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
-  );
-};
-
-type MenuItemProp = {title: string; faIcon: IconDefinition};
-
-const MenuItem = (prop: MenuItemProp) => {
-  return (
-    <View
-      style={{
-        alignItems: 'center',
-        borderColor: colors.border,
-        borderRadius: 20,
-        borderWidth: 1,
-        flex: 1,
-        padding: 40,
-      }}>
-      <FontAwesomeIcon icon={prop.faIcon} style={{width: 60, height: 60}} />
-      <Gap height={15} />
-      <Text>{prop.title}</Text>
-    </View>
   );
 };
 
