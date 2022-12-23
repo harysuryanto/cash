@@ -1,15 +1,19 @@
 import {
-  Image,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import {IconPaths} from '../../constants';
 import {colors} from '../../utils/colors';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import AppBar from '../../components/AppBar';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {
+  faMoneyBillTransfer,
+  IconDefinition,
+} from '@fortawesome/free-solid-svg-icons';
+import Gap from '../../components/Gap';
 
 const HomeScreen = (props: any) => {
   return (
@@ -20,15 +24,11 @@ const HomeScreen = (props: any) => {
           <Text style={styles.balance}>Rp230.000</Text>
           <Text style={styles.title}>Saldo</Text>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            marginHorizontal: 30,
-          }}>
+        <View style={{flexDirection: 'row', marginHorizontal: 30}}>
           <TouchableOpacity
             style={{flex: 1}}
             onPress={() => props.navigation.navigate('CashFlowScreen')}>
-            <MenuItem title="Catat Aliran Uang" iconPath={IconPaths.cashIn} />
+            <MenuItem title="Catat Aliran Uang" faIcon={faMoneyBillTransfer} />
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -36,13 +36,9 @@ const HomeScreen = (props: any) => {
   );
 };
 
-const MenuItem = ({
-  title,
-  iconPath: icon,
-}: {
-  title: string;
-  iconPath: IconPaths;
-}) => {
+type MenuItemProp = {title: string; faIcon: IconDefinition};
+
+const MenuItem = (prop: MenuItemProp) => {
   return (
     <View
       style={{
@@ -53,11 +49,9 @@ const MenuItem = ({
         flex: 1,
         padding: 40,
       }}>
-      <Image
-        style={{width: 50, height: 50, marginBottom: 15}}
-        source={{uri: icon}}
-      />
-      <Text>{title}</Text>
+      <FontAwesomeIcon icon={prop.faIcon} style={{width: 60, height: 60}} />
+      <Gap height={15} />
+      <Text>{prop.title}</Text>
     </View>
   );
 };
