@@ -27,12 +27,8 @@ const HomeScreen = (props: any) => {
           }}>
           <TouchableOpacity
             style={{flex: 1}}
-            onPress={() => props.navigation.navigate('CashInScreen')}>
-            <MenuItem title="Catat Uang Masuk" iconPath={IconPaths.cashIn} />
-          </TouchableOpacity>
-          <View style={{width: 20}} />
-          <TouchableOpacity style={{flex: 1}}>
-            <MenuItem title="Catat Uang Keluar" iconPath={IconPaths.cashOut} />
+            onPress={() => props.navigation.navigate('CashFlowScreen')}>
+            <MenuItem title="Catat Aliran Uang" iconPath={IconPaths.cashIn} />
           </TouchableOpacity>
         </View>
       </ScrollView>

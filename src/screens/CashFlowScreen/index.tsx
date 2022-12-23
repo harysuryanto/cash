@@ -16,7 +16,7 @@ import {SelectList} from 'react-native-dropdown-select-list';
 import CashListTile from './components/CashListTile';
 import Gap from '../../components/Gap';
 
-const CashInScreen = () => {
+const CashFlowScreen = () => {
   const [cashInList, setCashInList] = useState<Array<Cash>>([
     {
       id: 1,
@@ -215,4 +215,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CashInScreen;
+export default CashFlowScreen;

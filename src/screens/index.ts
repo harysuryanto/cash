@@ -1,4 +1,4 @@
 import HomeScreen from './HomeScreen';
-import CashInScreen from './CashInScreen';
+import CashFlowScreen from './CashFlowScreen';
 
-export {HomeScreen, CashInScreen};
+export {HomeScreen, CashFlowScreen};

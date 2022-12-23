@@ -2,7 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {CashInScreen, HomeScreen} from '../screens';
+import {CashFlowScreen, HomeScreen} from '../screens';
 import {StatusBar} from 'expo-status-bar';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHome, faMoneyBills} from '@fortawesome/free-solid-svg-icons';
@@ -28,8 +28,8 @@ const MainAppScreen = () => {
         }}
       />
       <Tab.Screen
-        name="CashInScreen"
-        component={CashInScreen}
+        name="CashFlowScreen"
+        component={CashFlowScreen}
         options={{
           headerShown: false,
           tabBarIcon: icon => (
