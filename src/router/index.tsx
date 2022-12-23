@@ -17,6 +17,7 @@ const MainAppScreen = () => {
         name="HomeScreen"
         component={HomeScreen}
         options={{
+          title: 'Home',
           headerShown: false,
           tabBarIcon: icon => (
             <FontAwesomeIcon
@@ -31,6 +32,7 @@ const MainAppScreen = () => {
         name="CashFlowScreen"
         component={CashFlowScreen}
         options={{
+          title: 'Cash Flow',
           headerShown: false,
           tabBarIcon: icon => (
             <FontAwesomeIcon
