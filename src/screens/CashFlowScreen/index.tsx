@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {BottomSheet} from 'react-native-btr';
@@ -15,6 +16,8 @@ import {colors} from '../../utils/colors';
 import {SelectList} from 'react-native-dropdown-select-list';
 import CashListTile from './components/CashListTile';
 import Gap from '../../components/Gap';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faAdd} from '@fortawesome/free-solid-svg-icons';
 
 const CashFlowScreen = () => {
   const [cashInList, setCashInList] = useState<Array<Cash>>([
@@ -82,7 +85,14 @@ const CashFlowScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        style={{flex: 1}}
+        style={{
+          flex: 1,
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+        }}
         data={cashInList}
         renderItem={({item}) => (
           <CashListTile
@@ -96,11 +106,21 @@ const CashFlowScreen = () => {
         )}
         keyExtractor={item => item.id.toString()}
       />
-      <Button title="Add" onPress={toggleBottomNavigationView} />
-      <Button
-        title="Show JSON"
-        onPress={() => alert(JSON.stringify(cashInList))}
-      />
+      <TouchableOpacity
+        onPress={toggleBottomNavigationView}
+        style={{
+          position: 'absolute',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: 50,
+          width: 50,
+          right: 20,
+          bottom: 20,
+          borderRadius: 25,
+          backgroundColor: '#007bff',
+        }}>
+        <FontAwesomeIcon icon={faAdd} color="white" />
+      </TouchableOpacity>
       <BottomSheet
         visible={visible}
         onBackButtonPress={toggleBottomNavigationView}
@@ -189,6 +209,7 @@ const CashFlowScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: 'relative',
   },
   balanceContainer: {
     alignItems: 'center',
