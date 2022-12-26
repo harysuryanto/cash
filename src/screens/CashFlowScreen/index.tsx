@@ -2,6 +2,7 @@ import {useContext, useState} from 'react';
 import {
   Button,
   FlatList,
+  Modal,
   ScrollView,
   StyleSheet,
   Text,
@@ -11,7 +12,7 @@ import {
 } from 'react-native';
 import {BottomSheet} from 'react-native-btr';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {CashCategory, CashType} from '../../interfaces/cash';
+import {Cash, CashCategory, CashType} from '../../interfaces/cash';
 import {colors} from '../../utils/colors';
 import {SelectList} from 'react-native-dropdown-select-list';
 import Gap from '../../components/Gap';
@@ -22,12 +23,15 @@ import CashListTile from './components/CashListTile';
 
 const CashFlowScreen = () => {
   const cashListContext = useContext(CashListContext);
+  const [selectedCash, setSelectedCash] = useState<Cash | null>(null);
 
   const [cashAmount, setCashAmount] = useState('');
   const [selectedType, setSelectedType] = useState<CashType>();
   const [selectedCategory, setSelectedCategory] = useState<CashCategory>();
   const [notes, setNotes] = useState('');
+
   const [visible, setVisible] = useState(false);
+  const [longPressModalVisible, setLongPressModalVisible] = useState(false);
 
   const handleSubmit = () => {
     cashListContext.addCash({
@@ -50,6 +54,11 @@ const CashFlowScreen = () => {
     setVisible(!visible);
   };
 
+  const handleDeleteCash = () => {
+    cashListContext.deleteCash(selectedCash!.id);
+    setLongPressModalVisible(false);
+  };
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.container}>
@@ -64,14 +73,20 @@ const CashFlowScreen = () => {
           }}
           data={cashListContext.cashList}
           renderItem={({item}) => (
-            <CashListTile
-              id={item.id}
-              date={item.date}
-              type={item.type}
-              category={item.category}
-              amount={item.amount}
-              notes={item.notes}
-            />
+            <TouchableOpacity
+              onLongPress={() => {
+                setSelectedCash(item);
+                setLongPressModalVisible(true);
+              }}>
+              <CashListTile
+                id={item.id}
+                date={item.date}
+                type={item.type}
+                category={item.category}
+                amount={item.amount}
+                notes={item.notes}
+              />
+            </TouchableOpacity>
           )}
           keyExtractor={item => item.id.toString()}
         />
@@ -90,6 +105,21 @@ const CashFlowScreen = () => {
           }}>
           <FontAwesomeIcon icon={faAdd} color="white" />
         </TouchableOpacity>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={longPressModalVisible}
+          style={{backgroundColor: 'grey', justifyContent: 'center'}}
+          onRequestClose={() => setLongPressModalVisible(false)}>
+          <View style={{backgroundColor: 'white', justifyContent: 'center'}}>
+            <TouchableOpacity>
+              <Text>Edit</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleDeleteCash}>
+              <Text>Delete</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
         <BottomSheet
           visible={visible}
           onBackButtonPress={toggleBottomNavigationView}
