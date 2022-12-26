@@ -1,27 +1,27 @@
 import {useContext, useState} from 'react';
-import {
-  Button,
-  FlatList,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import {BottomSheet} from 'react-native-btr';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {Cash, CashCategory, CashType} from '../../interfaces/cash';
 import {colors} from '../../utils/colors';
 import {SelectList} from 'react-native-dropdown-select-list';
 import Gap from '../../components/Gap';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faAdd} from '@fortawesome/free-solid-svg-icons';
 import {CashListContext} from '../../contexts/CashContext';
 import CashListTile from './components/CashListTile';
+import {
+  FAB,
+  Appbar,
+  List,
+  Portal,
+  Dialog,
+  Button,
+  TextInput,
+  Text,
+  useTheme,
+} from 'react-native-paper';
+import formatDate from '../../utils/utils/format_date';
 
 const CashFlowScreen = () => {
+  const theme = useTheme();
+
   const cashListContext = useContext(CashListContext);
   const [selectedCash, setSelectedCash] = useState<Cash | null>(null);
 
@@ -60,156 +60,132 @@ const CashFlowScreen = () => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={styles.container}>
-        <FlatList
-          style={{
-            flex: 1,
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-          }}
-          data={cashListContext.cashList}
-          renderItem={({item}) => (
-            <TouchableOpacity
-              onLongPress={() => {
-                setSelectedCash(item);
-                setLongPressModalVisible(true);
-              }}>
-              <CashListTile
-                id={item.id}
-                date={item.date}
-                type={item.type}
-                category={item.category}
-                amount={item.amount}
-                notes={item.notes}
-              />
-            </TouchableOpacity>
-          )}
-          keyExtractor={item => item.id.toString()}
-        />
-        <TouchableOpacity
-          onPress={toggleBottomNavigationView}
-          style={{
-            position: 'absolute',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: 50,
-            width: 50,
-            right: 20,
-            bottom: 20,
-            borderRadius: 25,
-            backgroundColor: '#007bff',
-          }}>
-          <FontAwesomeIcon icon={faAdd} color="white" />
-        </TouchableOpacity>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={longPressModalVisible}
-          style={{backgroundColor: 'grey', justifyContent: 'center'}}
-          onRequestClose={() => setLongPressModalVisible(false)}>
-          <View style={{backgroundColor: 'white', justifyContent: 'center'}}>
-            <TouchableOpacity>
-              <Text>Edit</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={handleDeleteCash}>
-              <Text>Delete</Text>
-            </TouchableOpacity>
-          </View>
-        </Modal>
-        <BottomSheet
-          visible={visible}
-          onBackButtonPress={toggleBottomNavigationView}
-          onBackdropPress={toggleBottomNavigationView}>
-          <View style={styles.bottomNavigationView}>
-            <ScrollView>
-              <Text>Amount</Text>
-              <TextInput
-                placeholder="Insert cash amount"
-                value={cashAmount}
-                onChangeText={text => setCashAmount(text)}
-                keyboardType="number-pad"
+    <View style={[styles.container, {backgroundColor: theme.colors.surface}]}>
+      <Appbar.Header>
+        <Appbar.Content title="Cash Flow" />
+      </Appbar.Header>
+      <FlatList
+        style={{flex: 1}}
+        data={cashListContext.cashList}
+        renderItem={({item}) => (
+          <List.Item
+            title={`${item.amount}${
+              item.category ? ' - ' + item.category : ''
+            }`}
+            description={`${formatDate(item.date)}${
+              item.notes ? ' • ' + item.notes : ''
+            }`}
+            left={props => (
+              <View
+                {...props}
                 style={{
-                  borderWidth: 1,
-                  borderColor: 'grey',
-                  paddingVertical: 10,
-                  paddingHorizontal: 20,
-                  borderRadius: 10,
-                }}
-              />
-              <Gap height={10} />
-              <Text>Type</Text>
-              <SelectList
-                defaultOption={{
-                  key: selectedType,
-                  value: selectedType,
-                }}
-                data={[
-                  {key: CashType.In, value: 'In'},
-                  {key: CashType.Out, value: 'Out'},
-                ]}
-                setSelected={setSelectedType}
-                save="key"
-              />
-              <Gap height={10} />
-              {selectedType === CashType.Out && (
+                  width: 40,
+                  height: 40,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor:
+                    item.type === CashType.Out ? 'lightblue' : 'lightgreen',
+                  borderRadius: 16,
+                }}>
+                <Text>{item.type.toUpperCase()}</Text>
+              </View>
+            )}
+            style={{paddingHorizontal: 16}}
+            onPress={e => {
+              setSelectedCash(item);
+              setLongPressModalVisible(true);
+            }}
+          />
+        )}
+        keyExtractor={item => item.id.toString()}
+      />
+
+      <FAB
+        icon="plus"
+        onPress={toggleBottomNavigationView}
+        style={{position: 'absolute', right: 16, bottom: 16}}
+      />
+
+      <Portal>
+        <Dialog
+          visible={longPressModalVisible}
+          onDismiss={() => setLongPressModalVisible(false)}>
+          <Dialog.Content>
+            <Button onPress={() => {}}>Edit</Button>
+            <Button onPress={handleDeleteCash}>Delete</Button>
+          </Dialog.Content>
+        </Dialog>
+        <Dialog visible={visible} onDismiss={toggleBottomNavigationView}>
+          <Dialog.Content>
+            <Dialog.Title>Add Cash</Dialog.Title>
+            <Gap height={10} />
+            <TextInput
+              label="Amount"
+              value={cashAmount}
+              onChangeText={text => setCashAmount(text)}
+              keyboardType="number-pad"
+              mode="outlined"
+            />
+            <Gap height={10} />
+            <SelectList
+              placeholder="Type"
+              defaultOption={{
+                key: selectedType,
+                value: selectedType,
+              }}
+              data={[
+                {key: CashType.In, value: 'In'},
+                {key: CashType.Out, value: 'Out'},
+              ]}
+              setSelected={setSelectedType}
+              save="key"
+            />
+            {selectedType === CashType.Out && (
+              <>
+                <Gap height={10} />
+                <SelectList
+                  placeholder="Category"
+                  defaultOption={{
+                    key: selectedCategory,
+                    value: selectedCategory,
+                  }}
+                  data={[
+                    {key: 'basic needs', value: 'Basic needs'},
+                    {key: 'desire', value: 'Desire'},
+                    {key: 'investment', value: 'Investment'},
+                  ]}
+                  setSelected={setSelectedCategory}
+                  save="key"
+                />
+              </>
+            )}
+            <Gap height={10} />
+            <TextInput
+              label="Notes (optional)"
+              value={notes}
+              numberOfLines={3}
+              onChangeText={text => setNotes(text)}
+              mode="outlined"
+            />
+            {cashAmount !== '' &&
+              (selectedType === CashType.In ||
+                (selectedType === CashType.Out &&
+                  selectedCategory !== undefined)) && (
                 <>
-                  <Text>Category</Text>
-                  <SelectList
-                    defaultOption={{
-                      key: selectedCategory,
-                      value: selectedCategory,
-                    }}
-                    data={[
-                      {key: 'basic needs', value: 'Basic needs'},
-                      {key: 'desire', value: 'Desire'},
-                      {key: 'investment', value: 'Investment'},
-                    ]}
-                    setSelected={setSelectedCategory}
-                    save="key"
-                  />
+                  <Gap height={20} />
+                  <Button onPress={handleSubmit}>Save</Button>
                 </>
               )}
-              <Gap height={10} />
-              <Text>Notes</Text>
-              <TextInput
-                placeholder="Notes (optional)"
-                value={notes}
-                numberOfLines={3}
-                textAlignVertical="top"
-                onChangeText={text => setNotes(text)}
-                style={{
-                  borderWidth: 1,
-                  borderColor: 'grey',
-                  paddingVertical: 10,
-                  paddingHorizontal: 20,
-                  borderRadius: 10,
-                }}
-              />
-              {cashAmount !== '' &&
-                (selectedType === CashType.In ||
-                  (selectedType === CashType.Out &&
-                    selectedCategory !== undefined)) && (
-                  <>
-                    <Gap height={20} />
-                    <Button title="Save" onPress={handleSubmit} />
-                  </>
-                )}
-            </ScrollView>
-          </View>
-        </BottomSheet>
-      </View>
-    </SafeAreaView>
+          </Dialog.Content>
+        </Dialog>
+      </Portal>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: 'relative',
   },
   balanceContainer: {
     alignItems: 'center',
