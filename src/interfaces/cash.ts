@@ -11,7 +11,7 @@ export enum CashType {
 
 export interface Cash {
   id: number;
-  date: Date;
+  date: string;
   type: CashType;
   /** `category` must be null if `type: CashType.In` */
   category: CashCategory | null;
