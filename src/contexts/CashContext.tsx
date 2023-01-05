@@ -1,43 +1,11 @@
-import {createContext, useState} from 'react';
-import {Cash, CashCategory, CashType} from '../interfaces/cash';
-
-const defaultValue = [
-  {
-    id: 1,
-    date: new Date('2022/10/26'),
-    type: CashType.In,
-    category: null,
-    amount: 3000,
-    notes: 'Gajian',
-  },
-  {
-    id: 2,
-    date: new Date(),
-    type: CashType.Out,
-    category: CashCategory.BasicNeeds,
-    amount: 4000,
-  },
-  {
-    id: 3,
-    date: new Date(),
-    type: CashType.Out,
-    category: CashCategory.Desire,
-    amount: 5000,
-    notes: 'Donation',
-  },
-  {
-    id: 4,
-    date: new Date(),
-    type: CashType.Out,
-    category: CashCategory.Investment,
-    amount: 6000,
-    notes: 'Deposit Ajaib',
-  },
-];
+import {createContext, useEffect, useState} from 'react';
+import {Cash} from '../interfaces/cash';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface CashListContextValue {
   cashList: Array<Cash>;
   addCash: (value: Cash) => void;
+  addCashAll: (value: Cash[]) => void;
   updateCash: (value: Cash) => void;
   deleteCash: (id: number) => void;
 }
@@ -45,6 +13,7 @@ interface CashListContextValue {
 const CashListContext = createContext<CashListContextValue>({
   cashList: [],
   addCash: () => {},
+  addCashAll: () => {},
   updateCash: () => {},
   deleteCash: () => {},
 });
@@ -54,10 +23,15 @@ type Props = {
 };
 
 const CashListProvider = ({children}: Props) => {
-  const [cashList, setCashList] = useState<Array<Cash>>(defaultValue);
+  const [cashList, setCashList] = useState<Cash[]>([]);
 
   const addCash = (cash: Cash) => {
     setCashList([...cashList, cash]);
+  };
+
+  const addCashAll = (newCashList: Cash[]) => {
+    setCashList([...cashList, ...newCashList]);
+    console.log(`Successfully added ${newCashList.length} item(s)`);
   };
 
   const updateCash = (cash: Cash) => {
@@ -68,11 +42,27 @@ const CashListProvider = ({children}: Props) => {
     setCashList(cashList.filter(item => item.id !== id));
   };
 
+  const saveToStorage = async () => {
+    if (cashList.length === 0) return;
+
+    try {
+      console.log('Menyimpan data...', JSON.stringify(cashList));
+      await AsyncStorage.setItem('cashList', JSON.stringify(cashList));
+    } catch (e) {
+      console.warn('Gagal nyimpen data', e);
+    }
+  };
+
+  useEffect(() => {
+    saveToStorage();
+  }, [cashList]);
+
   return (
     <CashListContext.Provider
       value={{
         cashList,
         addCash,
+        addCashAll,
         updateCash,
         deleteCash,
       }}>
