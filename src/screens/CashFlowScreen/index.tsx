@@ -19,6 +19,7 @@ import {
 } from 'react-native-paper';
 import formatDate from '../../utils/utils/format_date';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {v4 as uuidv4} from 'uuid';
 
 const CashFlowScreen = () => {
   const theme = useTheme();
@@ -36,7 +37,7 @@ const CashFlowScreen = () => {
 
   const handleSubmit = () => {
     cashListContext.addCash({
-      id: new Date().getMilliseconds(),
+      id: uuidv4(),
       date: new Date().toISOString(),
       type: selectedType!,
       category: selectedCategory ?? null,
@@ -70,7 +71,7 @@ const CashFlowScreen = () => {
           const formatedCashList = savedCashList.map(value => {
             return {
               ...value,
-              id: new Date().getUTCMilliseconds(),
+              id: uuidv4(),
             } satisfies Cash;
           });
           cashListContext.addCashAll(formatedCashList);
