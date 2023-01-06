@@ -3,11 +3,11 @@ import {Cash} from '../interfaces/cash';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface CashListContextValue {
-  cashList: Array<Cash>;
+  cashList: Cash[];
   addCash: (value: Cash) => void;
   addCashAll: (value: Cash[]) => void;
   updateCash: (value: Cash) => void;
-  deleteCash: (id: number) => void;
+  deleteCash: (id: string) => void;
 }
 
 const CashListContext = createContext<CashListContextValue>({
@@ -38,7 +38,7 @@ const CashListProvider = ({children}: Props) => {
     setCashList(cashList.map(item => (item.id === cash.id ? cash : item)));
   };
 
-  const deleteCash = (id: number) => {
+  const deleteCash = (id: string) => {
     setCashList(cashList.filter(item => item.id !== id));
   };
 
