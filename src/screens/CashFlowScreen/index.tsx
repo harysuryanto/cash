@@ -1,5 +1,5 @@
 import {useContext, useState} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {Alert, FlatList, StyleSheet, View} from 'react-native';
 import {Cash, CashCategory, CashType} from '../../interfaces/cash';
 import {colors} from '../../utils/colors';
 import {SelectList} from 'react-native-dropdown-select-list';
@@ -18,6 +18,7 @@ import {
   useTheme,
 } from 'react-native-paper';
 import formatDate from '../../utils/utils/format_date';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CashFlowScreen = () => {
   const theme = useTheme();
@@ -36,7 +37,7 @@ const CashFlowScreen = () => {
   const handleSubmit = () => {
     cashListContext.addCash({
       id: new Date().getMilliseconds(),
-      date: new Date(),
+      date: new Date().toISOString(),
       type: selectedType!,
       category: selectedCategory ?? null,
       amount: Number.parseFloat(cashAmount),
@@ -59,46 +60,71 @@ const CashFlowScreen = () => {
     setLongPressModalVisible(false);
   };
 
+  const handleLoadCashList = async () => {
+    try {
+      await AsyncStorage.getItem('cashList').then(value => {
+        const savedCashList = JSON.parse(value ?? '[]') as Cash[];
+        if (savedCashList.length == 0) {
+          Alert.alert('', 'No data in storage.');
+        } else {
+          const formatedCashList = savedCashList.map(value => {
+            return {
+              ...value,
+              id: new Date().getUTCMilliseconds(),
+            } satisfies Cash;
+          });
+          cashListContext.addCashAll(formatedCashList);
+        }
+      });
+    } catch (e) {
+      console.error('Gagal ngeload data', e);
+    }
+  };
+
   return (
     <View style={[styles.container, {backgroundColor: theme.colors.surface}]}>
       <Appbar.Header>
         <Appbar.Content title="Cash Flow" />
       </Appbar.Header>
-      <FlatList
-        style={{flex: 1}}
-        data={cashListContext.cashList}
-        renderItem={({item}) => (
-          <List.Item
-            title={`${item.amount}${
-              item.category ? ' - ' + item.category : ''
-            }`}
-            description={`${formatDate(item.date)}${
-              item.notes ? ' • ' + item.notes : ''
-            }`}
-            left={props => (
-              <View
-                {...props}
-                style={{
-                  width: 40,
-                  height: 40,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  backgroundColor:
-                    item.type === CashType.Out ? 'lightblue' : 'lightgreen',
-                  borderRadius: 16,
-                }}>
-                <Text>{item.type.toUpperCase()}</Text>
-              </View>
-            )}
-            style={{paddingHorizontal: 16}}
-            onPress={e => {
-              setSelectedCash(item);
-              setLongPressModalVisible(true);
-            }}
-          />
-        )}
-        keyExtractor={item => item.id.toString()}
-      />
+      <Button onPress={handleLoadCashList}>Load data from storage</Button>
+      {cashListContext.cashList.length === 0 && <Text>No cash flow.</Text>}
+      {cashListContext.cashList.length > 0 && (
+        <FlatList
+          style={{flex: 1}}
+          data={cashListContext.cashList}
+          renderItem={({item}) => (
+            <List.Item
+              title={`${item.amount}${
+                item.category ? ' - ' + item.category : ''
+              }`}
+              description={`${formatDate(new Date(item.date))}${
+                item.notes ? ' • ' + item.notes : ''
+              }`}
+              left={props => (
+                <View
+                  {...props}
+                  style={{
+                    width: 40,
+                    height: 40,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor:
+                      item.type === CashType.Out ? 'lightblue' : 'lightgreen',
+                    borderRadius: 16,
+                  }}>
+                  <Text>{item.type.toUpperCase()}</Text>
+                </View>
+              )}
+              style={{paddingHorizontal: 16}}
+              onPress={e => {
+                setSelectedCash(item);
+                setLongPressModalVisible(true);
+              }}
+            />
+          )}
+          keyExtractor={item => item.id.toString()}
+        />
+      )}
 
       <FAB
         icon="plus"
