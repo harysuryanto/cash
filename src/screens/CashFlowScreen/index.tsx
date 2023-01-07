@@ -25,6 +25,7 @@ const CashFlowScreen = () => {
   const theme = useTheme();
 
   const cashListContext = useContext(CashListContext);
+
   const [selectedCash, setSelectedCash] = useState<Cash | null>(null);
 
   const [cashAmount, setCashAmount] = useState('');
