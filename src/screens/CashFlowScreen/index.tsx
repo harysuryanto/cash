@@ -1,4 +1,4 @@
-import {useContext, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {Alert, FlatList, StyleSheet, View} from 'react-native';
 import {Cash, CashCategory, CashType} from '../../interfaces/cash';
 import {colors} from '../../utils/colors';
@@ -61,7 +61,7 @@ const CashFlowScreen = () => {
     setLongPressModalVisible(false);
   };
 
-  const handleLoadCashList = async () => {
+  const handleLoadCashListFromStorage = async () => {
     try {
       await AsyncStorage.getItem('cashList').then(value => {
         const savedCashList = JSON.parse(value ?? '[]') as Cash[];
@@ -82,12 +82,18 @@ const CashFlowScreen = () => {
     }
   };
 
+  useEffect(() => {
+    handleLoadCashListFromStorage();
+  }, []);
+
   return (
     <View style={[styles.container, {backgroundColor: theme.colors.surface}]}>
       <Appbar.Header>
         <Appbar.Content title="Cash Flow" />
       </Appbar.Header>
-      <Button onPress={handleLoadCashList}>Load data from storage</Button>
+      <Button onPress={handleLoadCashListFromStorage}>
+        Load data from storage
+      </Button>
       {cashListContext.cashList.length === 0 && <Text>No cash flow.</Text>}
       {cashListContext.cashList.length > 0 && (
         <FlatList
