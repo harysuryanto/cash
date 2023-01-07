@@ -92,9 +92,6 @@ const CashFlowScreen = () => {
       <Appbar.Header>
         <Appbar.Content title="Cash Flow" />
       </Appbar.Header>
-      <Button onPress={handleLoadCashListFromStorage}>
-        Load data from storage
-      </Button>
       {cashListContext.cashList.length === 0 && <Text>No cash flow.</Text>}
       {cashListContext.cashList.length > 0 && (
         <FlatList
