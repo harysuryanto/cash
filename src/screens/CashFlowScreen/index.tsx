@@ -33,10 +33,11 @@ const CashFlowScreen = () => {
     useState<CashCategory | null>();
   const [notes, setNotes] = useState('');
 
-  const [visible, setVisible] = useState(false);
+  const [isInEditMode, setIsInEditMode] = useState(false);
+  const [formModalVisible, setFormModalVisible] = useState(false);
   const [longPressModalVisible, setLongPressModalVisible] = useState(false);
 
-  const handleSubmit = () => {
+  const addCash = () => {
     cashListContext.addCash({
       id: uuidv4(),
       date: new Date().toISOString(),
@@ -45,24 +46,25 @@ const CashFlowScreen = () => {
       amount: Number.parseFloat(cashAmount),
       notes: notes,
     });
-
-    toggleBottomNavigationView();
-    setCashAmount('');
-    setSelectedType(CashType.In);
-    setSelectedCategory(CashCategory.BasicNeeds);
-    setNotes('');
   };
 
-  const toggleBottomNavigationView = () => {
-    setVisible(!visible);
+  const updateCash = () => {
+    cashListContext.updateCash({
+      id: selectedCash!.id,
+      date: selectedCash!.date,
+      type: selectedType!,
+      category: selectedCategory ?? null,
+      amount: Number.parseFloat(cashAmount),
+      notes: notes,
+    });
   };
 
-  const handleDeleteCash = () => {
+  const deleteCash = () => {
     cashListContext.deleteCash(selectedCash!.id);
     setLongPressModalVisible(false);
   };
 
-  const handleLoadCashListFromStorage = async () => {
+  const loadCashListFromStorage = async () => {
     try {
       await AsyncStorage.getItem('cashList').then(value => {
         const savedCashList = JSON.parse(value ?? '[]') as Cash[];
@@ -83,8 +85,48 @@ const CashFlowScreen = () => {
     }
   };
 
+  const cleanForm = () => {
+    setCashAmount('');
+    setSelectedType(CashType.In);
+    setSelectedCategory(CashCategory.BasicNeeds);
+    setNotes('');
+  };
+
+  const handleOpenAddForm = () => {
+    setIsInEditMode(false);
+    setFormModalVisible(true);
+  };
+
+  const handleOpenEditForm = () => {
+    setIsInEditMode(true);
+    setLongPressModalVisible(false);
+    setFormModalVisible(true);
+
+    setCashAmount(selectedCash!.amount.toString());
+    setSelectedType(selectedCash!.type);
+    if (selectedCash?.type === CashType.Out) {
+      setSelectedCategory(selectedCash!.category);
+    }
+    setNotes(selectedCash?.notes ?? '');
+  };
+
+  const handleCloseForm = () => {
+    cleanForm();
+    setFormModalVisible(false);
+  };
+
+  const handleSubmit = () => {
+    if (isInEditMode) {
+      updateCash();
+    } else {
+      addCash();
+    }
+    handleCloseForm();
+    cleanForm();
+  };
+
   useEffect(() => {
-    handleLoadCashListFromStorage();
+    loadCashListFromStorage();
   }, []);
 
   return (
@@ -133,7 +175,7 @@ const CashFlowScreen = () => {
 
       <FAB
         icon="plus"
-        onPress={toggleBottomNavigationView}
+        onPress={handleOpenAddForm}
         style={{position: 'absolute', right: 16, bottom: 16}}
       />
 
@@ -142,13 +184,15 @@ const CashFlowScreen = () => {
           visible={longPressModalVisible}
           onDismiss={() => setLongPressModalVisible(false)}>
           <Dialog.Content>
-            <Button onPress={() => {}}>Edit</Button>
-            <Button onPress={handleDeleteCash}>Delete</Button>
+            <Button onPress={handleOpenEditForm}>Edit</Button>
+            <Button onPress={deleteCash}>Delete</Button>
           </Dialog.Content>
         </Dialog>
-        <Dialog visible={visible} onDismiss={toggleBottomNavigationView}>
+        <Dialog visible={formModalVisible} onDismiss={handleCloseForm}>
           <Dialog.Content>
-            <Dialog.Title>Add Cash</Dialog.Title>
+            <Dialog.Title>
+              {isInEditMode ? 'Edit Cash' : 'Add Cash'}
+            </Dialog.Title>
             <Gap height={10} />
             <TextInput
               label="Amount"
@@ -204,7 +248,9 @@ const CashFlowScreen = () => {
                   selectedCategory !== undefined)) && (
                 <>
                   <Gap height={20} />
-                  <Button onPress={handleSubmit}>Save</Button>
+                  <Button onPress={handleSubmit}>
+                    {isInEditMode ? 'Update' : 'Save'}
+                  </Button>
                 </>
               )}
           </Dialog.Content>
