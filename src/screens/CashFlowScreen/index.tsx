@@ -69,9 +69,7 @@ const CashFlowScreen = () => {
     try {
       await AsyncStorage.getItem('cashList').then(value => {
         const savedCashList = JSON.parse(value ?? '[]') as Cash[];
-        if (savedCashList.length == 0) {
-          Alert.alert('', 'No data in storage.');
-        } else {
+        if (savedCashList.length !== 0) {
           const formatedCashList = savedCashList.map(value => {
             return {
               ...value,
