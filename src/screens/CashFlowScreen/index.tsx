@@ -28,8 +28,9 @@ const CashFlowScreen = () => {
   const [selectedCash, setSelectedCash] = useState<Cash | null>(null);
 
   const [cashAmount, setCashAmount] = useState('');
-  const [selectedType, setSelectedType] = useState<CashType>();
-  const [selectedCategory, setSelectedCategory] = useState<CashCategory>();
+  const [selectedType, setSelectedType] = useState<CashType>(CashType.In);
+  const [selectedCategory, setSelectedCategory] =
+    useState<CashCategory | null>();
   const [notes, setNotes] = useState('');
 
   const [visible, setVisible] = useState(false);
