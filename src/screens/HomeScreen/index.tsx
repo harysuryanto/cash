@@ -15,8 +15,11 @@ import {CashListContext} from '../../contexts/CashContext';
 import {Cash, CashType} from '../../interfaces/cash';
 import {formatCurrency} from '../../utils/utils/formatter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {TouchableRipple, useTheme} from 'react-native-paper';
 
 const HomeScreen = (props: any) => {
+  const theme = useTheme();
+
   const cashListContext = useContext(CashListContext);
 
   const getBalance = () => {
@@ -52,7 +55,8 @@ const HomeScreen = (props: any) => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[styles.container, {backgroundColor: theme.colors.surface}]}>
       <ScrollView>
         <AppBar />
         <View style={styles.balanceContainer}>
@@ -60,14 +64,15 @@ const HomeScreen = (props: any) => {
           <Text style={styles.title}>Balance</Text>
         </View>
         <View style={{flexDirection: 'row', marginHorizontal: 30}}>
-          <TouchableOpacity
-            style={{flex: 1}}
+          <TouchableRipple
+            borderless={true}
+            style={{flex: 1, borderRadius: 20}}
             onPress={() => props.navigation.navigate('CashFlowScreen')}>
             <MenuGridTile
               title="Track Cash Flow"
               faIcon={faMoneyBillTransfer}
             />
-          </TouchableOpacity>
+          </TouchableRipple>
         </View>
       </ScrollView>
     </SafeAreaView>
