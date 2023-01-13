@@ -1,12 +1,20 @@
 import {createContext, useEffect, useState} from 'react';
-import {Cash} from '../interfaces/cash';
+import {Cash, CashCategory, CashType} from '../interfaces/cash';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+interface CashProps {
+  type: CashType;
+  /** `category` must be null if `type: CashType.In` */
+  category: CashCategory | null;
+  amount: number;
+  notes?: string;
+}
 
 interface CashListContextValue {
   cashList: Cash[];
-  addCash: (value: Cash) => void;
+  addCash: (value: CashProps) => void;
   addCashAll: (value: Cash[]) => void;
-  updateCash: (value: Cash) => void;
+  updateCash: (value: CashProps) => void;
   deleteCash: (id: string) => void;
 }
 
@@ -25,8 +33,16 @@ type Props = {
 const CashListProvider = ({children}: Props) => {
   const [cashList, setCashList] = useState<Cash[]>([]);
 
-  const addCash = (cash: Cash) => {
-    setCashList([...cashList, cash]);
+  const addCash = (cash: CashProps) => {
+    const value = {
+      id: crypto.randomUUID(),
+      date: new Date().toISOString(),
+      amount: cash.amount,
+      type: cash.type,
+      category: cash.category,
+      notes: cash.notes,
+    } satisfies Cash;
+    setCashList([...cashList, value]);
   };
 
   const addCashAll = (newCashList: Cash[]) => {
@@ -34,8 +50,16 @@ const CashListProvider = ({children}: Props) => {
     console.log(`Successfully added ${newCashList.length} item(s)`);
   };
 
-  const updateCash = (cash: Cash) => {
-    setCashList(cashList.map(item => (item.id === cash.id ? cash : item)));
+  const updateCash = (cash: CashProps) => {
+    const value = {
+      id: crypto.randomUUID(),
+      date: new Date().toISOString(),
+      amount: cash.amount,
+      type: cash.type,
+      category: cash.category,
+      notes: cash.notes,
+    } satisfies Cash;
+    setCashList(cashList.map(item => (item.id === value.id ? value : item)));
   };
 
   const deleteCash = (id: string) => {
