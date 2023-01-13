@@ -5,48 +5,52 @@ const formatDate = (date: Date) => {
 };
 
 const formatDateRelatively = (date: Date) => {
-  let currentTime = new Date();
-  let past = date;
-
-  function daysDiff() {
-    let days = Math.ceil(
-      (past.getTime() - currentTime.getTime()) / 1000 / 60 / 60 / 24,
-    );
-    return days;
-  }
-
-  function hoursDiff() {
-    let expireTime = past;
-    let hours = Math.ceil(
-      (expireTime.getTime() - currentTime.getTime()) / 1000 / 60 / 60,
-    );
-    return hours;
-  }
-
-  function minutesDiff() {
+  try {
     let currentTime = new Date();
-    let expireTime = past;
-    let hours = Math.ceil(
-      (expireTime.getTime() - currentTime.getTime()) / 1000 / 60,
-    );
-    return hours;
-  }
+    let past = date;
 
-  const formatter = new Intl.RelativeTimeFormat('id', {
-    numeric: 'auto',
-  });
-
-  if (date.getDate() === new Date().getDate()) {
-    // "3 minutes ago"
-    if (date.getHours() === new Date().getHours()) {
-      return formatter.format(minutesDiff(), 'minutes');
-    } else {
-      // "3 hours ago"
-      return formatter.format(hoursDiff(), 'hours');
+    function daysDiff() {
+      let days = Math.ceil(
+        (past.getTime() - currentTime.getTime()) / 1000 / 60 / 60 / 24,
+      );
+      return days;
     }
-  } else {
-    // "3 days ago"
-    return formatter.format(daysDiff(), 'days');
+
+    function hoursDiff() {
+      let expireTime = past;
+      let hours = Math.ceil(
+        (expireTime.getTime() - currentTime.getTime()) / 1000 / 60 / 60,
+      );
+      return hours;
+    }
+
+    function minutesDiff() {
+      let currentTime = new Date();
+      let expireTime = past;
+      let hours = Math.ceil(
+        (expireTime.getTime() - currentTime.getTime()) / 1000 / 60,
+      );
+      return hours;
+    }
+
+    const formatter = new Intl.RelativeTimeFormat('id', {
+      numeric: 'auto',
+    });
+
+    if (date.getDate() === new Date().getDate()) {
+      // "3 minutes ago"
+      if (date.getHours() === new Date().getHours()) {
+        return formatter.format(minutesDiff(), 'minutes');
+      } else {
+        // "3 hours ago"
+        return formatter.format(hoursDiff(), 'hours');
+      }
+    } else {
+      // "3 days ago"
+      return formatter.format(daysDiff(), 'days');
+    }
+  } catch (error) {
+    return formatDate(date);
   }
 };
 
