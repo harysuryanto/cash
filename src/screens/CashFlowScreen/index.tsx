@@ -1,5 +1,5 @@
-import {useContext, useEffect, useState} from 'react';
-import {Alert, FlatList, StyleSheet, View} from 'react-native';
+import {useContext, useState} from 'react';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {Cash, CashCategory, CashType} from '../../interfaces/cash';
 import {colors} from '../../utils/colors';
 import {SelectList} from 'react-native-dropdown-select-list';
@@ -17,9 +17,10 @@ import {
   Text,
   useTheme,
 } from 'react-native-paper';
-import formatDate from '../../utils/utils/format_date';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {v4 as uuidv4} from 'uuid';
+import {
+  formatCurrency,
+  formatDateRelatively,
+} from '../../utils/utils/formatter';
 
 const CashFlowScreen = () => {
   const theme = useTheme();
@@ -40,22 +41,18 @@ const CashFlowScreen = () => {
 
   const addCash = () => {
     cashListContext.addCash({
-      id: uuidv4(),
-      date: new Date().toISOString(),
-      type: selectedType!,
-      category: selectedCategory ?? null,
       amount: Number.parseFloat(cashAmount),
+      category: selectedCategory ?? null,
+      type: selectedType,
       notes: notes,
     });
   };
 
   const updateCash = () => {
     cashListContext.updateCash({
-      id: selectedCash!.id,
-      date: selectedCash!.date,
+      amount: Number.parseFloat(cashAmount),
       type: selectedType!,
       category: selectedCategory ?? null,
-      amount: Number.parseFloat(cashAmount),
       notes: notes,
     });
   };
@@ -63,25 +60,6 @@ const CashFlowScreen = () => {
   const deleteCash = () => {
     cashListContext.deleteCash(selectedCash!.id);
     setLongPressModalVisible(false);
-  };
-
-  const loadCashListFromStorage = async () => {
-    try {
-      await AsyncStorage.getItem('cashList').then(value => {
-        const savedCashList = JSON.parse(value ?? '[]') as Cash[];
-        if (savedCashList.length !== 0) {
-          const formatedCashList = savedCashList.map(value => {
-            return {
-              ...value,
-              id: uuidv4(),
-            } satisfies Cash;
-          });
-          cashListContext.addCashAll(formatedCashList);
-        }
-      });
-    } catch (e) {
-      console.error('Gagal ngeload data', e);
-    }
   };
 
   const cleanForm = () => {
@@ -124,10 +102,6 @@ const CashFlowScreen = () => {
     cleanForm();
   };
 
-  useEffect(() => {
-    loadCashListFromStorage();
-  }, []);
-
   return (
     <View style={[styles.container, {backgroundColor: theme.colors.surface}]}>
       <Appbar.Header>
@@ -140,10 +114,10 @@ const CashFlowScreen = () => {
           data={cashListContext.cashList}
           renderItem={({item}) => (
             <List.Item
-              title={`${item.amount}${
+              title={`${formatCurrency(item.amount)}${
                 item.category ? ' - ' + item.category : ''
               }`}
-              description={`${formatDate(new Date(item.date))}${
+              description={`${formatDateRelatively(new Date(item.date))}${
                 item.notes ? ' • ' + item.notes : ''
               }`}
               left={props => (
