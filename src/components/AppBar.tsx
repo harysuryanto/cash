@@ -4,8 +4,8 @@ const AppBar = () => {
   return (
     <View style={styles.container}>
       <View style={styles.greetingContainer}>
-        <Text style={styles.greetingText}>Semoga harimu menyenangkan,</Text>
-        <Text style={styles.name}>Hary Suryanto</Text>
+        <Text style={styles.greetingText}>Have a great day,</Text>
+        <Text style={styles.name}>Hary! 🌞</Text>
       </View>
       <View style={styles.picture} />
     </View>

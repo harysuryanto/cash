@@ -57,14 +57,14 @@ const HomeScreen = (props: any) => {
         <AppBar />
         <View style={styles.balanceContainer}>
           <Text style={styles.balance}>{getBalance()}</Text>
-          <Text style={styles.title}>Saldo</Text>
+          <Text style={styles.title}>Balance</Text>
         </View>
         <View style={{flexDirection: 'row', marginHorizontal: 30}}>
           <TouchableOpacity
             style={{flex: 1}}
             onPress={() => props.navigation.navigate('CashFlowScreen')}>
             <MenuGridTile
-              title="Catat Aliran Uang"
+              title="Track Cash Flow"
               faIcon={faMoneyBillTransfer}
             />
           </TouchableOpacity>
