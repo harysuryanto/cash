@@ -1,6 +1,7 @@
 import {createContext, useEffect, useState} from 'react';
 import {Cash, CashCategory, CashType} from '../interfaces/cash';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {v4 as uuidv4} from 'uuid';
 
 interface CashProps {
   type: CashType;
@@ -35,7 +36,7 @@ const CashListProvider = ({children}: Props) => {
 
   const addCash = (cash: CashProps) => {
     const value = {
-      id: crypto.randomUUID(),
+      id: uuidv4(),
       date: new Date().toISOString(),
       amount: cash.amount,
       type: cash.type,
@@ -52,7 +53,7 @@ const CashListProvider = ({children}: Props) => {
 
   const updateCash = (cash: CashProps) => {
     const value = {
-      id: crypto.randomUUID(),
+      id: uuidv4(),
       date: new Date().toISOString(),
       amount: cash.amount,
       type: cash.type,
