@@ -16,6 +16,7 @@ import {Cash, CashType} from '../../interfaces/cash';
 import {formatCurrency} from '../../utils/utils/formatter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TouchableRipple, useTheme} from 'react-native-paper';
+import {v4 as uuidv4} from 'uuid';
 
 const HomeScreen = (props: any) => {
   const theme = useTheme();
@@ -37,15 +38,17 @@ const HomeScreen = (props: any) => {
     try {
       await AsyncStorage.getItem('cashList').then(value => {
         const savedCashList = JSON.parse(value ?? '[]') as Cash[];
-        if (savedCashList.length !== 0) {
-          const formatedCashList = savedCashList.map(value => {
-            return {
-              ...value,
-              id: crypto.randomUUID(),
-            } satisfies Cash;
-          });
-          cashListContext.addCashAll(formatedCashList);
-        }
+
+        // Prevent loading already loaded data
+        if (cashListContext.cashList.length !== 0) return;
+
+        const formatedCashList = savedCashList.map(value => {
+          return {
+            ...value,
+            id: uuidv4(),
+          } satisfies Cash;
+        });
+        cashListContext.addCashAll(formatedCashList);
       });
     } catch (e) {}
   };
