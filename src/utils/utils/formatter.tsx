@@ -51,12 +51,16 @@ const formatDateRelatively = (date: Date) => {
 };
 
 const formatCurrency = (currency: number) => {
-  const formatter = new Intl.NumberFormat(undefined, {
-    currency: 'IDR',
-    style: 'currency',
-    maximumFractionDigits: 0,
-  });
-  return formatter.format(currency);
+  try {
+    const formatter = new Intl.NumberFormat('id', {
+      currency: 'IDR',
+      style: 'currency',
+      maximumFractionDigits: 0,
+    });
+    return formatter.format(currency);
+  } catch (e) {
+    return `Rp ${currency}`;
+  }
 };
 
 export {formatDate, formatDateRelatively, formatCurrency};
