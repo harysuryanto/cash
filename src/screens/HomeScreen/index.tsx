@@ -94,7 +94,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 30,
     marginHorizontal: 30,
-    padding: 50,
+    paddingHorizontal: 10,
+    paddingVertical: 50,
   },
   balance: {
     fontSize: 36,
