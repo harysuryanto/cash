@@ -1,3 +1,5 @@
+import {faUserCircle} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {StyleSheet, Text, View} from 'react-native';
 
 const AppBar = () => {
@@ -7,7 +9,13 @@ const AppBar = () => {
         <Text style={styles.greetingText}>Have a great day,</Text>
         <Text style={styles.name}>Hary! 🌞</Text>
       </View>
-      <View style={styles.picture} />
+      <View style={styles.picture}>
+        <FontAwesomeIcon
+          icon={faUserCircle}
+          size={styles.picture.width}
+          color="#808e9b"
+        />
+      </View>
     </View>
   );
 };
@@ -28,7 +36,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   picture: {
-    backgroundColor: 'grey',
+    backgroundColor: '#d2dae2',
     borderRadius: 20,
     height: 40,
     width: 40,
