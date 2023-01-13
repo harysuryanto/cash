@@ -10,12 +10,15 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import AppBar from '../../components/AppBar';
 import {faMoneyBillTransfer} from '@fortawesome/free-solid-svg-icons';
 import {MenuGridTile} from './components/MenuGridTile';
-import {useContext} from 'react';
+import {useContext, useEffect} from 'react';
 import {CashListContext} from '../../contexts/CashContext';
-import {CashType} from '../../interfaces/cash';
+import {Cash, CashType} from '../../interfaces/cash';
+import {formatCurrency} from '../../utils/utils/formatter';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = (props: any) => {
   const cashListContext = useContext(CashListContext);
+
   const getBalance = () => {
     let cashList = cashListContext.cashList;
     let totalCashIn = cashList
@@ -24,15 +27,36 @@ const HomeScreen = (props: any) => {
     let totalCashOut = cashList
       .filter(cash => cash.type === CashType.Out)
       .reduce((sum, current) => sum + current.amount, 0);
-    return totalCashIn - totalCashOut;
+    return formatCurrency(totalCashIn - totalCashOut);
   };
+
+  const loadCashListFromStorage = async () => {
+    try {
+      await AsyncStorage.getItem('cashList').then(value => {
+        const savedCashList = JSON.parse(value ?? '[]') as Cash[];
+        if (savedCashList.length !== 0) {
+          const formatedCashList = savedCashList.map(value => {
+            return {
+              ...value,
+              id: crypto.randomUUID(),
+            } satisfies Cash;
+          });
+          cashListContext.addCashAll(formatedCashList);
+        }
+      });
+    } catch (e) {}
+  };
+
+  useEffect(() => {
+    loadCashListFromStorage();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <AppBar />
         <View style={styles.balanceContainer}>
-          <Text style={styles.balance}>{`Rp ${getBalance()}`}</Text>
+          <Text style={styles.balance}>{getBalance()}</Text>
           <Text style={styles.title}>Saldo</Text>
         </View>
         <View style={{flexDirection: 'row', marginHorizontal: 30}}>
