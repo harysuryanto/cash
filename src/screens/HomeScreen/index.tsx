@@ -53,8 +53,29 @@ const HomeScreen = (props: any) => {
     } catch (e) {}
   };
 
+  const reactToUpdates = async () => {
+    Updates.addListener(event => {
+      if (event.type === Updates.UpdateEventType.UPDATE_AVAILABLE) {
+        Alert.alert(
+          'Update available',
+          'Please restart your app to apply updates.',
+          [
+            {
+              text: 'Update',
+              onPress: () => Updates.reloadAsync(),
+            },
+            {
+              text: 'Not now',
+            },
+          ],
+        );
+      }
+    });
+  };
+
   useEffect(() => {
     loadCashListFromStorage();
+    reactToUpdates();
   }, []);
 
   return (
