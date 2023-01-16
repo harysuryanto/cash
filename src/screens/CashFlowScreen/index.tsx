@@ -28,7 +28,7 @@ const CashFlowScreen = () => {
 
   const [selectedCash, setSelectedCash] = useState<Cash | null>(null);
 
-  const [cashAmount, setCashAmount] = useState(0);
+  const [cashAmount, setCashAmount] = useState('');
   const [selectedType, setSelectedType] = useState<CashType>(CashType.In);
   const [selectedCategory, setSelectedCategory] = useState<
     CashCategory | undefined
@@ -41,7 +41,7 @@ const CashFlowScreen = () => {
 
   const addCash = () => {
     cashListContext.addCash({
-      amount: cashAmount,
+      amount: Number.parseInt(cashAmount),
       category: selectedCategory,
       type: selectedType,
       notes: notes,
@@ -50,7 +50,7 @@ const CashFlowScreen = () => {
 
   const updateCash = () => {
     cashListContext.updateCash({
-      amount: cashAmount,
+      amount: Number.parseInt(cashAmount),
       type: selectedType!,
       category: selectedCategory,
       notes: notes,
@@ -63,9 +63,9 @@ const CashFlowScreen = () => {
   };
 
   const cleanForm = () => {
-    setCashAmount(0);
+    setCashAmount('');
     setSelectedType(CashType.In);
-    setSelectedCategory(CashCategory.BasicNeeds);
+    setSelectedCategory(undefined);
     setNotes('');
   };
 
@@ -79,7 +79,7 @@ const CashFlowScreen = () => {
     setLongPressModalVisible(false);
     setFormModalVisible(true);
 
-    setCashAmount(selectedCash!.amount);
+    setCashAmount(selectedCash!.amount.toString());
     setSelectedType(selectedCash!.type);
     if (selectedCash?.type === CashType.Out) {
       setSelectedCategory(selectedCash!.category);
@@ -178,8 +178,8 @@ const CashFlowScreen = () => {
             <Gap height={10} />
             <TextInput
               label="Amount"
-              value={cashAmount.toString()}
-              onChangeText={text => setCashAmount(Number.parseInt(text))}
+              value={cashAmount}
+              onChangeText={text => setCashAmount(text)}
               keyboardType="number-pad"
               mode="outlined"
             />
@@ -224,7 +224,7 @@ const CashFlowScreen = () => {
               onChangeText={text => setNotes(text)}
               mode="outlined"
             />
-            {cashAmount !== 0 &&
+            {cashAmount !== '' &&
               (selectedType === CashType.In ||
                 (selectedType === CashType.Out &&
                   selectedCategory !== undefined)) && (
