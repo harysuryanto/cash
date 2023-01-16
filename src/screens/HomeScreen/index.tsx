@@ -1,10 +1,4 @@
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Alert, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {colors} from '../../utils/colors';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import AppBar from '../../components/AppBar';
@@ -17,6 +11,8 @@ import {formatCurrency} from '../../utils/utils/formatter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TouchableRipple, useTheme} from 'react-native-paper';
 import {v4 as uuidv4} from 'uuid';
+import Gap from '../../components/Gap';
+import * as Updates from 'expo-updates';
 
 const HomeScreen = (props: any) => {
   const theme = useTheme();
@@ -87,7 +83,15 @@ const HomeScreen = (props: any) => {
           <Text style={styles.balance}>{getBalance()}</Text>
           <Text style={styles.title}>Balance</Text>
         </View>
-        <View style={{flexDirection: 'row', marginHorizontal: 30}}>
+        <View style={styles.balanceContainer}>
+          <Text>Cash flow charts here.</Text>
+          <Text>Has 3 filters: All, Spending, and Earning.</Text>
+        </View>
+        <View style={styles.balanceContainer}>
+          <Text>Rp 89000</Text>
+          <Text>Most wasted money in a day</Text>
+        </View>
+        <View style={{flexDirection: 'row', paddingHorizontal: 30}}>
           <TouchableRipple
             borderless={true}
             style={{flex: 1, borderRadius: 20}}
@@ -98,6 +102,7 @@ const HomeScreen = (props: any) => {
             />
           </TouchableRipple>
         </View>
+        <Gap height={30} />
       </ScrollView>
     </SafeAreaView>
   );
