@@ -5,7 +5,6 @@ import {colors} from '../../utils/colors';
 import {SelectList} from 'react-native-dropdown-select-list';
 import Gap from '../../components/Gap';
 import {CashListContext} from '../../contexts/CashContext';
-import CashListTile from './components/CashListTile';
 import {
   FAB,
   Appbar,
@@ -31,8 +30,9 @@ const CashFlowScreen = () => {
 
   const [cashAmount, setCashAmount] = useState('');
   const [selectedType, setSelectedType] = useState<CashType>(CashType.In);
-  const [selectedCategory, setSelectedCategory] =
-    useState<CashCategory | null>();
+  const [selectedCategory, setSelectedCategory] = useState<
+    CashCategory | undefined
+  >();
   const [notes, setNotes] = useState('');
 
   const [isInEditMode, setIsInEditMode] = useState(false);
@@ -42,7 +42,7 @@ const CashFlowScreen = () => {
   const addCash = () => {
     cashListContext.addCash({
       amount: Number.parseFloat(cashAmount),
-      category: selectedCategory ?? null,
+      category: selectedCategory,
       type: selectedType,
       notes: notes,
     });
@@ -52,7 +52,7 @@ const CashFlowScreen = () => {
     cashListContext.updateCash({
       amount: Number.parseFloat(cashAmount),
       type: selectedType!,
-      category: selectedCategory ?? null,
+      category: selectedCategory,
       notes: notes,
     });
   };

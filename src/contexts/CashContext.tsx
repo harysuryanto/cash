@@ -3,21 +3,21 @@ import {Cash, CashCategory, CashType} from '../interfaces/cash';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {v4 as uuidv4} from 'uuid';
 
-interface CashProps {
+type CashProps = {
   type: CashType;
-  /** `category` must be null if `type: CashType.In` */
-  category: CashCategory | null;
+  /** `category` must be undefined if `type: CashType.In` */
+  category?: CashCategory;
   amount: number;
   notes?: string;
-}
+};
 
-interface CashListContextValue {
+type CashListContextValue = {
   cashList: Cash[];
   addCash: (value: CashProps) => void;
   addCashAll: (value: Cash[]) => void;
   updateCash: (value: CashProps) => void;
   deleteCash: (id: string) => void;
-}
+};
 
 const CashListContext = createContext<CashListContextValue>({
   cashList: [],

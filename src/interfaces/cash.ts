@@ -9,12 +9,12 @@ export enum CashType {
   Out = 'out',
 }
 
-export interface Cash {
+export type Cash = {
   id: string;
   date: string;
   type: CashType;
-  /** `category` must be null if `type: CashType.In` */
-  category: CashCategory | null;
+  /** `category` must be undefined if `type: CashType.In` */
+  category?: CashCategory;
   amount: number;
   notes?: string;
-}
+};
