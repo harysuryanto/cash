@@ -53,7 +53,7 @@ const HomeScreen = (props: any) => {
     } catch (e) {}
   };
 
-  const reactToUpdates = async () => {
+  const handleAppUpdates = async () => {
     Updates.addListener(event => {
       if (event.type === Updates.UpdateEventType.UPDATE_AVAILABLE) {
         Alert.alert(
@@ -75,7 +75,7 @@ const HomeScreen = (props: any) => {
 
   useEffect(() => {
     loadCashListFromStorage();
-    reactToUpdates();
+    handleAppUpdates();
   }, []);
 
   return (
