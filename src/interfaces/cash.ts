@@ -16,5 +16,5 @@ export type Cash = {
   /** `category` must be undefined if `type: CashType.In` */
   category?: CashCategory;
   amount: number;
-  notes?: string;
+  notes: string;
 };
