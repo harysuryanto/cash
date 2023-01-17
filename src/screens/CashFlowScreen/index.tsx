@@ -1,4 +1,4 @@
-import {useContext, useState} from 'react';
+import {useContext, useReducer, useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {Cash, CashCategory, CashType} from '../../interfaces/cash';
 import {colors} from '../../utils/colors';
@@ -21,6 +21,13 @@ import {
   formatDateRelatively,
 } from '../../utils/utils/formatter';
 
+interface Form {
+  amount: string;
+  type: CashType;
+  category?: CashCategory;
+  notes: string;
+}
+
 const CashFlowScreen = () => {
   const theme = useTheme();
 
@@ -28,12 +35,10 @@ const CashFlowScreen = () => {
 
   const [selectedCash, setSelectedCash] = useState<Cash | null>(null);
 
-  const [cashAmount, setCashAmount] = useState('');
-  const [selectedType, setSelectedType] = useState<CashType>(CashType.In);
-  const [selectedCategory, setSelectedCategory] = useState<
-    CashCategory | undefined
-  >();
-  const [notes, setNotes] = useState('');
+  const [form, updateForm] = useReducer<React.Reducer<Form, any>>(
+    (data, partialData) => ({...data, partialData}),
+    {amount: '', type: CashType.In, category: undefined, notes: ''},
+  );
 
   const [isInEditMode, setIsInEditMode] = useState(false);
   const [formModalVisible, setFormModalVisible] = useState(false);
@@ -41,19 +46,19 @@ const CashFlowScreen = () => {
 
   const addCash = () => {
     cashListContext.addCash({
-      amount: Number.parseInt(cashAmount),
-      category: selectedCategory,
-      type: selectedType,
-      notes: notes,
+      amount: Number.parseInt(form.amount),
+      category: form.category,
+      type: form.type,
+      notes: form.notes,
     });
   };
 
   const updateCash = () => {
     cashListContext.updateCash({
-      amount: Number.parseInt(cashAmount),
-      type: selectedType!,
-      category: selectedCategory,
-      notes: notes,
+      amount: Number.parseInt(form.amount),
+      type: form.type,
+      category: form.category,
+      notes: form.notes,
     });
   };
 
@@ -63,10 +68,12 @@ const CashFlowScreen = () => {
   };
 
   const cleanForm = () => {
-    setCashAmount('');
-    setSelectedType(CashType.In);
-    setSelectedCategory(undefined);
-    setNotes('');
+    updateForm({
+      amount: '',
+      type: CashType.In,
+      category: undefined,
+      notes: '',
+    });
   };
 
   const handleOpenAddForm = () => {
@@ -79,12 +86,12 @@ const CashFlowScreen = () => {
     setLongPressModalVisible(false);
     setFormModalVisible(true);
 
-    setCashAmount(selectedCash!.amount.toString());
-    setSelectedType(selectedCash!.type);
+    updateForm({amount: selectedCash!.amount.toString()});
+    updateForm({type: selectedCash!.type});
     if (selectedCash?.type === CashType.Out) {
-      setSelectedCategory(selectedCash!.category);
+      updateForm({category: selectedCash!.category});
     }
-    setNotes(selectedCash?.notes ?? '');
+    updateForm({notes: selectedCash!.notes});
   };
 
   const handleCloseForm = () => {
@@ -178,8 +185,8 @@ const CashFlowScreen = () => {
             <Gap height={10} />
             <TextInput
               label="Amount"
-              value={cashAmount}
-              onChangeText={text => setCashAmount(text)}
+              value={form.amount}
+              onChangeText={text => updateForm({amount: text})}
               keyboardType="number-pad"
               mode="outlined"
             />
@@ -187,31 +194,33 @@ const CashFlowScreen = () => {
             <SelectList
               placeholder="Type"
               defaultOption={{
-                key: selectedType,
-                value: selectedType,
+                key: form.type,
+                value: form.type,
               }}
               data={[
                 {key: CashType.In, value: 'In'},
                 {key: CashType.Out, value: 'Out'},
               ]}
-              setSelected={setSelectedType}
+              setSelected={(value: CashType) => updateForm({type: value})}
               save="key"
             />
-            {selectedType === CashType.Out && (
+            {form.type === CashType.Out && (
               <>
                 <Gap height={10} />
                 <SelectList
                   placeholder="Category"
                   defaultOption={{
-                    key: selectedCategory,
-                    value: selectedCategory,
+                    key: form.category,
+                    value: form.category,
                   }}
                   data={[
                     {key: 'basic needs', value: 'Basic needs'},
                     {key: 'desire', value: 'Desire'},
                     {key: 'investment', value: 'Investment'},
                   ]}
-                  setSelected={setSelectedCategory}
+                  setSelected={(value: CashCategory) =>
+                    updateForm({category: value})
+                  }
                   save="key"
                 />
               </>
@@ -219,15 +228,15 @@ const CashFlowScreen = () => {
             <Gap height={10} />
             <TextInput
               label="Notes (optional)"
-              value={notes}
+              value={form.notes}
               numberOfLines={3}
-              onChangeText={text => setNotes(text)}
+              onChangeText={value => updateForm({notes: value})}
               mode="outlined"
             />
-            {cashAmount !== '' &&
-              (selectedType === CashType.In ||
-                (selectedType === CashType.Out &&
-                  selectedCategory !== undefined)) && (
+            {form.amount !== '' &&
+              (form.type === CashType.In ||
+                (form.type === CashType.Out &&
+                  form.category !== undefined)) && (
                 <>
                   <Gap height={20} />
                   <Button onPress={handleSubmit}>
