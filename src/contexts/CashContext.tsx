@@ -4,11 +4,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {v4 as uuidv4} from 'uuid';
 
 type CashProps = {
+  /** `id` must be non-undefined in edit mode */
+  id?: string;
   type: CashType;
   /** `category` must be undefined if `type: CashType.In` */
   category?: CashCategory;
   amount: number;
-  notes?: string;
+  notes: string;
 };
 
 type CashListContextValue = {
@@ -53,7 +55,7 @@ const CashListProvider = ({children}: Props) => {
 
   const updateCash = (cash: CashProps) => {
     const value = {
-      id: uuidv4(),
+      id: cash.id!,
       date: new Date().toISOString(),
       amount: cash.amount,
       type: cash.type,
@@ -71,10 +73,10 @@ const CashListProvider = ({children}: Props) => {
     if (cashList.length === 0) return;
 
     try {
-      console.log('Menyimpan data...', JSON.stringify(cashList));
+      console.log('Saving data...');
       await AsyncStorage.setItem('cashList', JSON.stringify(cashList));
     } catch (e) {
-      console.warn('Gagal nyimpen data', e);
+      console.warn('Failed saving data!', e);
     }
   };
 

@@ -33,11 +33,14 @@ const CashFlowScreen = () => {
 
   const cashListContext = useContext(CashListContext);
 
-  const [selectedCash, setSelectedCash] = useState<Cash | null>(null);
+  const [selectedCash, setSelectedCash] = useState<Cash | undefined>();
 
   const [form, updateForm] = useReducer<
     React.Reducer<
       Form,
+      | {
+          id?: number;
+        }
       | {
           amount: string;
         }
@@ -73,6 +76,7 @@ const CashFlowScreen = () => {
 
   const updateCash = () => {
     cashListContext.updateCash({
+      id: selectedCash!.id,
       amount: Number.parseInt(form.amount),
       type: form.type,
       category: form.category,
@@ -116,6 +120,7 @@ const CashFlowScreen = () => {
   };
 
   const handleCloseForm = () => {
+    setSelectedCash(undefined);
     cleanForm();
     setFormModalVisible(false);
   };
