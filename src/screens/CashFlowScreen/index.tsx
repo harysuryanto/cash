@@ -35,10 +35,28 @@ const CashFlowScreen = () => {
 
   const [selectedCash, setSelectedCash] = useState<Cash | null>(null);
 
-  const [form, updateForm] = useReducer<React.Reducer<Form, any>>(
-    (data, partialData) => ({...data, partialData}),
-    {amount: '', type: CashType.In, category: undefined, notes: ''},
-  );
+  const [form, updateForm] = useReducer<
+    React.Reducer<
+      Form,
+      | {
+          amount: string;
+        }
+      | {
+          type: CashType;
+        }
+      | {
+          category?: CashCategory;
+        }
+      | {
+          notes: string;
+        }
+    >
+  >((data, partialData) => ({...data, ...partialData}), {
+    amount: '',
+    type: CashType.In,
+    category: undefined,
+    notes: '',
+  });
 
   const [isInEditMode, setIsInEditMode] = useState(false);
   const [formModalVisible, setFormModalVisible] = useState(false);
@@ -86,12 +104,15 @@ const CashFlowScreen = () => {
     setLongPressModalVisible(false);
     setFormModalVisible(true);
 
-    updateForm({amount: selectedCash!.amount.toString()});
-    updateForm({type: selectedCash!.type});
-    if (selectedCash?.type === CashType.Out) {
-      updateForm({category: selectedCash!.category});
-    }
-    updateForm({notes: selectedCash!.notes});
+    updateForm({
+      amount: selectedCash!.amount.toString(),
+      type: selectedCash!.type,
+      category:
+        selectedCash?.type === CashType.Out
+          ? selectedCash!.category
+          : undefined,
+      notes: selectedCash!.notes,
+    });
   };
 
   const handleCloseForm = () => {
