@@ -1,17 +1,17 @@
-import {Alert, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {useContext, useEffect} from 'react';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {colors} from '../../utils/colors';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import AppBar from '../../components/AppBar';
 import {faMoneyBillTransfer} from '@fortawesome/free-solid-svg-icons';
 import {MenuGridTile} from './components/MenuGridTile';
-import {useContext, useEffect} from 'react';
 import {CashListContext} from '../../contexts/CashContext';
 import {Cash, CashType} from '../../interfaces/cash';
 import {formatCurrency} from '../../utils/utils/formatter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TouchableRipple, useTheme} from 'react-native-paper';
-import {v4 as uuidv4} from 'uuid';
 import Gap from '../../components/Gap';
+import {nanoid} from 'nanoid';
 // import * as Updates from 'expo-updates';
 
 const HomeScreen = (props: any) => {
@@ -41,7 +41,7 @@ const HomeScreen = (props: any) => {
         const formatedCashList = savedCashList.map(value => {
           return {
             ...value,
-            id: uuidv4(),
+            id: nanoid(),
           } satisfies Cash;
         });
         cashListContext.addCashAll(formatedCashList);

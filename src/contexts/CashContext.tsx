@@ -1,7 +1,7 @@
 import {createContext, useEffect, useState} from 'react';
 import {Cash, CashCategory, CashType} from '../interfaces/cash';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {v4 as uuidv4} from 'uuid';
+import {nanoid} from 'nanoid';
 
 type CashProps = {
   /** `id` must be non-undefined in edit mode */
@@ -38,7 +38,7 @@ const CashListProvider = ({children}: Props) => {
 
   const addCash = (cash: CashProps) => {
     const value = {
-      id: uuidv4(),
+      id: nanoid(),
       date: new Date().toISOString(),
       amount: cash.amount,
       type: cash.type,
