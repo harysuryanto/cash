@@ -1,10 +1,10 @@
-import {NavigationContainer} from '@react-navigation/native';
+import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {CashListProvider} from './src/contexts/CashContext';
-import Router from './src/router';
+import {CashListProvider} from './contexts/CashContext';
+import Router from './router';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {StatusBar} from 'expo-status-bar';
-import theme from './src/utils/themes';
+import theme from './utils/themes';
 
 export default function App() {
   return (
