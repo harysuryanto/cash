@@ -67,7 +67,7 @@ const CashFlowScreen = () => {
 
   const addCash = () => {
     cashListContext.addCash({
-      amount: Number.parseInt(form.amount),
+      amount: parseInt(form.amount, 10),
       category: form.category,
       type: form.type,
       notes: form.notes,
@@ -77,7 +77,7 @@ const CashFlowScreen = () => {
   const updateCash = () => {
     cashListContext.updateCash({
       id: selectedCash!.id,
-      amount: Number.parseInt(form.amount),
+      amount: parseInt(form.amount, 10),
       type: form.type,
       category: form.category,
       notes: form.notes,
