@@ -12,7 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TouchableRipple, useTheme} from 'react-native-paper';
 import {v4 as uuidv4} from 'uuid';
 import Gap from '../../components/Gap';
-import * as Updates from 'expo-updates';
+// import * as Updates from 'expo-updates';
 
 const HomeScreen = (props: any) => {
   const theme = useTheme();
@@ -49,29 +49,30 @@ const HomeScreen = (props: any) => {
     } catch (e) {}
   };
 
-  const handleAppUpdates = async () => {
-    Updates.addListener(event => {
-      if (event.type === Updates.UpdateEventType.UPDATE_AVAILABLE) {
-        Alert.alert(
-          'Update available',
-          'Please restart your app to apply updates.',
-          [
-            {
-              text: 'Update',
-              onPress: () => Updates.reloadAsync(),
-            },
-            {
-              text: 'Not now',
-            },
-          ],
-        );
-      }
-    });
-  };
+  // TODO: Temporarily disabled until migration is completed
+  // const handleAppUpdates = async () => {
+  //   Updates.addListener(event => {
+  //     if (event.type === Updates.UpdateEventType.UPDATE_AVAILABLE) {
+  //       Alert.alert(
+  //         'Update available',
+  //         'Please restart your app to apply updates.',
+  //         [
+  //           {
+  //             text: 'Update',
+  //             onPress: () => Updates.reloadAsync(),
+  //           },
+  //           {
+  //             text: 'Not now',
+  //           },
+  //         ],
+  //       );
+  //     }
+  //   });
+  // };
 
   useEffect(() => {
     loadCashListFromStorage();
-    handleAppUpdates();
+    // handleAppUpdates();
   }, []);
 
   return (

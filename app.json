@@ -1,41 +1,4 @@
 {
-  "expo": {
-    "name": "cash",
-    "slug": "cash",
-    "version": "1.0.1",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 60000,
-      "url": "https://u.expo.dev/4d491cde-a25d-41cc-8cf0-4304256de998"
-    },
-    "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      },
-      "package": "id.harysuryanto.cash"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "4d491cde-a25d-41cc-8cf0-4304256de998"
-      }
-    },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    }
-  }
+  "name": "cash",
+  "displayName": "cash"
 }
