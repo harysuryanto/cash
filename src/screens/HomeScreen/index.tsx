@@ -11,7 +11,7 @@ import {formatCurrency} from '../../utils/utils/formatter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TouchableRipple, useTheme} from 'react-native-paper';
 import Gap from '../../components/Gap';
-import {nanoid} from 'nanoid';
+import uuid from 'react-native-uuid';
 // import * as Updates from 'expo-updates';
 
 const HomeScreen = (props: any) => {
@@ -41,7 +41,7 @@ const HomeScreen = (props: any) => {
         const formatedCashList = savedCashList.map(value => {
           return {
             ...value,
-            id: nanoid(),
+            id: uuid.v4().toString(),
           } satisfies Cash;
         });
         cashListContext.addCashAll(formatedCashList);
