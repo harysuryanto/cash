@@ -20,6 +20,13 @@ import {
   formatCurrency,
   formatDateRelatively,
 } from '../../utils/utils/formatter';
+import Tab from '../../components/Tab';
+
+enum Tabs {
+  all,
+  in,
+  out,
+}
 
 interface Form {
   amount: string;
@@ -31,7 +38,22 @@ interface Form {
 const CashFlowScreen = () => {
   const theme = useTheme();
 
+  const [selectedTab, setSelectedTab] = useState(Tabs.all);
+  const [isInEditMode, setIsInEditMode] = useState(false);
+  const [formModalVisible, setFormModalVisible] = useState(false);
+  const [longPressModalVisible, setLongPressModalVisible] = useState(false);
+
   const cashListContext = useContext(CashListContext);
+  const filteredCashList =
+    selectedTab === Tabs.all
+      ? cashListContext.cashList
+      : cashListContext.cashList.filter(cash => {
+          if (selectedTab === Tabs.in) {
+            return cash.type === CashType.In;
+          } else {
+            return cash.type === CashType.Out;
+          }
+        });
 
   const [selectedCash, setSelectedCash] = useState<Cash | undefined>();
 
@@ -61,10 +83,6 @@ const CashFlowScreen = () => {
     notes: '',
   });
 
-  const [isInEditMode, setIsInEditMode] = useState(false);
-  const [formModalVisible, setFormModalVisible] = useState(false);
-  const [longPressModalVisible, setLongPressModalVisible] = useState(false);
-
   const addCash = () => {
     cashListContext.addCash({
       amount: parseInt(form.amount, 10),
@@ -89,13 +107,8 @@ const CashFlowScreen = () => {
     setLongPressModalVisible(false);
   };
 
-  const cleanForm = () => {
-    updateForm({
-      amount: '',
-      type: CashType.In,
-      category: undefined,
-      notes: '',
-    });
+  const handleSelectTab = (value: Tabs) => {
+    setSelectedTab(value);
   };
 
   const handleOpenAddForm = () => {
@@ -125,6 +138,15 @@ const CashFlowScreen = () => {
     setFormModalVisible(false);
   };
 
+  const cleanForm = () => {
+    updateForm({
+      amount: '',
+      type: CashType.In,
+      category: undefined,
+      notes: '',
+    });
+  };
+
   const handleSubmit = () => {
     if (isInEditMode) {
       updateCash();
@@ -140,13 +162,30 @@ const CashFlowScreen = () => {
       <Appbar.Header>
         <Appbar.Content title="Cash Flow" />
       </Appbar.Header>
-      {cashListContext.cashList.length === 0 && (
+      <View style={{flexDirection: 'row'}}>
+        <Tab
+          title="All"
+          isActive={selectedTab === Tabs.all}
+          onPress={() => handleSelectTab(Tabs.all)}
+        />
+        <Tab
+          title="In"
+          isActive={selectedTab === Tabs.in}
+          onPress={() => handleSelectTab(Tabs.in)}
+        />
+        <Tab
+          title="Out"
+          isActive={selectedTab === Tabs.out}
+          onPress={() => handleSelectTab(Tabs.out)}
+        />
+      </View>
+      {filteredCashList.length === 0 && (
         <Text style={styles.noDataText}>No cash flow.</Text>
       )}
       {cashListContext.cashList.length > 0 && (
         <FlatList
           style={{flex: 1}}
-          data={cashListContext.cashList}
+          data={filteredCashList}
           renderItem={({item}) => (
             <List.Item
               title={`${formatCurrency(item.amount)}${
