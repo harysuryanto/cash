@@ -141,14 +141,7 @@ const CashFlowScreen = () => {
         <Appbar.Content title="Cash Flow" />
       </Appbar.Header>
       {cashListContext.cashList.length === 0 && (
-        <Text
-          style={{
-            flex: 1,
-            textAlign: 'center',
-            textAlignVertical: 'center',
-          }}>
-          No cash flow.
-        </Text>
+        <Text style={styles.noDataText}>No cash flow.</Text>
       )}
       {cashListContext.cashList.length > 0 && (
         <FlatList
@@ -296,6 +289,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 14,
+  },
+  noDataText: {
+    flex: 1,
+    textAlign: 'center',
+    textAlignVertical: 'center',
   },
   bottomNavigationView: {
     backgroundColor: '#fff',
