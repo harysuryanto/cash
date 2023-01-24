@@ -25,7 +25,6 @@ const formatDateRelatively = (date: Date) => {
     }
 
     function minutesDiff() {
-      let currentTime = new Date();
       let expireTime = past;
       let hours = Math.ceil(
         (expireTime.getTime() - currentTime.getTime()) / 1000 / 60,
