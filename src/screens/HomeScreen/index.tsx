@@ -1,5 +1,5 @@
 import {faMoneyBillTransfer} from '@fortawesome/free-solid-svg-icons';
-import AsyncStorage from '@react-native-async-storage/sync-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import {useContext, useEffect} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
