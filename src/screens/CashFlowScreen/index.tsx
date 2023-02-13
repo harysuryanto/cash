@@ -1,4 +1,4 @@
-import {useContext, useReducer, useState} from 'react';
+import React, {useContext, useReducer, useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {Cash, CashCategory, CashType} from '../../interfaces/cash';
 import {colors} from '../../utils/colors';
@@ -21,7 +21,7 @@ import {
   formatDateRelatively,
 } from '../../utils/utils/formatter';
 import Tab from '../../components/Tab';
-import {useNavigation, useLinkTo} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 enum Tabs {
   all,
