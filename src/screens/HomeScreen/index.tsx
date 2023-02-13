@@ -12,10 +12,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TouchableRipple, useTheme} from 'react-native-paper';
 import Gap from '../../components/Gap';
 import uuid from 'react-native-uuid';
+import {useNavigation} from '@react-navigation/core';
 // import * as Updates from 'expo-updates';
 
-const HomeScreen = (props: any) => {
+const HomeScreen = () => {
   const theme = useTheme();
+  const navigation = useNavigation();
 
   const cashListContext = useContext(CashListContext);
 
@@ -96,7 +98,7 @@ const HomeScreen = (props: any) => {
           <TouchableRipple
             borderless={true}
             style={{flex: 1, borderRadius: 20}}
-            onPress={() => props.navigation.navigate('CashFlowScreen')}>
+            onPress={() => navigation.navigate('CashFlowScreen')}>
             <MenuGridTile
               title="Track Cash Flow"
               faIcon={faMoneyBillTransfer}

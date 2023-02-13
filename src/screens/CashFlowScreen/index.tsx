@@ -21,6 +21,7 @@ import {
   formatDateRelatively,
 } from '../../utils/utils/formatter';
 import Tab from '../../components/Tab';
+import {useNavigation} from '@react-navigation/core';
 
 enum Tabs {
   all,
@@ -37,6 +38,7 @@ interface Form {
 
 const CashFlowScreen = () => {
   const theme = useTheme();
+  const navigation = useNavigation();
 
   const [selectedTab, setSelectedTab] = useState(Tabs.all);
   const [isInEditMode, setIsInEditMode] = useState(false);
@@ -160,6 +162,7 @@ const CashFlowScreen = () => {
   return (
     <View style={[styles.container, {backgroundColor: theme.colors.surface}]}>
       <Appbar.Header>
+        <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Cash Flow" />
       </Appbar.Header>
       <View style={{flexDirection: 'row'}}>
@@ -210,7 +213,7 @@ const CashFlowScreen = () => {
                 </View>
               )}
               style={{paddingHorizontal: 16}}
-              onPress={e => {
+              onPress={_ => {
                 setSelectedCash(item);
                 setLongPressModalVisible(true);
               }}
