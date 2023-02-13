@@ -1,27 +1,27 @@
-import React, {useContext, useReducer, useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {useContext, useReducer, useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
-import {Cash, CashCategory, CashType} from '../../interfaces/cash';
-import {colors} from '../../utils/colors';
 import {SelectList} from 'react-native-dropdown-select-list';
-import Gap from '../../components/Gap';
-import {CashListContext} from '../../contexts/CashContext';
 import {
-  FAB,
   Appbar,
+  Button,
+  Dialog,
+  FAB,
   List,
   Portal,
-  Dialog,
-  Button,
-  TextInput,
   Text,
+  TextInput,
   useTheme,
 } from 'react-native-paper';
+import Gap from '../../components/Gap';
+import Tab from '../../components/Tab';
+import {CashListContext} from '../../contexts/CashContext';
+import {Cash, CashCategory, CashType} from '../../interfaces/cash';
+import {colors} from '../../utils/colors';
 import {
   formatCurrency,
   formatDateRelatively,
 } from '../../utils/utils/formatter';
-import Tab from '../../components/Tab';
-import {useNavigation} from '@react-navigation/native';
 
 enum Tabs {
   all,

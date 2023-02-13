@@ -1,18 +1,18 @@
+import {faMoneyBillTransfer} from '@fortawesome/free-solid-svg-icons';
+import AsyncStorage from '@react-native-async-storage/sync-storage';
+import {useNavigation} from '@react-navigation/native';
 import {useContext, useEffect} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import {colors} from '../../utils/colors';
+import {TouchableRipple, useTheme} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import uuid from 'react-native-uuid';
 import AppBar from '../../components/AppBar';
-import {faMoneyBillTransfer} from '@fortawesome/free-solid-svg-icons';
-import {MenuGridTile} from './components/MenuGridTile';
+import Gap from '../../components/Gap';
 import {CashListContext} from '../../contexts/CashContext';
 import {Cash, CashType} from '../../interfaces/cash';
+import {colors} from '../../utils/colors';
 import {formatCurrency} from '../../utils/utils/formatter';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {TouchableRipple, useTheme} from 'react-native-paper';
-import Gap from '../../components/Gap';
-import uuid from 'react-native-uuid';
-import {useNavigation} from '@react-navigation/native';
+import {MenuGridTile} from './components/MenuGridTile';
 // import * as Updates from 'expo-updates';
 
 const HomeScreen = () => {
@@ -34,7 +34,7 @@ const HomeScreen = () => {
 
   const loadCashListFromStorage = async () => {
     try {
-      await AsyncStorage.getItem('cashList').then(value => {
+      await AsyncStorage.getItem('cashList').then((value: any) => {
         const savedCashList = JSON.parse(value ?? '[]') as Cash[];
 
         // Prevent loading already loaded data
