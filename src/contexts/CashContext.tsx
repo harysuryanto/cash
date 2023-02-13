@@ -1,7 +1,7 @@
-import {createContext, useEffect, useState} from 'react';
-import {Cash, CashCategory, CashType} from '../interfaces/cash';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {createContext, useEffect, useState} from 'react';
 import uuid from 'react-native-uuid';
+import {Cash, CashCategory, CashType} from '../interfaces/cash';
 
 type CashProps = {
   /** `id` must be non-undefined in edit mode */
@@ -50,7 +50,6 @@ const CashListProvider = ({children}: Props) => {
 
   const addCashAll = (newCashList: Cash[]) => {
     setCashList([...cashList, ...newCashList]);
-    console.log(`Successfully added ${newCashList.length} item(s)`);
   };
 
   const updateCash = (cash: CashProps) => {
@@ -73,7 +72,6 @@ const CashListProvider = ({children}: Props) => {
     if (cashList.length === 0) return;
 
     try {
-      console.log('Saving data...');
       await AsyncStorage.setItem('cashList', JSON.stringify(cashList));
     } catch (e) {
       console.warn('Failed saving data!', e);
