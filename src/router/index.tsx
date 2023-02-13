@@ -24,11 +24,9 @@ const Router = () => {
         <Stack.Screen
           name="CashFlowScreen"
           component={CashFlowScreen}
-          options={
-            {
-              // headerShown: false,
-            }
-          }
+          options={{
+            headerShown: false,
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
