@@ -12,7 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TouchableRipple, useTheme} from 'react-native-paper';
 import Gap from '../../components/Gap';
 import uuid from 'react-native-uuid';
-import {useNavigation} from '@react-navigation/core';
+import {useNavigation} from '@react-navigation/native';
 // import * as Updates from 'expo-updates';
 
 const HomeScreen = () => {

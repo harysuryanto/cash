@@ -21,7 +21,7 @@ import {
   formatDateRelatively,
 } from '../../utils/utils/formatter';
 import Tab from '../../components/Tab';
-import {useNavigation} from '@react-navigation/core';
+import {useNavigation, useLinkTo} from '@react-navigation/native';
 
 enum Tabs {
   all,
