@@ -166,6 +166,11 @@ const HomeScreen = () => {
     return [highestMonth, highestAmount];
   };
 
+  const getAppVersion = (): string => {
+    const packageJson = require('../../../package.json');
+    return packageJson.version;
+  };
+
   useEffect(() => {
     loadCashListFromStorage();
     // handleAppUpdates();
@@ -214,6 +219,10 @@ const HomeScreen = () => {
             />
           </TouchableRipple>
         </View>
+        <Gap height={30} />
+        <Text style={{width: '100%', textAlign: 'center'}}>
+          v{getAppVersion()}
+        </Text>
         <Gap height={30} />
       </ScrollView>
     </SafeAreaView>
