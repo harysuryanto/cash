@@ -11,7 +11,7 @@ import Gap from '../../components/Gap';
 import {CashListContext} from '../../contexts/CashContext';
 import {Cash, CashType} from '../../interfaces/cash';
 import {colors} from '../../utils/colors';
-import {formatCurrency} from '../../utils/utils/formatter';
+import {formatCurrency, formatDate} from '../../utils/utils/formatter';
 import {MenuGridTile} from './components/MenuGridTile';
 // import * as Updates from 'expo-updates';
 
@@ -72,6 +72,100 @@ const HomeScreen = () => {
   //   });
   // };
 
+  // const getAverageSpendingPermonthPrediction = (cashList: Cash[]): number => {
+  //   if (cashList.length === 0) return 0;
+
+  //   const spendingsLast12Months = cashList
+  //     .filter(({type}) => type === CashType.Out)
+  //     .reduce((_previousValue, currentValue, _currentIndex, cashList) => {
+  //       const now = new Date();
+  //       const date = new Date(currentValue.date);
+  //       const aYear = 365;
+
+  //       function daysDiff() {
+  //         let days = Math.ceil(
+  //           (date.getTime() - now.getTime()) / 1000 / 60 / 60 / 24,
+  //         );
+  //         return days;
+  //       }
+
+  //       if (daysDiff() < aYear) {
+  //         // cashList.push(currentValue);
+  //         return currentValue;
+  //       }
+  //     }, []);
+
+  //   const sum = spendingsLast12Months
+  //     .map(value => value.amount)
+  //     .reduce((accumulator, currentValue) => accumulator + currentValue);
+
+  //   const months = new Set(
+  //     spendingsLast12Months.map(({date}) => {
+  //       const month = new Date(date).getMonth();
+  //       return month;
+  //     }),
+  //   ).size;
+
+  //   return sum / months;
+  // };
+
+  const groupCashListByMonth = (): string => {
+    const cashList = cashListContext.cashList.map(
+      (cash, index) => `${index + 1} — ${formatDate(new Date(cash.date))}`,
+    );
+
+    return cashList.join('\n').toString();
+  };
+
+  const groupByMonth = (): {[month: string]: Cash[]} => {
+    const groups: {[month: string]: Cash[]} = {};
+
+    for (const transaction of cashListContext.cashList) {
+      const month = new Date(transaction.date).toLocaleString('default', {
+        month: 'long',
+        year: 'numeric',
+      });
+      if (!groups[month]) {
+        groups[month] = [];
+      }
+      groups[month].push(transaction);
+    }
+
+    return groups;
+  };
+
+  const getSpendingPermonth = (): {[month: string]: number} => {
+    const sums: {[month: string]: number} = {};
+
+    for (const transaction of cashListContext.cashList) {
+      const month = new Date(transaction.date).toLocaleString('default', {
+        month: 'long',
+        year: 'numeric',
+      });
+      if (!sums[month]) {
+        sums[month] = 0;
+      }
+      if (transaction.type === CashType.Out) {
+        sums[month] += transaction.amount;
+      }
+    }
+
+    return sums;
+  };
+
+  const getHighestSpending = (): [string, number] => {
+    const groups = getSpendingPermonth();
+    let highestMonth: string = '';
+    let highestAmount: number = -Infinity;
+    for (const month in groups) {
+      if (groups[month] > highestAmount) {
+        highestMonth = month;
+        highestAmount = groups[month];
+      }
+    }
+    return [highestMonth, highestAmount];
+  };
+
   useEffect(() => {
     loadCashListFromStorage();
     // handleAppUpdates();
@@ -87,12 +181,27 @@ const HomeScreen = () => {
           <Text style={styles.title}>Balance</Text>
         </View>
         <View style={styles.balanceContainer}>
+          <Text>
+            Prediksi pengeluaran bulan depan berdasarkan rata-rata pengeluaran
+            perbulan dalam 12 bulan terakhir
+          </Text>
+          <Text>
+            {groupCashListByMonth()}
+            {/* {formatCurrency(
+              // getAverageSpendingPermonthPrediction(cashListContext.cashList),
+              69000,
+            )} */}
+          </Text>
+        </View>
+        <View style={styles.balanceContainer}>
           <Text>Cash flow charts here.</Text>
           <Text>Has 3 filters: All, Spending, and Earning.</Text>
         </View>
         <View style={styles.balanceContainer}>
-          <Text>Rp 89000</Text>
-          <Text>Most wasted money in a day</Text>
+          <Text>{formatCurrency(getHighestSpending()[1])}</Text>
+          <Text>
+            Highest spending of all time is in {getHighestSpending()[0]}
+          </Text>
         </View>
         <View style={{flexDirection: 'row', paddingHorizontal: 30}}>
           <TouchableRipple
