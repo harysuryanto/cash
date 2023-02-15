@@ -181,11 +181,11 @@ const HomeScreen = () => {
       style={[styles.container, {backgroundColor: theme.colors.surface}]}>
       <ScrollView>
         <AppBar />
-        <View style={styles.balanceContainer}>
-          <Text style={styles.balance}>{getBalance()}</Text>
-          <Text style={styles.title}>Balance</Text>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.sectionContent}>{getBalance()}</Text>
+          <Text style={styles.sectionTitle}>Balance</Text>
         </View>
-        <View style={styles.balanceContainer}>
+        <View style={styles.sectionContainer}>
           <Text>
             Prediksi pengeluaran bulan depan berdasarkan rata-rata pengeluaran
             perbulan dalam 12 bulan terakhir
@@ -198,14 +198,14 @@ const HomeScreen = () => {
             )} */}
           </Text>
         </View>
-        <View style={styles.balanceContainer}>
+        <View style={styles.sectionContainer}>
           <Text>Cash flow charts here.</Text>
           <Text>Has 3 filters: All, Spending, and Earning.</Text>
         </View>
-        <View style={styles.balanceContainer}>
+        <View style={styles.sectionContainer}>
           <Text>{formatCurrency(getHighestSpending()[1])}</Text>
           <Text>
-            Highest spending of all time is in {getHighestSpending()[0]}
+            Highest spending month of all time is {getHighestSpending()[0]}
           </Text>
         </View>
         <View style={{flexDirection: 'row', paddingHorizontal: 30}}>
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  balanceContainer: {
+  sectionContainer: {
     alignItems: 'center',
     borderColor: colors.border,
     borderRadius: 20,
@@ -244,10 +244,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 50,
   },
-  balance: {
+  sectionContent: {
     fontSize: 36,
   },
-  title: {
+  sectionTitle: {
     fontSize: 14,
   },
 });
