@@ -186,27 +186,33 @@ const HomeScreen = () => {
           <Text style={styles.sectionTitle}>Balance</Text>
         </View>
         <View style={styles.sectionContainer}>
-          <Text>
-            Prediksi pengeluaran bulan depan berdasarkan rata-rata pengeluaran
-            perbulan dalam 12 bulan terakhir
+          <Text style={styles.sectionContent}>
+            {formatCurrency(getHighestSpending()[1])}
           </Text>
-          <Text>
-            {groupCashListByMonth()}
-            {/* {formatCurrency(
+          <Text style={styles.sectionTitle}>
+            Highest spending month of all time is {getHighestSpending()[0]}
+          </Text>
+        </View>
+        <View style={{flexDirection: 'row', marginHorizontal: 30, gap: 30}}>
+          <View
+            style={[styles.sectionContainer, {flex: 1, marginHorizontal: 0}]}>
+            <Text>
+              🚧 Prediksi pengeluaran bulan depan berdasarkan rata-rata
+              pengeluaran perbulan dalam 12 bulan terakhir
+            </Text>
+            <Text>
+              {groupCashListByMonth()}
+              {/* {formatCurrency(
               // getAverageSpendingPermonthPrediction(cashListContext.cashList),
               69000,
             )} */}
-          </Text>
-        </View>
-        <View style={styles.sectionContainer}>
-          <Text>Cash flow charts here.</Text>
-          <Text>Has 3 filters: All, Spending, and Earning.</Text>
-        </View>
-        <View style={styles.sectionContainer}>
-          <Text>{formatCurrency(getHighestSpending()[1])}</Text>
-          <Text>
-            Highest spending month of all time is {getHighestSpending()[0]}
-          </Text>
+            </Text>
+          </View>
+          <View
+            style={[styles.sectionContainer, {flex: 1, marginHorizontal: 0}]}>
+            <Text>Cash flow charts here.</Text>
+            <Text>Has 3 filters: All, Spending, and Earning.</Text>
+          </View>
         </View>
         <View style={{flexDirection: 'row', paddingHorizontal: 30}}>
           <TouchableRipple
