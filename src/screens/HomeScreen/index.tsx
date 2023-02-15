@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import {useContext, useEffect} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import {TouchableRipple, useTheme} from 'react-native-paper';
+import {MD3Theme, TouchableRipple, useTheme} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import uuid from 'react-native-uuid';
 import AppBar from '../../components/AppBar';
@@ -16,7 +16,7 @@ import {MenuGridTile} from './components/MenuGridTile';
 // import * as Updates from 'expo-updates';
 
 const HomeScreen = () => {
-  const theme = useTheme();
+  const styles = getThemeStyles(useTheme());
   const navigation = useNavigation();
 
   const cashListContext = useContext(CashListContext);
@@ -177,8 +177,7 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <SafeAreaView
-      style={[styles.container, {backgroundColor: theme.colors.surface}]}>
+    <SafeAreaView style={styles.container}>
       <ScrollView>
         <AppBar />
         <View style={styles.sectionContainer}>
@@ -235,27 +234,31 @@ const HomeScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  sectionContainer: {
-    alignItems: 'center',
-    borderColor: colors.border,
-    borderRadius: 20,
-    borderWidth: 1,
-    justifyContent: 'center',
-    marginBottom: 30,
-    marginHorizontal: 30,
-    paddingHorizontal: 10,
-    paddingVertical: 50,
-  },
-  sectionContent: {
-    fontSize: 36,
-  },
-  sectionTitle: {
-    fontSize: 14,
-  },
-});
+const getThemeStyles = (theme: MD3Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.surface,
+    },
+    sectionContainer: {
+      alignItems: 'center',
+      borderColor: colors.border,
+      borderRadius: 20,
+      borderWidth: 1,
+      justifyContent: 'center',
+      marginBottom: 30,
+      marginHorizontal: 30,
+      paddingHorizontal: 10,
+      paddingVertical: 50,
+    },
+    sectionContent: {
+      fontSize: theme.fonts.headlineLarge.fontSize,
+      color: theme.colors.onPrimaryContainer,
+      fontFamily: theme.fonts.bodyMedium.fontFamily,
+    },
+    sectionTitle: {
+      fontSize: 14,
+    },
+  });
 
 export default HomeScreen;
