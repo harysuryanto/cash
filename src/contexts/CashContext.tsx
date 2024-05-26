@@ -1,7 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {createContext, useEffect, useState} from 'react';
-import uuid from 'react-native-uuid';
-import {Cash, CashCategory, CashType} from '../interfaces/cash';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createContext, useEffect, useState } from "react";
+import uuid from "react-native-uuid";
+import { Cash, CashCategory, CashType } from "../interfaces/cash";
 
 type CashProps = {
   /** `id` must be non-undefined in edit mode */
@@ -33,7 +33,7 @@ type Props = {
   children: JSX.Element;
 };
 
-const CashListProvider = ({children}: Props) => {
+const CashListProvider = ({ children }: Props) => {
   const [cashList, setCashList] = useState<Cash[]>([]);
 
   const addCash = (cash: CashProps) => {
@@ -61,20 +61,20 @@ const CashListProvider = ({children}: Props) => {
       category: cash.category,
       notes: cash.notes,
     } satisfies Cash;
-    setCashList(cashList.map(item => (item.id === value.id ? value : item)));
+    setCashList(cashList.map((item) => (item.id === value.id ? value : item)));
   };
 
   const deleteCash = (id: string) => {
-    setCashList(cashList.filter(item => item.id !== id));
+    setCashList(cashList.filter((item) => item.id !== id));
   };
 
   const saveToStorage = async () => {
     if (cashList.length === 0) return;
 
     try {
-      await AsyncStorage.setItem('cashList', JSON.stringify(cashList));
+      await AsyncStorage.setItem("cashList", JSON.stringify(cashList));
     } catch (e) {
-      console.warn('Failed saving data!', e);
+      console.warn("Failed saving data!", e);
     }
   };
 
@@ -90,10 +90,11 @@ const CashListProvider = ({children}: Props) => {
         addCashAll,
         updateCash,
         deleteCash,
-      }}>
+      }}
+    >
       {children}
     </CashListContext.Provider>
   );
 };
 
-export {CashListProvider, CashListContext};
+export { CashListProvider, CashListContext };

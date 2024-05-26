@@ -1,3 +1,0 @@
-0000000000000000000000000000000000000000 535bf63adf148288b00487add6d0470c7e259926 Hary Suryanto <hary.suryanto01@gmail.com> 1674231376 +0700	commit (initial): Initial commit
-535bf63adf148288b00487add6d0470c7e259926 395e1c06ae41b646161122b88a072cb8cc38915f Hary Suryanto <hary.suryanto01@gmail.com> 1674231496 +0700	commit: Move App.tsx to /src
-395e1c06ae41b646161122b88a072cb8cc38915f 926ed68b0cd80df757e8c25277d1c8a89b626c4b Hary Suryanto <hary.suryanto01@gmail.com> 1674231507 +0700	commit: Update import

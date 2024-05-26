@@ -1,6 +1,5 @@
-import {faUserCircle} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {StyleSheet, Text, View} from 'react-native';
+import { Ionicons } from "@expo/vector-icons";
+import { StyleSheet, Text, View } from "react-native";
 
 const AppBar = () => {
   return (
@@ -10,8 +9,8 @@ const AppBar = () => {
         <Text style={styles.name}>Hary! 🌞🌞</Text>
       </View>
       <View style={styles.picture}>
-        <FontAwesomeIcon
-          icon={faUserCircle}
+        <Ionicons
+          name="person-circle"
           size={styles.picture.width}
           color="#808e9b"
         />
@@ -22,9 +21,9 @@ const AppBar = () => {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
     paddingHorizontal: 30,
     paddingVertical: 15,
   },
@@ -36,7 +35,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   picture: {
-    backgroundColor: '#d2dae2',
+    backgroundColor: "#d2dae2",
     borderRadius: 20,
     height: 40,
     width: 40,
