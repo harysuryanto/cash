@@ -1,5 +1,5 @@
-import AppBar from "@/src/components/AppBar";
-import Gap from "@/src/components/Gap";
+import AppBar from "@/src/components/shared/AppBar";
+import Gap from "@/src/components/shared/Gap";
 import { CashListContext } from "@/src/contexts/CashContext";
 import { Cash, CashType } from "@/src/interfaces/cash";
 import { colors } from "@/src/utils/colors";
@@ -12,7 +12,7 @@ import { MD3Theme, TouchableRipple, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Constants from "expo-constants";
 import uuid from "react-native-uuid";
-import { MenuGridTile } from "@/src/components/MenuGridTile";
+import { MenuGridTile } from "@/src/components/shared/MenuGridTile";
 import { FontAwesome6 } from "@expo/vector-icons";
 
 const HomeScreen = () => {

@@ -1,5 +1,5 @@
-import Gap from "@/src/components/Gap";
-import Tab from "@/src/components/Tab";
+import Gap from "@/src/components/shared/Gap";
+import Tab from "@/src/components/shared/Tab";
 import { CashListContext } from "@/src/contexts/CashContext";
 import { Cash, CashCategory, CashType } from "@/src/interfaces/cash";
 import { colors } from "@/src/utils/colors";

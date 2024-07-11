@@ -2,7 +2,7 @@ import { Text, View } from "react-native";
 
 import Gap from "./Gap";
 
-import { colors } from "../utils/colors";
+import { colors } from "../../utils/colors";
 
 type MenuItemProp = {
   title: string;
