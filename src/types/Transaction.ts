@@ -1,9 +1,11 @@
 import { Timestamp } from "firebase/firestore";
 
 export type Transaction = {
-  catagory: string;
+  category: string;
   date: Timestamp;
   description: string;
   fund: string;
+  id: string;
   nominal: number;
+  type: "income" | "expense";
 };

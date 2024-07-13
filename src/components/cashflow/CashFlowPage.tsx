@@ -1,6 +1,7 @@
 import Gap from "@/src/components/shared/Gap";
 import Tab from "@/src/components/shared/Tab";
 import { CashListContext } from "@/src/contexts/CashContext";
+import useTransactionsList from "@/src/hooks/useTransactionsList";
 import { Cash, CashCategory, CashType } from "@/src/interfaces/cash";
 import { colors } from "@/src/utils/colors";
 import {
@@ -12,6 +13,7 @@ import { useContext, useReducer, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import {
+  ActivityIndicator,
   Appbar,
   Button,
   Dialog,
@@ -25,8 +27,8 @@ import {
 
 enum Tabs {
   all,
-  in,
-  out,
+  income,
+  expense,
 }
 
 interface Form {
@@ -45,17 +47,14 @@ const CashFlowPage = () => {
   const [formModalVisible, setFormModalVisible] = useState(false);
   const [longPressModalVisible, setLongPressModalVisible] = useState(false);
 
-  const cashListContext = useContext(CashListContext);
-  const filteredCashList =
-    selectedTab === Tabs.all
-      ? cashListContext.cashList
-      : cashListContext.cashList.filter((cash) => {
-          if (selectedTab === Tabs.in) {
-            return cash.type === CashType.In;
-          } else {
-            return cash.type === CashType.Out;
-          }
-        });
+  const { status, data } = useTransactionsList({
+    type:
+      selectedTab === Tabs.income
+        ? "income"
+        : selectedTab === Tabs.expense
+        ? "expense"
+        : undefined,
+  });
 
   const [selectedCash, setSelectedCash] = useState<Cash | undefined>();
 
@@ -85,29 +84,29 @@ const CashFlowPage = () => {
     notes: "",
   });
 
-  const addCash = () => {
-    cashListContext.addCash({
-      amount: parseInt(form.amount, 10),
-      category: form.category,
-      type: form.type,
-      notes: form.notes,
-    });
-  };
+  // const addCash = () => {
+  //   cashListContext.addCash({
+  //     amount: parseInt(form.amount, 10),
+  //     category: form.category,
+  //     type: form.type,
+  //     notes: form.notes,
+  //   });
+  // };
 
-  const updateCash = () => {
-    cashListContext.updateCash({
-      id: selectedCash!.id,
-      amount: parseInt(form.amount, 10),
-      type: form.type,
-      category: form.category,
-      notes: form.notes,
-    });
-  };
+  // const updateCash = () => {
+  //   cashListContext.updateCash({
+  //     id: selectedCash!.id,
+  //     amount: parseInt(form.amount, 10),
+  //     type: form.type,
+  //     category: form.category,
+  //     notes: form.notes,
+  //   });
+  // };
 
-  const deleteCash = () => {
-    cashListContext.deleteCash(selectedCash!.id);
-    setLongPressModalVisible(false);
-  };
+  // const deleteCash = () => {
+  //   cashListContext.deleteCash(selectedCash!.id);
+  //   setLongPressModalVisible(false);
+  // };
 
   const handleSelectTab = (value: Tabs) => {
     setSelectedTab(value);
@@ -149,15 +148,15 @@ const CashFlowPage = () => {
     });
   };
 
-  const handleSubmit = () => {
-    if (isInEditMode) {
-      updateCash();
-    } else {
-      addCash();
-    }
-    handleCloseForm();
-    cleanForm();
-  };
+  // const handleSubmit = () => {
+  //   if (isInEditMode) {
+  //     updateCash();
+  //   } else {
+  //     addCash();
+  //   }
+  //   handleCloseForm();
+  //   cleanForm();
+  // };
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.surface }]}>
@@ -172,55 +171,57 @@ const CashFlowPage = () => {
           onPress={() => handleSelectTab(Tabs.all)}
         />
         <Tab
-          title="In"
-          isActive={selectedTab === Tabs.in}
-          onPress={() => handleSelectTab(Tabs.in)}
+          title="Income"
+          isActive={selectedTab === Tabs.income}
+          onPress={() => handleSelectTab(Tabs.income)}
         />
         <Tab
-          title="Out"
-          isActive={selectedTab === Tabs.out}
-          onPress={() => handleSelectTab(Tabs.out)}
+          title="Expense"
+          isActive={selectedTab === Tabs.expense}
+          onPress={() => handleSelectTab(Tabs.expense)}
         />
       </View>
-      {filteredCashList.length === 0 && (
-        <Text style={styles.noDataText}>No cash flow.</Text>
+      {status === "pending" && <ActivityIndicator />}
+      {status === "error" && <Text variant="bodyMedium">Error.</Text>}
+      {status === "success" && data.length === 0 && (
+        <Text style={styles.noDataText}>No transactions.</Text>
       )}
-      {cashListContext.cashList.length > 0 && (
+      {status === "success" && data.length > 0 && (
         <FlatList
           style={{ flex: 1 }}
-          data={filteredCashList}
+          data={data}
           renderItem={({ item }) => (
             <List.Item
-              title={`${formatCurrency(item.amount)}${
+              key={item.id}
+              title={`${formatCurrency(item.nominal)}${
                 item.category ? " - " + item.category : ""
               }`}
-              description={`${formatDateRelatively(new Date(item.date))}${
-                item.notes ? " • " + item.notes : ""
+              description={`${formatDateRelatively(item.date.toDate())}${
+                item.description ? " • " + item.description : ""
               }`}
               left={(props) => (
                 <View
                   {...props}
                   style={{
-                    width: 40,
-                    height: 40,
+                    width: 16,
+                    height: 16,
                     justifyContent: "center",
                     alignItems: "center",
                     backgroundColor:
-                      item.type === CashType.Out ? "lightblue" : "lightgreen",
+                      item.type === "expense" ? "pink" : "lightgreen",
                     borderRadius: 16,
+                    alignSelf: "center",
                   }}
-                >
-                  <Text>{item.type.toUpperCase()}</Text>
-                </View>
+                ></View>
               )}
               style={{ paddingHorizontal: 16 }}
-              onPress={(_) => {
-                setSelectedCash(item);
-                setLongPressModalVisible(true);
-              }}
+              // onPress={(_) => {
+              //   setSelectedCash(item);
+              //   setLongPressModalVisible(true);
+              // }}
             />
           )}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={({ id }) => id}
         />
       )}
 
@@ -230,7 +231,7 @@ const CashFlowPage = () => {
         style={{ position: "absolute", right: 16, bottom: 16 }}
       />
 
-      <Portal>
+      {/* <Portal>
         <Dialog
           visible={longPressModalVisible}
           onDismiss={() => setLongPressModalVisible(false)}
@@ -309,7 +310,7 @@ const CashFlowPage = () => {
               )}
           </Dialog.Content>
         </Dialog>
-      </Portal>
+      </Portal> */}
     </View>
   );
 };

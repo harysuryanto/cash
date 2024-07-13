@@ -1,7 +1,15 @@
 import { CashListProvider } from "@/src/contexts/CashContext";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import { PaperProvider } from "react-native-paper";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    mutations: { throwOnError: false },
+    queries: { throwOnError: false },
+  },
+});
 
 function Nav() {
   return (
@@ -25,9 +33,11 @@ function RootLayout() {
 export default function RootLayoutNav() {
   return (
     <PaperProvider>
-      <CashListProvider>
-        <RootLayout />
-      </CashListProvider>
+      <QueryClientProvider client={queryClient}>
+        <CashListProvider>
+          <RootLayout />
+        </CashListProvider>
+      </QueryClientProvider>
     </PaperProvider>
   );
 }
