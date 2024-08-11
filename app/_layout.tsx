@@ -1,4 +1,3 @@
-import { CashListProvider } from "@/src/contexts/CashContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
@@ -34,9 +33,7 @@ export default function RootLayoutNav() {
   return (
     <PaperProvider>
       <QueryClientProvider client={queryClient}>
-        <CashListProvider>
-          <RootLayout />
-        </CashListProvider>
+        <RootLayout />
       </QueryClientProvider>
     </PaperProvider>
   );
