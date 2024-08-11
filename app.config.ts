@@ -41,4 +41,15 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   experiments: {
     typedRoutes: true,
   },
+  updates: {
+    url: "https://u.expo.dev/4d491cde-a25d-41cc-8cf0-4304256de998",
+  },
+  runtimeVersion: {
+    policy: "appVersion",
+  },
+  extra: {
+    eas: {
+      projectId: "4d491cde-a25d-41cc-8cf0-4304256de998",
+    },
+  },
 });
