@@ -1,13 +1,20 @@
-import { ExpoConfig, ConfigContext } from "expo/config";
+import { ConfigContext, ExpoConfig } from "expo/config";
+
+const packageJson = require("./package.json");
+const VERSION: string = packageJson.version;
+const ENV = process.env.APP_ENV || "development";
+const BUILD_IDENTIFIER_POSTFIX = ENV === "production" ? "" : `.${ENV}`;
+const NAME: string = `Cash${ENV === "production" ? "" : ` (${ENV})`}`;
+const SCHEME: string = "cash";
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: "cash",
+  name: NAME,
   slug: "cash",
-  version: "1.2.0",
+  version: VERSION,
+  scheme: SCHEME,
   orientation: "portrait",
   icon: "./assets/images/icon.png",
-  scheme: "myapp",
   userInterfaceStyle: "automatic",
   splash: {
     image: "./assets/images/splash.png",
@@ -15,6 +22,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     backgroundColor: "#ffffff",
   },
   ios: {
+    bundleIdentifier: `id.harysuryanto.cash${BUILD_IDENTIFIER_POSTFIX}`,
     supportsTablet: true,
   },
   android: {
@@ -22,6 +30,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       foregroundImage: "./assets/images/adaptive-icon.png",
       backgroundColor: "#ffffff",
     },
+    package: `id.harysuryanto.cash${BUILD_IDENTIFIER_POSTFIX}`,
   },
   web: {
     bundler: "metro",
