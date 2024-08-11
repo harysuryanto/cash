@@ -3,9 +3,10 @@
   "main": "expo-router/entry",
   "version": "1.2.0",
   "scripts": {
+    "prebuild": "bunx expo prebuild --clean",
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "build:android:staging": "bunx eas build --profile staging --platform android --output sipkl-mobile-staging.apk --local",
     "build:ios:staging": "bunx eas build --profile staging --platform ios --output sipkl-mobile-staging.ipa --local",
