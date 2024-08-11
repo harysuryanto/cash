@@ -1,0 +1,110 @@
+name: Build Android with EAS
+on:
+  workflow_dispatch:
+    inputs:
+      build_profile:
+        description: "EAS build profile"
+        required: true
+        default: "production"
+        type: choice
+        options:
+          - development
+          - preview
+          - production
+
+env:
+  NODE_VERSION: '18'
+  JAVA_VERSION: '17'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Set up Java ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-node-${{ env.NODE_VERSION }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ env.NODE_VERSION }}-
+
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Validate eas.json
+        run: |
+          if ! jq empty eas.json; then
+            echo "eas.json is not valid JSON"
+            exit 1
+          fi
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm install -g eas-cli sharp-cli
+          echo "$(npm bin -g)" >> $GITHUB_PATH
+
+      - name: Update Expo packages
+        run: npx expo install --check
+
+      - name: Verify EAS CLI installation
+        run: eas --version
+
+      - name: Build APK
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          NODE_OPTIONS: --no-warnings
+          EAS_BUILD_PROFILE: ${{ github.event.inputs.build_profile }}
+        run: |
+          set -e
+          echo "🚀 Starting build process..."
+          
+          # Extract values from package.json
+          NAME=$(jq -r '.name' package.json)
+          VERSION=$(jq -r '.version' package.json)
+          FILENAME="${NAME}-v${VERSION}-${EAS_BUILD_PROFILE}.apk"
+          
+          # Log extracted values
+          echo "NAME=${NAME}"
+          echo "VERSION=${VERSION}"
+          echo "FILENAME=${FILENAME}"
+          
+          # Build APK
+          npx eas build --profile $EAS_BUILD_PROFILE --platform android --local --non-interactive --output $FILENAME
+          
+          echo "✅ Build process completed."
+          echo "APK_PATH=$FILENAME" >> $GITHUB_ENV
+
+      - name: Upload APK artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.APK_PATH }}
+          path: ${{ env.APK_PATH }}
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Upload build logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-logs
+          path: build-output.log
