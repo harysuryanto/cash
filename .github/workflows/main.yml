@@ -39,10 +39,10 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            ~/.npm
+            ~/.bun
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-node-${{ env.NODE_VERSION }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          key: ${{ runner.os }}-node-${{ env.NODE_VERSION }}-${{ hashFiles('**/bun.lockb') }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-node-${{ env.NODE_VERSION }}-
 
@@ -58,12 +58,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm ci
-          npm install -g eas-cli sharp-cli
-          echo "$(npm bin -g)" >> $GITHUB_PATH
+          bun install
+          bun add -g eas-cli sharp-cli
+          echo "$(bun bin -g)" >> $GITHUB_PATH
 
       - name: Update Expo packages
-        run: npx expo install --check
+        run: bunx expo install --check
 
       - name: Verify EAS CLI installation
         run: eas --version
@@ -88,7 +88,7 @@ jobs:
           echo "FILENAME=${FILENAME}"
 
           # Build APK
-          npx eas build --profile $EAS_BUILD_PROFILE --platform android --local --non-interactive --output $FILENAME
+          bunx eas build --profile $EAS_BUILD_PROFILE --platform android --local --non-interactive --output $FILENAME
 
           echo "✅ Build process completed."
           echo "APK_PATH=$FILENAME" >> $GITHUB_ENV
