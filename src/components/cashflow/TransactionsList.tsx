@@ -11,7 +11,6 @@ import {
   formatCurrency,
   formatDateRelatively,
 } from "@/src/utils/utils/formatter";
-import { List } from "react-native-paper";
 
 export default function TransactionsList() {
   const { status, data } = useTransactionsList();
@@ -32,34 +31,16 @@ export default function TransactionsList() {
     <FlatList
       style={{ flex: 1 }}
       data={data}
-      renderItem={({ item }) => (
-        <List.Item
-          key={item.id}
-          title={`${formatCurrency(item.nominal)}${
-            item.category ? " - " + item.category : ""
-          }`}
-          description={`${formatDateRelatively(item.date.toDate())}${
-            item.description ? " • " + item.description : ""
-          }`}
-          left={(props) => (
-            <View
-              {...props}
-              style={{
-                width: 16,
-                height: 16,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor:
-                  item.type === "expense" ? "pink" : "lightgreen",
-                borderRadius: 16,
-                alignSelf: "center",
-              }}
-            ></View>
-          )}
-          style={{ paddingHorizontal: 16 }}
-        />
+      renderItem={({ item: { id, category, date, description, nominal } }) => (
+        <View key={id} style={{ paddingHorizontal: 16 }}>
+          <Text>{`${formatCurrency(nominal)}${
+            category ? " - " + category : ""
+          }`}</Text>
+          <Text>{`${formatDateRelatively(date.toDate())}${
+            description ? " • " + description : ""
+          }`}</Text>
+        </View>
       )}
-      keyExtractor={({ id }) => id}
     />
   );
 }
