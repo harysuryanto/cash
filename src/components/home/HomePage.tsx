@@ -82,7 +82,7 @@ export default function HomePage() {
           </View>
         </View>
         <View style={{ flexDirection: "row", paddingHorizontal: 30 }}>
-          <Link href={"cash-flow"} asChild>
+          <Link href={"/cash-flow"} asChild>
             <TouchableRipple
               borderless={true}
               style={{ flex: 1, borderRadius: 20 }}
