@@ -4,11 +4,17 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
-    "reset-project": "node ./scripts/reset-project.js",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "test": "jest --watchAll",
+    "build:android:preview": "npx eas build --profile preview --platform android --output sipkl-mobile-preview.apk --local",
+    "build:ios:preview": "npx eas build --profile preview --platform ios --output sipkl-mobile-preview.ipa --local",
+    "build:android:production": "npx eas build --profile production --platform android --output sipkl-mobile.apk --local",
+    "build:ios:production": "npx eas build --profile production --platform ios --output sipkl-mobile.ipa --local",
+    "update:preview": "cross-env ENVIRONMENT=preview npx eas update --channel preview --clear-cache",
+    "update:production": "cross-env ENVIRONMENT=production npx eas update --channel production --clear-cache",
+    "format": "eslint \"**/*.{js,jsx,ts,tsx}\" --fix && prettier \"**/*.{js,jsx,ts,tsx,json}\" --write",
+    "test": "jest",
     "lint": "expo lint"
   },
   "jest": {
@@ -46,8 +52,10 @@
     "@types/jest": "^29.5.12",
     "@types/react": "~18.2.45",
     "@types/react-test-renderer": "^18.0.7",
+    "cross-env": "^7.0.3",
     "jest": "^29.2.1",
     "jest-expo": "~51.0.3",
+    "react-native-dotenv": "^3.4.11",
     "react-test-renderer": "18.2.0",
     "typescript": "~5.3.3"
   },
