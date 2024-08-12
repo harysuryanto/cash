@@ -1,5 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
-import {TouchableRipple, useTheme} from 'react-native-paper';
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 interface TabProps {
   title: string;
@@ -7,27 +6,21 @@ interface TabProps {
   onPress?: () => void;
 }
 
-const Tab = ({title, isActive = false, onPress}: TabProps) => {
-  const theme = useTheme();
-
+const Tab = ({ title, isActive = false, onPress }: TabProps) => {
   return (
-    <TouchableRipple onPress={onPress} style={{flex: 1, height: 48}}>
+    <Pressable onPress={onPress} style={{ flex: 1, height: 48 }}>
       <View style={styles.container}>
-        <Text
-          style={[
-            styles.title,
-            {color: isActive ? theme.colors?.primary : theme.colors?.onSurface},
-          ]}>
+        <Text style={[styles.title, { color: isActive ? "green" : undefined }]}>
           {title}
         </Text>
         <View
           style={[
             styles.activeIndicator,
-            {backgroundColor: isActive ? theme.colors.primary : 'transparent'},
+            { backgroundColor: isActive ? "green" : "transparent" },
           ]}
         />
       </View>
-    </TouchableRipple>
+    </Pressable>
   );
 };
 
@@ -35,15 +28,15 @@ export default Tab;
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    borderBottomColor: '#dddddd',
+    alignItems: "center",
+    borderBottomColor: "#dddddd",
     borderBottomWidth: 1,
     flex: 1,
   },
   title: {
     flex: 1,
-    textAlign: 'center',
-    verticalAlign: 'middle',
+    textAlign: "center",
+    verticalAlign: "middle",
   },
   activeIndicator: {
     borderTopStartRadius: 3,
