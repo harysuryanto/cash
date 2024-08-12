@@ -1,18 +1,18 @@
 import AppBar from "@/src/components/shared/AppBar";
 import Gap from "@/src/components/shared/Gap";
-import { Cash, CashType } from "@/src/interfaces/cash";
+// import { Cash, CashType } from "@/src/interfaces/cash";
 import { colors } from "@/src/utils/colors";
-import { formatCurrency, formatDate } from "@/src/utils/utils/formatter";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+// import { formatCurrency, formatDate } from "@/src/utils/utils/formatter";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Link } from "expo-router";
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-// import { MD3Theme, TouchableRipple, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Constants from "expo-constants";
-import uuid from "react-native-uuid";
+// import uuid from "react-native-uuid";
 import { MenuGridTile } from "@/src/components/shared/MenuGridTile";
 import { FontAwesome6 } from "@expo/vector-icons";
+import { ENVIRONMENT } from "@env";
 
 export default function HomePage() {
   // const getBalance = () => {
@@ -95,7 +95,7 @@ export default function HomePage() {
         </View>
         <Gap height={30} />
         <Text style={{ width: "100%", textAlign: "center" }}>
-          v{Constants.expoConfig?.version}
+          v{Constants.expoConfig?.version} - {ENVIRONMENT}
         </Text>
         <Gap height={30} />
       </ScrollView>
