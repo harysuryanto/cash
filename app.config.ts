@@ -3,7 +3,7 @@ import { ConfigContext, ExpoConfig } from "expo/config";
 const packageJson = require("./package.json");
 const VERSION: string = packageJson.version;
 const ENV = process.env.ENVIRONMENT || "development";
-const BUILD_IDENTIFIER_POSTFIX = ENV === "production" ? "" : `.${ENV}`;
+const BUNDLE_ID_POSTFIX = ENV === "production" ? "" : `.${ENV}`;
 const NAME: string = `Cash${ENV === "production" ? "" : ` (${ENV})`}`;
 const SCHEME: string = "cash";
 
@@ -22,7 +22,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     backgroundColor: "#ffffff",
   },
   ios: {
-    bundleIdentifier: `id.harysuryanto.cash${BUILD_IDENTIFIER_POSTFIX}`,
+    bundleIdentifier: `id.harysuryanto.cash${BUNDLE_ID_POSTFIX}`,
     supportsTablet: true,
   },
   android: {
@@ -30,7 +30,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       foregroundImage: "./assets/images/adaptive-icon.png",
       backgroundColor: "#ffffff",
     },
-    package: `id.harysuryanto.cash${BUILD_IDENTIFIER_POSTFIX}`,
+    package: `id.harysuryanto.cash${BUNDLE_ID_POSTFIX}`,
   },
   web: {
     bundler: "metro",
