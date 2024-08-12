@@ -83,10 +83,7 @@ export default function HomePage() {
         </View>
         <View style={{ flexDirection: "row", paddingHorizontal: 30 }}>
           <Link href={"/cash-flow"} asChild>
-            <Pressable
-              android_ripple={{ borderless: true }}
-              style={{ flex: 1, borderRadius: 20 }}
-            >
+            <Pressable style={{ flex: 1, borderRadius: 20 }}>
               <MenuGridTile
                 title="Track Cash Flow"
                 icon={({ size }) => (
