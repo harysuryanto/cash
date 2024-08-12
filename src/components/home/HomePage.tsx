@@ -6,8 +6,8 @@ import { formatCurrency, formatDate } from "@/src/utils/utils/formatter";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Link } from "expo-router";
 import React, { useContext, useEffect } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { MD3Theme, TouchableRipple, useTheme } from "react-native-paper";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+// import { MD3Theme, TouchableRipple, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Constants from "expo-constants";
 import uuid from "react-native-uuid";
@@ -83,8 +83,8 @@ export default function HomePage() {
         </View>
         <View style={{ flexDirection: "row", paddingHorizontal: 30 }}>
           <Link href={"/cash-flow"} asChild>
-            <TouchableRipple
-              borderless={true}
+            <Pressable
+              android_ripple={{ borderless: true }}
               style={{ flex: 1, borderRadius: 20 }}
             >
               <MenuGridTile
@@ -93,7 +93,7 @@ export default function HomePage() {
                   <FontAwesome6 name="money-bill-transfer" size={size} />
                 )}
               />
-            </TouchableRipple>
+            </Pressable>
           </Link>
         </View>
         <Gap height={30} />

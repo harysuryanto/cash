@@ -8,10 +8,10 @@ export default function CashFlowPage() {
 
   return (
     <View style={styles.container}>
-      <Appbar.Header>
+      {/* <Appbar.Header>
         <Appbar.BackAction onPress={router.back} />
         <Appbar.Content title="Cash Flow" />
-      </Appbar.Header>
+      </Appbar.Header> */}
       <TransactionsList />
     </View>
   );
