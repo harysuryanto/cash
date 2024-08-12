@@ -1,7 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
-import { PaperProvider } from "react-native-paper";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,10 +30,8 @@ function RootLayout() {
 
 export default function RootLayoutNav() {
   return (
-    <PaperProvider>
-      <QueryClientProvider client={queryClient}>
-        <RootLayout />
-      </QueryClientProvider>
-    </PaperProvider>
+    <QueryClientProvider client={queryClient}>
+      <RootLayout />
+    </QueryClientProvider>
   );
 }
