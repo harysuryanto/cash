@@ -1,3 +1,4 @@
+import { checkOtaUpdate } from "@/src/utils/utils/ota-update";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
@@ -23,6 +24,7 @@ SplashScreen.preventAutoHideAsync();
 function RootLayout() {
   useEffect(() => {
     SplashScreen.hideAsync();
+    checkOtaUpdate();
   }, []);
 
   return <Nav />;
