@@ -87,8 +87,7 @@ jobs:
           echo "FILENAME=${FILENAME}"
 
           # Build APK
-          # bunx eas build --profile $EAS_BUILD_PROFILE --platform android --local --non-interactive --output $FILENAME
-          bun build:android:$EAS_BUILD_PROFILE $FILENAME
+          bunx eas build --profile $EAS_BUILD_PROFILE --platform android --local --non-interactive --output $FILENAME
 
           echo "✅ Build process completed."
           echo "APK_PATH=$FILENAME" >> $GITHUB_ENV
