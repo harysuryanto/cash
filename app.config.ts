@@ -2,7 +2,7 @@ import { ConfigContext, ExpoConfig } from "expo/config";
 
 const packageJson = require("./package.json");
 const VERSION: string = packageJson.version;
-const ENV = process.env.APP_ENV || "development";
+const ENV = process.env.EXPO_PUBLIC_APP_ENV || "development";
 const BUNDLE_ID_POSTFIX = ENV === "production" ? "" : `.${ENV}`;
 const NAME: string = `Cash${ENV === "production" ? "" : ` (${ENV})`}`;
 const SCHEME: string = "cash";
