@@ -12,8 +12,8 @@
     "build:ios:staging": "bunx eas build --profile staging --platform ios --output sipkl-mobile-staging.ipa --local",
     "build:android:production": "bunx eas build --profile production --platform android --output sipkl-mobile.apk --local",
     "build:ios:production": "bunx eas build --profile production --platform ios --output sipkl-mobile.ipa --local",
-    "update:staging": "cross-env APP_ENV=staging bunx eas update --channel staging --clear-cache",
-    "update:production": "cross-env APP_ENV=production bunx eas update --channel production --clear-cache",
+    "update:staging": "cross-env EXPO_PUBLIC_APP_ENV=staging bunx eas update --channel staging --clear-cache",
+    "update:production": "cross-env EXPO_PUBLIC_APP_ENV=production bunx eas update --channel production --clear-cache",
     "format": "eslint \"**/*.{js,jsx,ts,tsx}\" --fix && prettier \"**/*.{js,jsx,ts,tsx,json}\" --write",
     "test": "jest",
     "lint": "expo lint"
