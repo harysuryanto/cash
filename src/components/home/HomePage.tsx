@@ -12,7 +12,7 @@ import Constants from "expo-constants";
 // import uuid from "react-native-uuid";
 import { MenuGridTile } from "@/src/components/shared/MenuGridTile";
 import { FontAwesome6 } from "@expo/vector-icons";
-import { ENVIRONMENT } from "@env";
+import { APP_ENV } from "@env";
 
 export default function HomePage() {
   // const getBalance = () => {
@@ -95,7 +95,7 @@ export default function HomePage() {
         </View>
         <Gap height={30} />
         <Text style={{ width: "100%", textAlign: "center" }}>
-          v{Constants.expoConfig?.version} - {ENVIRONMENT}
+          v{Constants.expoConfig?.version} - {APP_ENV}
         </Text>
         <Gap height={30} />
       </ScrollView>

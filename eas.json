@@ -8,7 +8,7 @@
       "distribution": "internal",
       "channel": "development",
       "env": {
-        "ENVIRONMENT": "development"
+        "APP_ENV": "development"
       }
     },
     "staging": {
@@ -18,7 +18,7 @@
       },
       "channel": "staging",
       "env": {
-        "ENVIRONMENT": "staging"
+        "APP_ENV": "staging"
       }
     },
     "production": {
@@ -28,7 +28,7 @@
       },
       "channel": "production",
       "env": {
-        "ENVIRONMENT": "production"
+        "APP_ENV": "production"
       }
     }
   },

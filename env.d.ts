@@ -1,4 +1,4 @@
 declare module "@env" {
-  export const ENVIRONMENT: string;
+  export const APP_ENV: string;
   export const GREETING: string;
 }
