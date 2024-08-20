@@ -6,7 +6,13 @@ import { colors } from "@/src/utils/colors";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Link } from "expo-router";
 import React from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Constants from "expo-constants";
 // import uuid from "react-native-uuid";
@@ -83,14 +89,14 @@ export default function HomePage() {
         </View>
         <View style={{ flexDirection: "row", paddingHorizontal: 30 }}>
           <Link href={"/cash-flow"} asChild>
-            <Pressable style={{ flex: 1, borderRadius: 20 }}>
+            <TouchableOpacity style={{ flex: 1, borderRadius: 20 }}>
               <MenuGridTile
                 title="Track Cash Flow"
                 icon={({ size }) => (
                   <FontAwesome6 name="money-bill-transfer" size={size} />
                 )}
               />
-            </Pressable>
+            </TouchableOpacity>
           </Link>
         </View>
         <Gap height={30} />
