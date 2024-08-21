@@ -1,4 +1,5 @@
 const { getDefaultConfig } = require("expo/metro-config");
+const { withNativeWind } = require("nativewind/metro");
 
 module.exports = (() => {
   // eslint-disable-next-line no-undef
@@ -14,5 +15,5 @@ module.exports = (() => {
     sourceExts: [...resolver.sourceExts, "cjs"],
   };
 
-  return config;
+  return withNativeWind(config, { input: "./src/global.css" });
 })();
