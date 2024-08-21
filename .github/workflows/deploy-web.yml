@@ -9,7 +9,7 @@ env:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
       - name: Checkout repository
@@ -43,7 +43,7 @@ jobs:
           echo "🚀 Starting build process..."
 
           # Build Web
-          bunx expo export --platform web
+          cross-env EXPO_PUBLIC_APP_ENV=production bunx expo export --platform web
 
           echo "✅ Build process completed."
 
