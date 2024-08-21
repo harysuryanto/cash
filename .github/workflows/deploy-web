@@ -40,7 +40,7 @@ jobs:
           echo "🚀 Starting build process..."
 
           # Build Web
-          bunx expo export --platform web
+          cross-env EXPO_PUBLIC_APP_ENV=production bunx expo export --platform web
 
           echo "✅ Build process completed."
 
