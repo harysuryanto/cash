@@ -33,18 +33,12 @@ jobs:
         run: |
           bun install
 
-      - name: Tailwind CSS
-        run: bunx tailwindcss -i ./src/global.css -o ./node_modules/.cache/nativewind/global.css
-
       - name: Build Web
         env:
           EXPO_PUBLIC_APP_ENV: production
         run: |
           echo "🚀 Starting build process..."
-
-          # Build Web
-          cross-env EXPO_PUBLIC_APP_ENV=production bunx expo export --platform web
-
+          bunx expo export --platform web
           echo "✅ Build process completed."
 
       - name: Deploy to GitHub Pages
