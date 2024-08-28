@@ -12,14 +12,7 @@ type MenuItemProp = {
 export const MenuGridTile = ({ icon, title }: MenuItemProp) => {
   return (
     <View
-      style={{
-        alignItems: "center",
-        borderColor: colors.border,
-        borderRadius: 20,
-        borderWidth: 1,
-        flex: 1,
-        padding: 40,
-      }}
+      className={`flex-1 items-center rounded-[20px] border border-[${colors.border}] p-10`}
     >
       {icon({ size: 60 })}
       <Gap height={15} />
