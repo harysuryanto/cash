@@ -111,8 +111,8 @@ export default function HomePage() {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: colors.white,
     flex: 1,
-    // backgroundColor: theme.colors.surface,
   },
   sectionContainer: {
     alignItems: "center",
