@@ -1,16 +1,10 @@
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import TransactionsList from "./TransactionsList";
 
 export default function CashFlowPage() {
   return (
-    <View style={styles.container}>
+    <View className="flex-1 bg-white">
       <TransactionsList />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
