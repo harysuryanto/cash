@@ -7,26 +7,36 @@ import StyledDateTimePickerButton from "../shared/StyledDateTimePickerButton";
 export default function AddTransactionForm() {
   // TODO: Add form validation and form submission
 
-  const [selectedOption, setSelectedOption] = useState<
-    string | number | undefined
-  >();
+  const [type, setSelectedOption] = useState<string | number | undefined>();
+  const [nominal, setNominal] = useState<string>();
+  const [category, setCategory] = useState<string | number | undefined>();
+  const [fund, setFund] = useState<string | number | undefined>();
+  const [date, setDate] = useState<Date>(new Date());
+  const [description, setDescription] = useState<string>();
 
   return (
     <View className="gap-1">
       <Select
         label="Type"
+        placeholder=""
         options={[
           { id: 1, name: "Expense" },
           { id: 2, name: "Income" },
         ]}
         labelKey="name"
         valueKey="id"
-        selectedValue={selectedOption}
+        selectedValue={type}
         onSelect={(value) => setSelectedOption(value)}
       />
-      <Input label="Amount" keyboardType="numeric" />
+      <Input
+        label="Amount"
+        value={nominal}
+        onChangeText={setNominal}
+        keyboardType="numeric"
+      />
       <Select
         label="Category"
+        placeholder=""
         options={[
           { id: 1, name: "Basic Need" },
           { id: 2, name: "Desire" },
@@ -34,20 +44,28 @@ export default function AddTransactionForm() {
         ]}
         labelKey="name"
         valueKey="id"
-        selectedValue={selectedOption}
-        onSelect={(value) => setSelectedOption(value)}
+        selectedValue={category}
+        onSelect={(value) => setCategory(value)}
       />
       <Select
         label="Fund"
+        placeholder=""
         options={[{ id: 1, name: "Cash" }]}
         labelKey="name"
         valueKey="id"
-        selectedValue={selectedOption}
-        onSelect={(value) => setSelectedOption(value)}
+        selectedValue={fund}
+        onSelect={(value) => setFund(value)}
       />
-      <StyledDateTimePickerButton label="Date" onChange={console.log} />
+      <StyledDateTimePickerButton
+        label="Date"
+        placeholder=""
+        date={date}
+        onChange={({ date }) => setDate(new Date(date!.toString()))}
+      />
       <Input
         label="Notes"
+        value={description}
+        onChangeText={setDescription}
         keyboardType="default"
         multiline
         numberOfLines={3}
