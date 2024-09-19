@@ -70,10 +70,12 @@ const StyledDateTimePickerButton = forwardRef<
           <DateTimePicker
             {...props}
             date={selectedDate}
-            onChange={({ date }) => {
+            onChange={(param) => {
+              if (!param.date) return;
+
               setVisible(false);
-              setSelectedDate(new Date(date!.toString()));
-              props.onChange?.({ date });
+              setSelectedDate(new Date(param.date.toString()));
+              props.onChange?.(param);
             }}
             mode="single"
           />
