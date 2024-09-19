@@ -2,7 +2,7 @@ import { View } from "react-native";
 import React, { useState } from "react";
 import { Input } from "@/src/components/shared/nativecn/Input";
 import { Select } from "@/src/components/shared/nativecn/Select";
-import StyledDateTimePickerButton from "../shared/StyledDateTimePickerButton";
+import StyledDateTimePickerButton from "@/src/components/shared/StyledDateTimePickerButton";
 
 export default function AddTransactionForm() {
   // TODO: Add form validation and form submission
