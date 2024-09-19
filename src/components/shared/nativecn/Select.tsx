@@ -102,7 +102,9 @@ export const Select = ({
         ref={selectButtonRef}
         className={cn(
           selectClasses,
-          "border border-input py-2.5 px-4 rounded-lg bg-white dark:bg-black"
+          "border border-input py-2.5 px-4 rounded-lg bg-white"
+          // TODO: Use dark mode again
+          // "border border-input py-2.5 px-4 rounded-lg bg-white dark:bg-black"
         )}
         onPress={openDropdown}
       >
@@ -131,7 +133,9 @@ export const Select = ({
                 shadowRadius: 8,
                 elevation: 5,
               }}
-              className="absolute bg-white shadow-sm dark:bg-black p-2 rounded-md shadow-black dark:shadow-white"
+              className="absolute bg-white shadow-sm p-2 rounded-md shadow-black"
+              // TODO: Use dark mode again
+              // className="absolute bg-white shadow-sm dark:bg-black p-2 rounded-md shadow-black dark:shadow-white"
             >
               <FlatList
                 data={new_options}

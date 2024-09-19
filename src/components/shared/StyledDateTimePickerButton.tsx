@@ -45,6 +45,8 @@ const StyledDateTimePickerButton = forwardRef<
           <TouchableOpacity
             className={
               "border border-input py-2.5 px-4 rounded-lg bg-white dark:bg-black"
+              // TODO: Use dark mode again
+              // "border border-input py-2.5 px-4 rounded-lg bg-white dark:bg-black"
             }
             onPress={() => setVisible(true)}
           >
