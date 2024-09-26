@@ -1,30 +1,40 @@
-const activeEnv = process.env.EXPO_PUBLIC_APP_ENV || "development";
+import { z } from "zod";
 
-interface Env {
-  dev: string;
-  stag: string;
-  prod: string;
-}
+// const activeEnv = process.env.EXPO_PUBLIC_APP_ENV || "development";
 
-const createEnv = (prop: Env) => {
-  switch (activeEnv) {
-    case "development":
-      return prop.dev;
-    case "staging":
-      return prop.stag;
-    case "production":
-      return prop.prod;
-    default:
-      return prop.dev;
-  }
-};
+// interface Env {
+//   dev: string;
+//   stag: string;
+//   prod: string;
+// }
+
+// const createEnv = (prop: Env) => {
+//   switch (activeEnv) {
+//     case "development":
+//       return prop.dev;
+//     case "staging":
+//       return prop.stag;
+//     case "production":
+//       return prop.prod;
+//     default:
+//       return prop.dev;
+//   }
+// };
 
 /**
  * Must start with "EXPO_PUBLIC_" for variables names
  */
 
-export const EXPO_PUBLIC_APP_ENV = createEnv({
-  dev: "development",
-  stag: "staging",
-  prod: "production",
+// const EXPO_PUBLIC_APP_ENV = createEnv({
+//   dev: "development",
+//   stag: "staging",
+//   prod: "production",
+// });
+
+const envSchema = z.object({
+  APP_ENV: z
+    .enum(["development", "staging", "production"])
+    .default("development"),
 });
+
+export const env = envSchema.parse(process.env);
