@@ -18,7 +18,7 @@ import Constants from "expo-constants";
 // import uuid from "react-native-uuid";
 import { MenuGridTile } from "@/src/components/shared/MenuGridTile";
 import { FontAwesome6 } from "@expo/vector-icons";
-import { env } from "@/src/constants/env";
+import { env } from "@/src/utils/utils/env";
 
 export default function HomePage() {
   // const getBalance = () => {
