@@ -19,6 +19,7 @@ import Constants from "expo-constants";
 import { MenuGridTile } from "@/src/components/shared/MenuGridTile";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { env } from "@/src/utils/utils/env";
+import usePageFocusAnalytic from "@/src/hooks/usePageFocusAnalytic";
 
 export default function HomePage() {
   // const getBalance = () => {
@@ -47,6 +48,8 @@ export default function HomePage() {
   //   loadCashListFromStorage();
   //   // handleAppUpdates();
   // }, []);
+
+  usePageFocusAnalytic();
 
   return (
     <SafeAreaView style={styles.container}>
