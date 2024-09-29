@@ -3,7 +3,7 @@ import TransactionsList from "./TransactionsList";
 import usePageFocusAnalytic from "@/src/hooks/usePageFocusAnalytic";
 
 export default function CashFlowPage() {
-  usePageFocusAnalytic();
+  usePageFocusAnalytic("Cash Flow Page");
 
   return (
     <View className="flex-1 bg-white">

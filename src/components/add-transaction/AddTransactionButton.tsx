@@ -16,7 +16,7 @@ export default function AddTransactionButton({
     <TouchableOpacity
       hitSlop={{ left: 10, right: 100, top: 100, bottom: 100 }}
       onPress={() =>
-        capture({ eventType: "do", eventDetails: "add_transaction" })
+        capture({ eventType: "act", eventDetails: "add_transaction" })
       }
       {...rest}
     >
