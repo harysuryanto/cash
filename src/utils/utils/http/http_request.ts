@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 import HttpRequestError from "@/src/utils/utils/http/http_request_error";
+import { captureEvent } from "@/src/utils/utils/analytics";
 
 export const generalAxiosConfig = {
   timeout: 20000,
@@ -44,14 +45,31 @@ const fetchData = async <T>(
           headers: headersInit,
         });
 
+        captureEvent({
+          eventType: "error",
+          eventDetails: "http_response",
+        });
+
         throw new HttpRequestError(response, error.response?.data);
       } else if (error.request) {
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
         // http.ClientRequest in node.js
+
+        captureEvent({
+          eventType: "error",
+          eventDetails: "http_request",
+        });
+
         throw new Error("Cannot connect to server.");
       } else {
         // Something happened in setting up the request that triggered an Error
+
+        captureEvent({
+          eventType: "error",
+          eventDetails: "http_unknown",
+        });
+
         throw new Error(`An error occurred: ${error.message}`);
       }
     }

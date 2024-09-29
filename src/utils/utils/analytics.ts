@@ -5,10 +5,11 @@ import fetchData from "@/src/utils/utils/http/http_request";
  */
 export type captureEventProps = {
   userId?: string;
-  eventType: "view" | "act";
+  eventType: "view" | "act" | "error";
   eventDetails: string;
   sessionId?: string;
   properties?: Object;
+  debug?: boolean;
 };
 
 /**
@@ -20,6 +21,7 @@ export const captureEvent = async ({
   eventDetails,
   sessionId,
   properties,
+  debug = __DEV__,
 }: captureEventProps): Promise<void> => {
   try {
     // await fetchData({
@@ -41,6 +43,7 @@ export const captureEvent = async ({
         event: `${eventType}_${eventDetails}`, // Required; Only recieves alphabets and _;
         sessionId, // Optional
         properties, // Optional
+        debug: Number(debug), // Optional; Defaults to 0
       },
     });
 

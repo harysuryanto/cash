@@ -9,6 +9,7 @@ const useAnalytics = () => {
       eventDetails,
       sessionId,
       properties,
+      debug,
     }: captureEventProps) => {
       captureEvent({
         userId,
@@ -16,6 +17,7 @@ const useAnalytics = () => {
         eventDetails,
         sessionId,
         properties,
+        debug,
       });
     },
     []
