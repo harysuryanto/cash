@@ -6,8 +6,8 @@ import { useEffect } from "react";
 
 const queryClient = new QueryClient({
   defaultOptions: {
-    mutations: { throwOnError: false, retry: 0 },
-    queries: { throwOnError: false, retry: 0 },
+    mutations: { throwOnError: false, retry: false },
+    queries: { throwOnError: false, retry: false },
   },
 });
 
