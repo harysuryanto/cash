@@ -24,7 +24,7 @@ export const captureEvent = async ({
   debug = __DEV__,
 }: captureEventProps): Promise<void> => {
   try {
-    return await axios.post("https://api.lukehog.com/event/AgX05QGeLPk8QnYe", {
+    return await axios.post("https://api.lukehog.com/event/gwYJn9BJoeyJvJDx", {
       userId: userId ?? "unauthenticated", // Required
       event: `${eventType}_${eventDetails}`, // Required; Only recieves alphabets and _
       sessionId, // Optional
