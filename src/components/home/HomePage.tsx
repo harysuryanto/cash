@@ -49,7 +49,7 @@ export default function HomePage() {
   //   // handleAppUpdates();
   // }, []);
 
-  usePageFocusAnalytic("Home Page");
+  usePageFocusAnalytic("home_page");
 
   return (
     <SafeAreaView style={styles.container}>

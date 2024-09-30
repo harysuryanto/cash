@@ -1,7 +1,13 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import curlirize from "axios-curlirize";
 
 import HttpRequestError from "@/src/utils/utils/http/http_request_error";
 import { captureEvent } from "@/src/utils/utils/analytics";
+
+curlirize(axios, (result, err) => {
+  // Logs of http requests
+  // console.log(result.command);
+});
 
 export const generalAxiosConfig = {
   timeout: 20000,
@@ -20,6 +26,11 @@ const fetchData = async <T>(
     return await axios<T, AxiosResponse<T, any>, any>(mergedConfig);
   } catch (error) {
     if (axios.isAxiosError(error)) {
+      // @ts-ignore
+      const curl = error.config?.curlCommand;
+      let errorType: "response" | "request" | "unknown";
+      let errorToThrow: unknown;
+
       if (__DEV__ && error.response?.data !== undefined) {
         console.log(
           `🔴 ${error.response.config.method?.toUpperCase()} ${
@@ -45,33 +56,33 @@ const fetchData = async <T>(
           headers: headersInit,
         });
 
-        captureEvent({
-          eventType: "error",
-          eventDetails: "http_response",
-        });
-
-        throw new HttpRequestError(response, error.response?.data);
+        errorType = "response";
+        errorToThrow = new HttpRequestError(response, error.response?.data);
       } else if (error.request) {
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
         // http.ClientRequest in node.js
 
-        captureEvent({
-          eventType: "error",
-          eventDetails: "http_request",
-        });
-
-        throw new Error("Cannot connect to server.");
+        errorType = "request";
+        errorToThrow = new Error("Cannot connect to server.");
       } else {
         // Something happened in setting up the request that triggered an Error
 
-        captureEvent({
-          eventType: "error",
-          eventDetails: "http_unknown",
-        });
-
-        throw new Error(`An error occurred: ${error.message}`);
+        errorType = "unknown";
+        errorToThrow = new Error(`An error occurred: ${error.message}`);
       }
+
+      captureEvent({
+        eventType: "error",
+        eventDetails: "http",
+        properties: {
+          type: errorType,
+          error: errorToThrow,
+          curl: curl,
+        },
+      });
+
+      throw errorToThrow;
     }
 
     throw error;

@@ -4,7 +4,7 @@ import AddTransactionForm from "./AddTransactionForm";
 import usePageFocusAnalytic from "@/src/hooks/usePageFocusAnalytic";
 
 export default function AddTransactionPage() {
-  usePageFocusAnalytic("Add Transaction Page");
+  usePageFocusAnalytic("add_transaction_page");
 
   return (
     <ScrollView className="flex-1 bg-white">
