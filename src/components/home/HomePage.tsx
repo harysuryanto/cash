@@ -20,6 +20,7 @@ import { MenuGridTile } from "@/src/components/shared/MenuGridTile";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { env } from "@/src/utils/utils/env";
 import usePageFocusAnalytic from "@/src/hooks/usePageFocusAnalytic";
+import HttpErrorTest from "../shared/HttpErrorTest";
 
 export default function HomePage() {
   // const getBalance = () => {
@@ -66,6 +67,7 @@ export default function HomePage() {
           {/* <Text style={styles.sectionTitle}>
             Highest spending month of all time is {getHighestSpending()[0]}
           </Text> */}
+          <HttpErrorTest />
         </View>
         <View style={{ flexDirection: "row", marginHorizontal: 30, gap: 30 }}>
           <View
