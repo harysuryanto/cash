@@ -20,7 +20,9 @@ export type captureEventProps = {
  * Logs user activity.
  *
  * Dashboard: https://lukehog.com/#/4DuS5lnMBxchyjfGBPqNEIqs
+ *
  * lukehog.json: {"adminKey":"4DuS5lnMBxchyjfGBPqNEIqs","appId":"gwYJn9BJoeyJvJDx"}
+ *
  * sqlite: https://sqlime.org/#https://api.lukehog.com/sqlite/4DuS5lnMBxchyjfGBPqNEIqs
  */
 export const captureEvent = async ({
@@ -34,7 +36,7 @@ export const captureEvent = async ({
   try {
     return await axios.post("https://api.lukehog.com/event/gwYJn9BJoeyJvJDx", {
       userId: userId ?? "unauthenticated", // Required
-      event: `${eventType}_${eventDetails}`, // Required; Only recieves alphabets and _
+      event: `${eventType}_${eventDetails}`, // Required; Only recieves alphabets and _ (snake_case)
       sessionId, // Optional
       properties, // Optional
       debug: Number(debug), // Optional; Defaults to 0
