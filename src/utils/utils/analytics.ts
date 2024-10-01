@@ -8,7 +8,7 @@ export type captureEventProps = {
   eventType: "view" | "act" | "error";
   eventDetails: string;
   sessionId?: string;
-  properties?: Object;
+  properties?: object;
   /**
    * To separate analytics for development and production.
    * @default __DEV__
