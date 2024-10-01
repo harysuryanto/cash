@@ -9,11 +9,19 @@ export type captureEventProps = {
   eventDetails: string;
   sessionId?: string;
   properties?: Object;
+  /**
+   * To separate analytics for development and production.
+   * @default __DEV__
+   */
   debug?: boolean;
 };
 
 /**
  * Logs user activity.
+ *
+ * Dashboard: https://lukehog.com/#/4DuS5lnMBxchyjfGBPqNEIqs
+ * lukehog.json: {"adminKey":"4DuS5lnMBxchyjfGBPqNEIqs","appId":"gwYJn9BJoeyJvJDx"}
+ * sqlite: https://sqlime.org/#https://api.lukehog.com/sqlite/4DuS5lnMBxchyjfGBPqNEIqs
  */
 export const captureEvent = async ({
   userId,
