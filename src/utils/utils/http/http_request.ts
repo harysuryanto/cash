@@ -28,7 +28,7 @@ const fetchData = async <T>(
     if (!axios.isAxiosError(error)) throw error;
 
     // @ts-ignore
-    const curl = error.config?.curlCommand;
+    const curl: string = error.config?.curlCommand;
     let errorType: "response" | "request" | "unknown";
     let errorTypeDescription: string;
     let errorToThrow: unknown;
