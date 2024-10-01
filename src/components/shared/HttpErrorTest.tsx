@@ -10,10 +10,19 @@ export default function HttpErrorTest() {
   const { isFetching, status, error, refetch } = useQuery({
     queryKey: ["HttpErrorTestQuery"],
     queryFn: async () => {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
       return await fetchData({
+        method: "get",
+        // url: "https://Ajsonplaceholder.typicode.com/posts",
         url: "https",
-        data: {
-          purpose: "testing",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+        params: {
+          title: "foo",
+          body: "bar",
+          userId: 1,
         },
       });
     },
