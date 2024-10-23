@@ -1,10 +1,10 @@
 import { ExpoConfig } from "expo/config";
 
 const packageJson = require("./package.json");
-const VERSION: string = packageJson.version;
+const VERSION = packageJson.version as string;
 const ENV = process.env.EXPO_PUBLIC_APP_ENV || "development";
-const NAME_POSTFIX: string = ENV === "production" ? "" : ` (${ENV})`;
-const SCHEME_POSTFIX: string = ENV === "production" ? "" : `-${ENV}`;
+const NAME_POSTFIX = ENV === "production" ? "" : ` (${ENV})`;
+const SCHEME_POSTFIX = ENV === "production" ? "" : `-${ENV}`;
 const BUNDLE_ID_POSTFIX = ENV === "production" ? "" : `.${ENV}`;
 
 export default {
