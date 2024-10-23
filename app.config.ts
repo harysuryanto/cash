@@ -1,17 +1,17 @@
-import { ConfigContext, ExpoConfig } from "expo/config";
+import { ExpoConfig } from "expo/config";
 
 const packageJson = require("./package.json");
 const VERSION: string = packageJson.version;
 const ENV = process.env.EXPO_PUBLIC_APP_ENV || "development";
+const NAME_POSTFIX: string = ENV === "production" ? "" : ` (${ENV})`;
+const SCHEME_POSTFIX: string = ENV === "production" ? "" : `-${ENV}`;
 const BUNDLE_ID_POSTFIX = ENV === "production" ? "" : `.${ENV}`;
-const NAME: string = `Cash${ENV === "production" ? "" : ` (${ENV})`}`;
-const SCHEME: string = "cash";
 
 export default {
-  name: NAME,
+  name: `Cash${NAME_POSTFIX}`,
   slug: "cash",
   version: VERSION,
-  scheme: SCHEME,
+  scheme: `cash${SCHEME_POSTFIX}`,
   orientation: "portrait",
   icon: "./assets/images/icon.png",
   userInterfaceStyle: "automatic",
