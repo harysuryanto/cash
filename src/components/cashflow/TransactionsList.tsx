@@ -1,10 +1,4 @@
-import {
-  ActivityIndicator,
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { ActivityIndicator, FlatList, Text, View } from "react-native";
 import React from "react";
 import useTransactionsList from "@/src/hooks/useTransactionsList";
 import {
@@ -13,7 +7,7 @@ import {
 } from "@/src/utils/utils/formatter";
 
 export default function TransactionsList() {
-  const { status, data } = useTransactionsList();
+  const { status, data, refetch, isRefetching } = useTransactionsList();
 
   if (status === "pending") {
     return <ActivityIndicator />;
@@ -24,12 +18,16 @@ export default function TransactionsList() {
   }
 
   if (data.length === 0) {
-    return <Text style={styles.noDataText}>No transactions.</Text>;
+    return (
+      <Text className="flex-1 text-center align-middle">No transactions.</Text>
+    );
   }
 
   return (
     <FlatList
-      style={{ flex: 1 }}
+      className="flex-1"
+      onRefresh={refetch}
+      refreshing={isRefetching}
       data={data}
       renderItem={({ item: { id, category, date, description, nominal } }) => (
         <View key={id} style={{ paddingHorizontal: 16 }}>
@@ -44,11 +42,3 @@ export default function TransactionsList() {
     />
   );
 }
-
-const styles = StyleSheet.create({
-  noDataText: {
-    flex: 1,
-    textAlign: "center",
-    textAlignVertical: "center",
-  },
-});
