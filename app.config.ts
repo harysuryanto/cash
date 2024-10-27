@@ -30,6 +30,7 @@ export default {
       backgroundColor: "#ffffff",
     },
     package: `id.harysuryanto.cash${BUNDLE_ID_POSTFIX}`,
+    versionCode: 1,
   },
   web: {
     bundler: "metro",
