@@ -36,13 +36,13 @@ export async function getTransactionsList(
 }
 
 export async function addTransaction(
-  transaction: Transaction
+  transaction: Omit<Transaction, "id">
 ): Promise<DocumentReference<DocumentData, DocumentData>> {
   const docRef = await addDoc(collection(FIRESTORE_DB, `/${PATH}`), {
     ...transaction,
     // TODO: Change to manually set by user
     date: Timestamp.fromDate(new Date()),
-  } satisfies Transaction);
+  } satisfies Omit<Transaction, "id">);
   return docRef;
 }
 
