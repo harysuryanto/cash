@@ -13,7 +13,7 @@ import {
 import { FIRESTORE_DB } from "@/firebaseConfig";
 import { Transaction } from "@/src/types/Transaction";
 
-const PATH = "transactions";
+const PATH = "/transactions";
 
 export interface getTransactionsListProps {
   type?: "income" | "expense";
@@ -24,7 +24,7 @@ export async function getTransactionsList(
 ): Promise<Transaction[]> {
   const { type } = props || {};
 
-  const col = collection(FIRESTORE_DB, `/${PATH}`);
+  const col = collection(FIRESTORE_DB, PATH);
   const conditions = [];
   if (type) {
     conditions.push(where("type", "==", type));
@@ -37,10 +37,7 @@ export async function getTransactionsList(
 export async function addTransaction(
   transaction: Omit<Transaction, "id">
 ): Promise<DocumentReference<DocumentData, DocumentData>> {
-  const docRef = await addDoc(
-    collection(FIRESTORE_DB, `/${PATH}`),
-    transaction
-  );
+  const docRef = await addDoc(collection(FIRESTORE_DB, PATH), transaction);
   return docRef;
 }
 
@@ -49,13 +46,13 @@ export async function updateTransaction(
   transaction: Transaction
 ): Promise<void> {
   const docRef = await updateDoc(
-    doc(FIRESTORE_DB, `/${PATH}/${id}`),
+    doc(FIRESTORE_DB, `${PATH}/${id}`),
     transaction satisfies Transaction
   );
   return docRef;
 }
 
 export async function deleteTransaction(id: string): Promise<void> {
-  const docRef = await deleteDoc(doc(FIRESTORE_DB, `/${PATH}/${id}`));
+  const docRef = await deleteDoc(doc(FIRESTORE_DB, `${PATH}/${id}`));
   return docRef;
 }
