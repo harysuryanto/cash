@@ -9,6 +9,7 @@ import { Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NAV_THEME } from "@/src/constants";
 import { useColorScheme } from "@/src/hooks/useColorScheme";
+import { PortalHost } from "@/src/components/shared/react-native-reusables/primitives/portal";
 
 const LIGHT_THEME: Theme = {
   dark: false,
@@ -80,11 +81,15 @@ export default function RootLayoutNav() {
   }
 
   return (
-    <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-      <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-      <QueryClientProvider client={queryClient}>
-        <RootLayout />
-      </QueryClientProvider>
-    </ThemeProvider>
+    <>
+      <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+        <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+        <QueryClientProvider client={queryClient}>
+          <RootLayout />
+        </QueryClientProvider>
+      </ThemeProvider>
+      {/* Default Portal Host (one per app) */}
+      <PortalHost />
+    </>
   );
 }
