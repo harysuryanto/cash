@@ -140,6 +140,7 @@ export default function AddTransactionForm() {
           <Label nativeID="category">Category</Label>
           <Select
             aria-labelledby="category"
+            key={type?.value}
             value={category}
             onValueChange={setCategory}
           >
