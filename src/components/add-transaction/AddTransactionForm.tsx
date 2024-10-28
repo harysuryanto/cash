@@ -10,8 +10,9 @@ import { createTransactionsListQueryKey } from "@/src/hooks/useTransactionsList"
 import StyledDateTimePickerButton from "@/src/components/shared/StyledDateTimePickerButton";
 import { Input } from "@/src/components/shared/react-native-reusables/Input";
 import { Button } from "@/src/components/shared/react-native-reusables/Button";
-import { Text } from "@/src/components/shared/react-native-reusables/Text";
 import { Label } from "@/src/components/shared/react-native-reusables/Label";
+import { Text } from "@/src/components/shared/react-native-reusables/Text";
+import { Textarea } from "@/src/components/shared/react-native-reusables/Textarea";
 import {
   Select,
   SelectContent,
@@ -209,7 +210,7 @@ export default function AddTransactionForm() {
       </View>
       <View>
         <Label nativeID="description">Notes</Label>
-        <Input
+        <Textarea
           aria-labelledby="description"
           placeholder="Add notes"
           value={description}
