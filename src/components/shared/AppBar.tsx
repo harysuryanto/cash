@@ -1,5 +1,5 @@
-import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, Text, View } from "react-native";
+import { UserCircle } from "@/src/utils/react-native-reusables/icons/UserCircle";
 
 const AppBar = () => {
   return (
@@ -10,13 +10,7 @@ const AppBar = () => {
         </Text>
         <Text style={styles.name}>Hary! 🌞🌞</Text>
       </View>
-      <View style={styles.picture}>
-        <Ionicons
-          name="person-circle"
-          size={styles.picture.width}
-          color="#808e9b"
-        />
-      </View>
+      <UserCircle size={40} color="#808e9b" />
     </View>
   );
 };
@@ -35,12 +29,6 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 12,
-  },
-  picture: {
-    backgroundColor: "#d2dae2",
-    borderRadius: 20,
-    height: 40,
-    width: 40,
   },
 });
 

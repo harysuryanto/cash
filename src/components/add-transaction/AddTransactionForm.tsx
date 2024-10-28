@@ -1,4 +1,4 @@
-import { Button, View } from "react-native";
+import { View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Input } from "@/src/components/shared/nativecn/Input";
 import { Select } from "@/src/components/shared/nativecn/Select";
@@ -9,6 +9,8 @@ import { Timestamp } from "firebase/firestore";
 import { addTransaction } from "@/src/services/transaction";
 import { useRouter } from "expo-router";
 import { createTransactionsListQueryKey } from "@/src/hooks/useTransactionsList";
+import { Button } from "@/src/components/shared/react-native-reusables/Button";
+import { Text } from "@/src/components/shared/react-native-reusables/Text";
 
 export default function AddTransactionForm() {
   const router = useRouter();
@@ -138,7 +140,9 @@ export default function AddTransactionForm() {
         numberOfLines={3}
         textAlignVertical="top"
       />
-      <Button title="Submit" onPress={onSubmit} disabled={isPending} />
+      <Button onPress={onSubmit} disabled={isPending}>
+        <Text>Submit</Text>
+      </Button>
     </View>
   );
 }

@@ -17,10 +17,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Constants from "expo-constants";
 // import uuid from "react-native-uuid";
 import { MenuGridTile } from "@/src/components/shared/MenuGridTile";
-import { FontAwesome6 } from "@expo/vector-icons";
 import { env } from "@/src/utils/utils/env";
 import usePageFocusAnalytic from "@/src/hooks/usePageFocusAnalytic";
 import HttpErrorTest from "../shared/HttpErrorTest";
+import { ArrowDownUp } from "@/src/utils/react-native-reusables/icons/ArrowDownUp";
 
 export default function HomePage() {
   // const getBalance = () => {
@@ -97,9 +97,7 @@ export default function HomePage() {
             <TouchableOpacity style={{ flex: 1, borderRadius: 20 }}>
               <MenuGridTile
                 title="Track Cash Flow"
-                icon={({ size }) => (
-                  <FontAwesome6 name="money-bill-transfer" size={size} />
-                )}
+                icon={({ size }) => <ArrowDownUp size={size} color="#808e9b" />}
               />
             </TouchableOpacity>
           </Link>
