@@ -32,7 +32,7 @@ import { z } from "zod";
 // });
 
 const envSchema = z.object({
-  APP_ENV: z
+  EXPO_PUBLIC_APP_ENV: z
     .enum(["development", "staging", "production"])
     .default("development"),
 });

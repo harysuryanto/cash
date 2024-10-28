@@ -104,7 +104,7 @@ export default function HomePage() {
         </View>
         <Gap height={30} />
         <Text style={{ width: "100%", textAlign: "center" }}>
-          v{Constants.expoConfig?.version} - {env.APP_ENV}
+          v{Constants.expoConfig?.version} - {env.EXPO_PUBLIC_APP_ENV}
         </Text>
         <Gap height={30} />
       </ScrollView>
