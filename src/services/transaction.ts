@@ -7,7 +7,6 @@ import {
   DocumentReference,
   getDocs,
   query,
-  Timestamp,
   updateDoc,
   where,
 } from "firebase/firestore";
@@ -38,11 +37,10 @@ export async function getTransactionsList(
 export async function addTransaction(
   transaction: Omit<Transaction, "id">
 ): Promise<DocumentReference<DocumentData, DocumentData>> {
-  const docRef = await addDoc(collection(FIRESTORE_DB, `/${PATH}`), {
-    ...transaction,
-    // TODO: Change to manually set by user
-    date: Timestamp.fromDate(new Date()),
-  } satisfies Omit<Transaction, "id">);
+  const docRef = await addDoc(
+    collection(FIRESTORE_DB, `/${PATH}`),
+    transaction
+  );
   return docRef;
 }
 
