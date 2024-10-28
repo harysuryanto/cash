@@ -1,3 +1,4 @@
+import "expo-dev-client";
 import "../src/global.css";
 import { checkOtaUpdate } from "@/src/utils/utils/ota-update";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
