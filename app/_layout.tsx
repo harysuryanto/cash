@@ -11,6 +11,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NAV_THEME } from "@/src/constants";
 import { useColorScheme } from "@/src/hooks/useColorScheme";
 import { PortalHost } from "@/src/components/shared/react-native-reusables/primitives/portal";
+import { AddTransactionFormProvider } from "@/src/contexts/AddTransactionFormContext";
 
 const LIGHT_THEME: Theme = {
   dark: false,
@@ -86,7 +87,9 @@ export default function RootLayoutNav() {
       <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
         <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
         <QueryClientProvider client={queryClient}>
-          <RootLayout />
+          <AddTransactionFormProvider>
+            <RootLayout />
+          </AddTransactionFormProvider>
         </QueryClientProvider>
       </ThemeProvider>
       {/* Default Portal Host (one per app) */}
