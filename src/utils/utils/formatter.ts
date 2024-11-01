@@ -4,14 +4,14 @@ const formatDate = (date: Date) => {
   }/${date.getFullYear()}, ${date.getHours()}:${date.getMinutes()}`;
 };
 
-const formatDateRelatively = (date: Date) => {
+const formatRelativeTime = (date: Date) => {
   try {
     let currentTime = new Date();
     let past = date;
 
     function daysDiff() {
       let days = Math.ceil(
-        (past.getTime() - currentTime.getTime()) / 1000 / 60 / 60 / 24,
+        (past.getTime() - currentTime.getTime()) / 1000 / 60 / 60 / 24
       );
       return days;
     }
@@ -19,7 +19,7 @@ const formatDateRelatively = (date: Date) => {
     function hoursDiff() {
       let expireTime = past;
       let hours = Math.ceil(
-        (expireTime.getTime() - currentTime.getTime()) / 1000 / 60 / 60,
+        (expireTime.getTime() - currentTime.getTime()) / 1000 / 60 / 60
       );
       return hours;
     }
@@ -27,37 +27,38 @@ const formatDateRelatively = (date: Date) => {
     function minutesDiff() {
       let expireTime = past;
       let hours = Math.ceil(
-        (expireTime.getTime() - currentTime.getTime()) / 1000 / 60,
+        (expireTime.getTime() - currentTime.getTime()) / 1000 / 60
       );
       return hours;
     }
 
-    const formatter = new Intl.RelativeTimeFormat('id', {
-      numeric: 'auto',
+    const formatter = new Intl.RelativeTimeFormat("id", {
+      numeric: "auto",
     });
 
     if (date.getDate() === new Date().getDate()) {
       // "3 minutes ago"
       if (date.getHours() === new Date().getHours()) {
-        return formatter.format(minutesDiff(), 'minutes');
+        return formatter.format(minutesDiff(), "minutes");
       } else {
         // "3 hours ago"
-        return formatter.format(hoursDiff(), 'hours');
+        return formatter.format(hoursDiff(), "hours");
       }
     } else {
       // "3 days ago"
-      return formatter.format(daysDiff(), 'days');
+      return formatter.format(daysDiff(), "days");
     }
   } catch (error) {
+    console.log(error);
     return formatDate(date);
   }
 };
 
 const formatCurrency = (currency: number) => {
   try {
-    const formatter = new Intl.NumberFormat('id', {
-      currency: 'IDR',
-      style: 'currency',
+    const formatter = new Intl.NumberFormat("id", {
+      currency: "IDR",
+      style: "currency",
       maximumFractionDigits: 0,
     });
     return formatter.format(currency);
@@ -66,4 +67,4 @@ const formatCurrency = (currency: number) => {
   }
 };
 
-export {formatDate, formatDateRelatively, formatCurrency};
+export { formatDate, formatRelativeTime, formatCurrency };
