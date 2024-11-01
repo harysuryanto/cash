@@ -1,10 +1,8 @@
 import { ActivityIndicator, FlatList, Text, View } from "react-native";
 import React from "react";
 import useTransactionsList from "@/src/hooks/useTransactionsList";
-import {
-  formatCurrency,
-  formatDateRelatively,
-} from "@/src/utils/utils/formatter";
+import { formatCurrency } from "@/src/utils/utils/formatter";
+import TransactionCard from "@/src/components/cashflow/TransactionCard";
 
 export default function TransactionsList() {
   const { status, data, refetch, isRefetching } = useTransactionsList();
@@ -26,17 +24,28 @@ export default function TransactionsList() {
   return (
     <FlatList
       className="flex-1"
-      onRefresh={refetch}
       refreshing={isRefetching}
+      onRefresh={refetch}
       data={data}
-      renderItem={({ item: { id, category, date, description, nominal } }) => (
-        <View key={id} style={{ paddingHorizontal: 16 }}>
-          <Text>{`${formatCurrency(nominal)}${
-            category ? " - " + category : ""
-          }`}</Text>
-          <Text>{`${formatDateRelatively(date.toDate())}${
-            description ? " • " + description : ""
-          }`}</Text>
+      renderItem={({ item }) => (
+        <View className="p-4 pt-0">
+          <TransactionCard
+            {...item}
+            nominal={formatCurrency(item.nominal)}
+            date={
+              item.date.toDate().getDate() === new Date().getDate()
+                ? "Today"
+                : `${new Intl.DateTimeFormat("id", {
+                    day: "numeric",
+                    month: "short",
+                    year:
+                      new Date().getFullYear() ===
+                      item.date.toDate().getFullYear()
+                        ? undefined
+                        : "2-digit",
+                  }).format(item.date.toDate())}`
+            }
+          />
         </View>
       )}
     />
