@@ -3,10 +3,13 @@ import {
   collection,
   deleteDoc,
   doc,
-  DocumentData,
-  DocumentReference,
+  type DocumentData,
+  type DocumentReference,
   getDocs,
+  limit,
+  orderBy,
   query,
+  type QueryConstraint,
   updateDoc,
   where,
 } from "firebase/firestore";
@@ -25,7 +28,10 @@ export async function getTransactionsList(
   const { type } = props || {};
 
   const col = collection(FIRESTORE_DB, PATH);
-  const conditions = [];
+  const conditions: Array<QueryConstraint> = [
+    orderBy("date", "desc"),
+    limit(100),
+  ];
   if (type) {
     conditions.push(where("type", "==", type));
   }
