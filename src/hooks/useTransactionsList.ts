@@ -28,8 +28,6 @@ const useTransactionsList = (filter?: useTransactionsListProps) => {
   });
 
   useEffect(() => {
-    console.log(query.isFetching, query.error, query.status);
-
     if (!query.isFetching && query.error) {
       capture({ eventType: "error", eventDetails: "loading_transactions" });
     }
