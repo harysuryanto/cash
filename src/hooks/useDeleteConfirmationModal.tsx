@@ -94,7 +94,7 @@ export const useDeleteConfirmationModal = ({
             </View>
             <View className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2">
               <Button variant="ghost" onPress={closeModal}>
-                <Text>{confirmButtonText}</Text>
+                <Text>{cancelButtonText}</Text>
               </Button>
               <Button variant="destructive" onPress={handleConfirm}>
                 <Text>{confirmButtonText}</Text>
