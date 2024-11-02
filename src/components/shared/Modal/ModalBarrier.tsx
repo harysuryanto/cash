@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
-  Dimensions,
   Platform,
   Pressable,
   StyleSheet,
+  useWindowDimensions,
   View,
   ViewProps,
 } from "react-native";
@@ -19,6 +19,12 @@ export default function ModalBarrier({
   ...rest
 }: ModalBarrierProps) {
   const isWeb = Platform.OS === "web";
+  const screenWidth = useWindowDimensions().width;
+  const contentWidth = useMemo(() => {
+    const screenPadding = 16;
+    const isSm = screenWidth > 640 + screenPadding * 2;
+    return isSm ? 640 : screenWidth - screenPadding * 2;
+  }, [screenWidth]);
 
   return (
     <View
@@ -33,7 +39,7 @@ export default function ModalBarrier({
       <Pressable className="flex flex-1" onPress={onPress} />
       <View className="flex flex-row">
         <Pressable className="flex flex-1" onPress={onPress} />
-        <View className="sm:w-max md:max-w-md">{children}</View>
+        <View style={{ width: contentWidth }}>{children}</View>
         <Pressable className="flex flex-1" onPress={onPress} />
       </View>
       <Pressable className="flex flex-1" onPress={onPress} />
