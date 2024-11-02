@@ -32,9 +32,9 @@ export default function ModalBarrier({
     >
       <Pressable className="flex flex-1" onPress={onPress} />
       <View className="flex flex-row">
-        <Pressable className="w-[16]" onPress={onPress} />
-        <View className="flex flex-1">{children}</View>
-        <Pressable className="w-[16]" onPress={onPress} />
+        <Pressable className="flex flex-1" onPress={onPress} />
+        <View className="sm:w-max md:max-w-md">{children}</View>
+        <Pressable className="flex flex-1" onPress={onPress} />
       </View>
       <Pressable className="flex flex-1" onPress={onPress} />
     </View>
