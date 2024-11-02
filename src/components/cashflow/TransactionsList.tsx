@@ -1,8 +1,9 @@
-import { ActivityIndicator, FlatList, Text, View } from "react-native";
+import { ActivityIndicator, FlatList, View } from "react-native";
 import React from "react";
 import useTransactionsList from "@/src/hooks/useTransactionsList";
 import { formatCurrency } from "@/src/utils/utils/formatter";
 import TransactionCard from "@/src/components/cashflow/TransactionCard";
+import { Text } from "@/src/components/shared/react-native-reusables/Text";
 
 export default function TransactionsList() {
   const { status, data, refetch, isRefetching } = useTransactionsList();
