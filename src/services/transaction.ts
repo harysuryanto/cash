@@ -61,17 +61,15 @@ export async function addTransaction(
 export async function updateTransaction(
   id: string,
   transaction: Transaction
-): Promise<void> {
-  const docRef = await updateDoc(
-    doc(FIRESTORE_DB, `${PATH}/${id}`),
-    transaction satisfies Transaction
-  );
+): Promise<DocumentReference<DocumentData, DocumentData>> {
+  const docRef = doc(FIRESTORE_DB, `${PATH}/${id}`);
+  await updateDoc(docRef, transaction satisfies Transaction);
   return docRef;
 }
 
 export async function deleteTransaction(
   id: string
-): Promise<ReturnType<typeof doc>> {
+): Promise<DocumentReference<DocumentData, DocumentData>> {
   const docRef = doc(FIRESTORE_DB, `${PATH}/${id}`);
   await deleteDoc(docRef);
   return docRef;
