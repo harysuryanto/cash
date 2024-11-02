@@ -37,7 +37,18 @@ export async function getTransactionsList(
   }
   const que = query(col, ...conditions);
   const querySnapshot = await getDocs(que);
-  return querySnapshot.docs.map((doc) => doc.data() as Transaction);
+  return querySnapshot.docs.map(
+    (doc) =>
+      ({
+        id: doc.id,
+        category: doc.data().category,
+        date: doc.data().date,
+        description: doc.data().description,
+        fund: doc.data().fund,
+        nominal: doc.data().nominal,
+        type: doc.data().type,
+      } satisfies Transaction)
+  );
 }
 
 export async function addTransaction(
@@ -58,7 +69,10 @@ export async function updateTransaction(
   return docRef;
 }
 
-export async function deleteTransaction(id: string): Promise<void> {
-  const docRef = await deleteDoc(doc(FIRESTORE_DB, `${PATH}/${id}`));
+export async function deleteTransaction(
+  id: string
+): Promise<ReturnType<typeof doc>> {
+  const docRef = doc(FIRESTORE_DB, `${PATH}/${id}`);
+  await deleteDoc(docRef);
   return docRef;
 }

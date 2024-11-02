@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 import * as Haptics from "expo-haptics";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Card,
   CardContent,
@@ -10,8 +11,11 @@ import {
 import { Text } from "@/src/components/shared/react-native-reusables/Text";
 import { useDeleteConfirmationModal } from "@/src/hooks/useDeleteConfirmationModal";
 import Modal from "@/src/components/shared/Modal";
+import { deleteTransaction } from "@/src/services/transaction";
+import { createTransactionsListQueryKey } from "@/src/hooks/useTransactionsList";
 
 type TransactionCardProps = {
+  id: string;
   type: string;
   nominal: string;
   category: string;
@@ -21,6 +25,7 @@ type TransactionCardProps = {
 };
 
 export default function TransactionCard({
+  id,
   type,
   nominal,
   category,
@@ -28,20 +33,30 @@ export default function TransactionCard({
   date,
   description,
 }: TransactionCardProps) {
+  const queryClient = useQueryClient();
+
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const handleDelete = async () => {
-    // Your delete logic here
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-  };
-
-  const {
-    Modal: DeleteConfirmationModal,
-    openModal,
-    mutationResult,
-  } = useDeleteConfirmationModal({
-    onDelete: handleDelete,
+  const { mutate } = useMutation({
+    mutationFn: async (id: TransactionCardProps["id"]) => {
+      return await deleteTransaction(id);
+    },
+    onError: (error) => {
+      alert(error.message);
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: createTransactionsListQueryKey(),
+      });
+    },
   });
+
+  const { Modal: DeleteConfirmationModal, openModal } =
+    useDeleteConfirmationModal({
+      onDelete: async () => {
+        mutate(id);
+      },
+    });
 
   const handleLongPress = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
