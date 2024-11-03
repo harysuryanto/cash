@@ -22,6 +22,7 @@ export default function Layout() {
         }}
       />
       <Stack.Screen name="add" />
+      <Stack.Screen name="[transactionId]" />
     </Stack>
   );
 }

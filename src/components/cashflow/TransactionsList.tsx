@@ -1,9 +1,15 @@
-import { ActivityIndicator, FlatList, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import useTransactionsList from "@/src/hooks/useTransactionsList";
 import { formatCurrency } from "@/src/utils/utils/formatter";
 import TransactionCard from "@/src/components/cashflow/TransactionCard";
 import { Text } from "@/src/components/shared/react-native-reusables/Text";
+import { Link } from "expo-router";
 
 export default function TransactionsList() {
   const { status, data, refetch, isRefetching } = useTransactionsList();
@@ -29,25 +35,27 @@ export default function TransactionsList() {
       onRefresh={refetch}
       data={data}
       renderItem={({ item }) => (
-        <View className="p-4 pt-0">
-          <TransactionCard
-            {...item}
-            nominal={formatCurrency(item.nominal)}
-            date={
-              item.date.toDate().getDate() === new Date().getDate()
-                ? "Today"
-                : `${new Intl.DateTimeFormat("id", {
-                    day: "numeric",
-                    month: "short",
-                    year:
-                      new Date().getFullYear() ===
-                      item.date.toDate().getFullYear()
-                        ? undefined
-                        : "2-digit",
-                  }).format(item.date.toDate())}`
-            }
-          />
-        </View>
+        <Link href={`/(private)/cash-flow/${item.id}`} asChild>
+          <TouchableOpacity className="p-4 pt-0">
+            <TransactionCard
+              {...item}
+              nominal={formatCurrency(item.nominal)}
+              date={
+                item.date.toDate().getDate() === new Date().getDate()
+                  ? "Today"
+                  : `${new Intl.DateTimeFormat("id", {
+                      day: "numeric",
+                      month: "short",
+                      year:
+                        new Date().getFullYear() ===
+                        item.date.toDate().getFullYear()
+                          ? undefined
+                          : "2-digit",
+                    }).format(item.date.toDate())}`
+              }
+            />
+          </TouchableOpacity>
+        </Link>
       )}
     />
   );
