@@ -5,6 +5,7 @@ import {
   doc,
   type DocumentData,
   type DocumentReference,
+  getDoc,
   getDocs,
   limit,
   orderBy,
@@ -49,6 +50,25 @@ export async function getTransactionsList(
         type: doc.data().type,
       } satisfies Transaction)
   );
+}
+
+export async function getTransactionDetails(
+  id: string
+): Promise<Transaction | null> {
+  const docRef = doc(FIRESTORE_DB, `${PATH}/${id}`);
+  const docSnap = await getDoc(docRef);
+
+  if (!docSnap.exists()) return null;
+
+  return {
+    id: docSnap.id,
+    category: docSnap.data().category,
+    date: docSnap.data().date,
+    description: docSnap.data().description,
+    fund: docSnap.data().fund,
+    nominal: docSnap.data().nominal,
+    type: docSnap.data().type,
+  } satisfies Transaction;
 }
 
 export async function addTransaction(
