@@ -13,7 +13,10 @@ export default function AddTransactionButton({
 }: AddTransactionButtonProps) {
   return (
     <Link href="/(private)/cash-flow/add" asChild>
-      <TouchableOpacity {...rest}>
+      <TouchableOpacity
+        hitSlop={{ left: 10, right: 100, top: 100, bottom: 100 }}
+        {...rest}
+      >
         <Ionicons name="add" size={24} color={color} />
       </TouchableOpacity>
     </Link>
