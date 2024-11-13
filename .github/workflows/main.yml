@@ -11,6 +11,7 @@ on:
           - development
           - staging
           - production
+          - productionAab
 
 env:
   BUN_VERSION: "latest"
@@ -80,7 +81,12 @@ jobs:
           # Extract values from package.json
           NAME=$(jq -r '.name' package.json)
           VERSION=$(jq -r '.version' package.json)
-          FILENAME="${NAME}-v${VERSION}-${EAS_BUILD_PROFILE}.apk"
+
+          if [ "$EAS_BUILD_PROFILE" = "productionAab" ]; then
+            FILENAME="${NAME}-v${VERSION}-${EAS_BUILD_PROFILE}.aab"
+          else
+            FILENAME="${NAME}-v${VERSION}-${EAS_BUILD_PROFILE}.apk"
+          fi
 
           # Log extracted values
           echo "NAME=${NAME}"
