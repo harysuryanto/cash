@@ -64,7 +64,7 @@ jobs:
           echo "$(bun bin -g)" >> $GITHUB_PATH
 
       - name: Update Expo packages
-        run: bunx expo install --check
+        run: bunx expo install --fix
 
       - name: Verify EAS CLI installation
         run: eas --version
