@@ -3,17 +3,15 @@ import DateTimePicker from "react-native-ui-datepicker";
 import { DatePickerSingleProps } from "react-native-ui-datepicker/src/DateTimePicker";
 
 import { forwardRef, useState } from "react";
-import { Modal, Text, TouchableOpacity, View } from "react-native";
+import { Modal, Text, TouchableOpacity } from "react-native";
 
 import { cn } from "@/src/utils/utils/utils";
 
 export interface StyledDateTimePickerButtonProps
   extends Omit<DatePickerSingleProps, "mode"> {
-  className?: string | undefined;
-  label?: string;
-  labelClasses?: string;
   placeholder?: string;
-  placeholderClasses?: string;
+  valueClassName?: string | undefined;
+  placeholderClassName?: string;
 }
 
 const StyledDateTimePickerButton = forwardRef<
@@ -22,11 +20,9 @@ const StyledDateTimePickerButton = forwardRef<
 >(
   (
     {
-      className,
-      label,
-      labelClasses,
       placeholder = "Select date",
-      placeholderClasses,
+      valueClassName,
+      placeholderClassName,
       ...props
     },
     ref
@@ -38,34 +34,27 @@ const StyledDateTimePickerButton = forwardRef<
 
     return (
       <>
-        <View className={cn("flex flex-col gap-1.5", className)}>
-          {label && (
-            <Text className={cn("text-base", labelClasses)}>{label}</Text>
-          )}
-          <TouchableOpacity
-            className={
-              "border border-input py-2.5 px-4 rounded-lg bg-white dark:bg-black"
-              // TODO: Use dark mode again
-              // "border border-input py-2.5 px-4 rounded-lg bg-white dark:bg-black"
-            }
-            onPress={() => setVisible(true)}
+        <TouchableOpacity
+          className={
+            "web:flex h-10 native:h-12 web:w-full rounded-md border border-input bg-background px-3 web:py-2 web:ring-offset-background web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2"
+          }
+          onPress={() => setVisible(true)}
+        >
+          <Text
+            className={cn(
+              "text-base lg:text-sm native:text-lg native:leading-[1.25]",
+              selectedDate ? "text-foreground" : "text-muted-foreground",
+              selectedDate ? valueClassName : placeholderClassName
+            )}
           >
-            <Text
-              className={cn(
-                "text-base",
-                selectedDate ? "text-black" : "text-gray-500",
-                placeholderClasses
-              )}
-            >
-              {selectedDate
-                ? `${selectedDate.getDate()} ${selectedDate.toLocaleString(
-                    "default",
-                    { month: "long" }
-                  )} ${selectedDate.getFullYear()}`
-                : placeholder}
-            </Text>
-          </TouchableOpacity>
-        </View>
+            {selectedDate
+              ? `${selectedDate.getDate()} ${selectedDate.toLocaleString(
+                  "default",
+                  { month: "long" }
+                )} ${selectedDate.getFullYear()}`
+              : placeholder}
+          </Text>
+        </TouchableOpacity>
         <Modal visible={visible} animationType="fade">
           <DateTimePicker
             {...props}
