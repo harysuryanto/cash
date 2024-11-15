@@ -40,7 +40,7 @@ export default function EditTransactionPage() {
         <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
       }
     >
-      <View className="p-3">
+      <View className="px-4">
         <EditTransactionForm transaction={data} />
       </View>
     </ScrollView>

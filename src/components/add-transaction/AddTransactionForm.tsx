@@ -44,13 +44,15 @@ export default function AddTransactionForm() {
   }, []);
 
   return (
-    <View className="gap-1">
+    <View className="gap-4">
       <Controller
         control={control}
         name="type"
         render={({ field: { value, onChange }, fieldState: { error } }) => (
           <View>
-            <Label nativeID="type">Type</Label>
+            <Label nativeID="type" className="mb-2">
+              Type
+            </Label>
             <Select
               aria-labelledby="type"
               value={value}
@@ -85,7 +87,9 @@ export default function AddTransactionForm() {
           fieldState: { error },
         }) => (
           <View>
-            <Label nativeID="nominal">Nominal</Label>
+            <Label nativeID="nominal" className="mb-2">
+              Nominal
+            </Label>
             <Input
               aria-labelledby="nominal"
               placeholder="Nominal"
@@ -104,7 +108,9 @@ export default function AddTransactionForm() {
           name="category"
           render={({ field: { value, onChange }, fieldState: { error } }) => (
             <View>
-              <Label nativeID="category">Category</Label>
+              <Label nativeID="category" className="mb-2">
+                Category
+              </Label>
               <Select
                 aria-labelledby="category"
                 key={type.value}
@@ -143,7 +149,9 @@ export default function AddTransactionForm() {
         name="fund"
         render={({ field: { value, onChange }, fieldState: { error } }) => (
           <View>
-            <Label nativeID="fund">Fund</Label>
+            <Label nativeID="fund" className="mb-2">
+              Fund
+            </Label>
             <Select
               aria-labelledby="fund"
               value={value}
@@ -175,7 +183,9 @@ export default function AddTransactionForm() {
         name="date"
         render={({ field: { value, onChange }, fieldState: { error } }) => (
           <View>
-            <Label nativeID="date">Date</Label>
+            <Label nativeID="date" className="mb-2">
+              Date
+            </Label>
             <StyledDateTimePickerButton
               aria-labelledby="date"
               placeholder="Select date"
@@ -194,7 +204,9 @@ export default function AddTransactionForm() {
           fieldState: { error },
         }) => (
           <View>
-            <Label nativeID="description">Notes</Label>
+            <Label nativeID="description" className="mb-2">
+              Notes
+            </Label>
             <Textarea
               aria-labelledby="description"
               placeholder="Add notes"

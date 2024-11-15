@@ -8,7 +8,7 @@ export default function AddTransactionPage() {
 
   return (
     <ScrollView className="flex-1 bg-white">
-      <View className="p-3">
+      <View className="px-4">
         <AddTransactionForm />
       </View>
     </ScrollView>

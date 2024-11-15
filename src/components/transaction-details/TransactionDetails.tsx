@@ -37,12 +37,12 @@ export default function TransactionDetails({
 
   return (
     <ScrollView
-      className="flex-1"
+      className="flex-1 bg-white"
       refreshControl={
         <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
       }
     >
-      <View className="flex-1 px-4 gap-6">
+      <View className="flex-1 px-4 gap-4">
         <View className="flex-row justify-between">
           <Text className="pr-6">Nominal</Text>
           <Text
