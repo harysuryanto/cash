@@ -2,7 +2,7 @@ import DateTimePicker from "react-native-ui-datepicker";
 
 import { DatePickerSingleProps } from "react-native-ui-datepicker/src/DateTimePicker";
 
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { Modal, Text, TouchableOpacity } from "react-native";
 
 import { cn } from "@/src/utils/utils/utils";
@@ -23,14 +23,19 @@ const StyledDateTimePickerButton = forwardRef<
       placeholder = "Select date",
       valueClassName,
       placeholderClassName,
+      date,
       ...props
     },
     ref
   ) => {
     const [visible, setVisible] = useState(false);
-    const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-      undefined
-    );
+    const [selectedDate, setSelectedDate] = useState<Date | undefined>();
+
+    useEffect(() => {
+      if (!date) return;
+
+      setSelectedDate(new Date(date!.toString()));
+    }, [date]);
 
     return (
       <>
