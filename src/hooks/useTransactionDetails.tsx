@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 export const useTransactionDetailsQueryKey = "transactionDetails";
 
-export const createTransactionDetailsQueryKey = (id: string) => [
+export const createTransactionDetailsQueryKey = (id?: string) => [
   removeNullishValuesFromObject({
     useTransactionDetailsQueryKey,
     id,
