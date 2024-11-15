@@ -1,3 +1,5 @@
+import * as SelectPrimitive from "@/src/components/shared/react-native-reusables/primitives/select";
+
 export enum IconPaths {
   cashIn = "https://cdn-icons-png.flaticon.com/512/4256/4256796.png",
   cashOut = "https://cdn-icons-png.flaticon.com/512/4221/4221548.png",
@@ -19,4 +21,24 @@ export const NAV_THEME = {
     primary: "hsl(0 0% 98%)", // primary
     text: "hsl(0 0% 98%)", // foreground
   },
-};
+} as const;
+
+export const TYPE_OPTIONS: NonNullable<SelectPrimitive.Option>[] = [
+  { value: "expense", label: "Expense" },
+  { value: "income", label: "Income" },
+];
+export const EXPENSE_CATEGORY_OPTIONS: NonNullable<SelectPrimitive.Option>[] = [
+  { value: "Basic Need", label: "Basic Need" },
+  { value: "Desire", label: "Desire" },
+  { value: "Investment", label: "Investment" },
+  { value: "Uncategorized", label: "Uncategorized" },
+];
+export const INCOME_CATEGORY_OPTIONS: NonNullable<SelectPrimitive.Option>[] = [
+  { value: "Salary", label: "Salary" },
+  { value: "Bonus", label: "Bonus" },
+  { value: "Investment Return", label: "Investment Return" },
+  { value: "Uncategorized", label: "Uncategorized" },
+];
+export const FUND_OPTIONS: NonNullable<SelectPrimitive.Option>[] = [
+  { value: "Cash", label: "Cash" },
+];

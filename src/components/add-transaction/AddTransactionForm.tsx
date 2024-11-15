@@ -14,30 +14,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/src/components/shared/react-native-reusables/Select";
-import * as SelectPrimitive from "@/src/components/shared/react-native-reusables/primitives/select";
 import FormErrorText from "@/src/components/shared/FormErrorText";
 import { useAddTransactionForm } from "@/src/contexts/AddTransactionFormContext";
 import { Controller } from "react-hook-form";
-
-const TYPE_OPTIONS: NonNullable<SelectPrimitive.Option>[] = [
-  { value: "expense", label: "Expense" },
-  { value: "income", label: "Income" },
-];
-const EXPENSE_CATEGORY_OPTIONS: NonNullable<SelectPrimitive.Option>[] = [
-  { value: "Basic Need", label: "Basic Need" },
-  { value: "Desire", label: "Desire" },
-  { value: "Investment", label: "Investment" },
-  { value: "Uncategorized", label: "Uncategorized" },
-];
-const INCOME_CATEGORY_OPTIONS: NonNullable<SelectPrimitive.Option>[] = [
-  { value: "Salary", label: "Salary" },
-  { value: "Bonus", label: "Bonus" },
-  { value: "Investment Return", label: "Investment Return" },
-  { value: "Uncategorized", label: "Uncategorized" },
-];
-const FUND_OPTIONS: NonNullable<SelectPrimitive.Option>[] = [
-  { value: "Cash", label: "Cash" },
-];
+import {
+  EXPENSE_CATEGORY_OPTIONS,
+  FUND_OPTIONS,
+  INCOME_CATEGORY_OPTIONS,
+  TYPE_OPTIONS,
+} from "@/src/constants";
 
 export default function AddTransactionForm() {
   const insets = useSafeAreaInsets();
