@@ -16,7 +16,7 @@ type TransactionDetailsProps = {
 export default function TransactionDetails({
   transactionId,
 }: TransactionDetailsProps) {
-  const { status, data, refetch, isRefetching } =
+  const { status, error, data, refetch, isRefetching } =
     useTransactionDetails(transactionId);
 
   if (status === "pending") {
@@ -24,7 +24,7 @@ export default function TransactionDetails({
   }
 
   if (status === "error") {
-    return <Text>Error</Text>;
+    <Text className="flex-1 text-center align-middle">{error.message}</Text>;
   }
 
   if (!data) {
