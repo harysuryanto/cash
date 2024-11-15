@@ -12,6 +12,7 @@ import { NAV_THEME } from "@/src/constants";
 import { useColorScheme } from "@/src/hooks/useColorScheme";
 import { PortalHost } from "@/src/components/shared/react-native-reusables/primitives/portal";
 import { AddTransactionFormProvider } from "@/src/contexts/AddTransactionFormContext";
+import { EditTransactionFormProvider } from "@/src/contexts/EditTransactionFormContext";
 
 const LIGHT_THEME: Theme = {
   dark: false,
@@ -88,7 +89,9 @@ export default function RootLayoutNav() {
         <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
         <QueryClientProvider client={queryClient}>
           <AddTransactionFormProvider>
-            <RootLayout />
+            <EditTransactionFormProvider>
+              <RootLayout />
+            </EditTransactionFormProvider>
           </AddTransactionFormProvider>
         </QueryClientProvider>
       </ThemeProvider>

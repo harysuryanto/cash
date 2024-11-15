@@ -80,10 +80,10 @@ export async function addTransaction(
 
 export async function updateTransaction(
   id: string,
-  transaction: Transaction
+  transaction: Omit<Transaction, "id">
 ): Promise<DocumentReference<DocumentData, DocumentData>> {
   const docRef = doc(FIRESTORE_DB, `${PATH}/${id}`);
-  await updateDoc(docRef, transaction satisfies Transaction);
+  await updateDoc(docRef, transaction satisfies Omit<Transaction, "id">);
   return docRef;
 }
 

@@ -1,10 +1,6 @@
-import { View, Text } from "react-native";
 import React from "react";
+import EditTransactionPage from "@/src/components/edit-transaction/EditTransactionPage";
 
 export default function EditTransactionRoute() {
-  return (
-    <View>
-      <Text>EditTransactionRoute</Text>
-    </View>
-  );
+  return <EditTransactionPage />;
 }
