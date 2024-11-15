@@ -34,13 +34,13 @@ export const captureEvent = async ({
   debug = __DEV__,
 }: captureEventProps): Promise<void> => {
   try {
-    return await axios.post("https://api.lukehog.com/event/gwYJn9BJoeyJvJDx", {
-      userId: userId ?? "unauthenticated", // Required
-      event: `${eventType}_${eventDetails}`, // Required; Only recieves alphabets and _ (snake_case)
-      sessionId, // Optional
-      properties, // Optional
-      debug: Number(debug), // Optional; Defaults to 0
-    });
+    // return await axios.post("https://api.lukehog.com/event/gwYJn9BJoeyJvJDx", {
+    //   userId: userId ?? "unauthenticated", // Required
+    //   event: `${eventType}_${eventDetails}`, // Required; Only recieves alphabets and _ (snake_case)
+    //   sessionId, // Optional
+    //   properties, // Optional
+    //   debug: Number(debug), // Optional; Defaults to 0
+    // });
   } catch (error) {
     console.log("🔴 Analytics error:", error);
   }
