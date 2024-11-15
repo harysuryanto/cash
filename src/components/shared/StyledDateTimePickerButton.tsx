@@ -36,7 +36,7 @@ const StyledDateTimePickerButton = forwardRef<
       <>
         <TouchableOpacity
           className={
-            "web:flex h-10 native:h-12 web:w-full rounded-md border border-input bg-background px-3 web:py-2 web:ring-offset-background web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2"
+            "web:flex justify-center h-10 native:h-12 web:w-full rounded-md border border-input bg-background px-3 web:py-2 web:ring-offset-background web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2"
           }
           onPress={() => setVisible(true)}
         >
