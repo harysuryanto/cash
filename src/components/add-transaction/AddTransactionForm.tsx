@@ -40,7 +40,7 @@ export default function AddTransactionForm() {
   const type = getValues("type");
 
   useEffect(() => {
-    return reset();
+    return reset;
   }, []);
 
   return (
