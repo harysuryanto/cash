@@ -6,6 +6,7 @@ import { z } from "zod";
 import { DocumentData, DocumentReference, Timestamp } from "firebase/firestore";
 import type { Transaction } from "@/src/types/Transaction";
 import { addTransaction } from "@/src/services/transaction";
+import { useAuth } from "./AuthContext";
 
 const optionSchema = z.object({
   label: z.string(),
@@ -48,6 +49,8 @@ export const useAddTransactionForm = () => {
 };
 
 export const AddTransactionFormProvider = ({ children }: PropsWithChildren) => {
+  const { user } = useAuth();
+
   const formMethods = useForm<FormFields>({ resolver: zodResolver(schema) });
   const mutation = useMutation({
     mutationFn: async (data: FormFields) => {
@@ -58,6 +61,7 @@ export const AddTransactionFormProvider = ({ children }: PropsWithChildren) => {
         fund: data.fund.value,
         date: Timestamp.fromDate(data.date),
         description: data.description ?? "",
+        userId: user!.id,
       });
     },
   });

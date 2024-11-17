@@ -13,6 +13,7 @@ import { useColorScheme } from "@/src/hooks/useColorScheme";
 import { PortalHost } from "@/src/components/shared/react-native-reusables/primitives/portal";
 import { AddTransactionFormProvider } from "@/src/contexts/AddTransactionFormContext";
 import { EditTransactionFormProvider } from "@/src/contexts/EditTransactionFormContext";
+import { AuthProvider } from "@/src/contexts/AuthContext";
 
 const LIGHT_THEME: Theme = {
   dark: false,
@@ -88,11 +89,13 @@ export default function RootLayoutNav() {
       <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
         <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
         <QueryClientProvider client={queryClient}>
-          <AddTransactionFormProvider>
-            <EditTransactionFormProvider>
-              <RootLayout />
-            </EditTransactionFormProvider>
-          </AddTransactionFormProvider>
+          <AuthProvider>
+            <AddTransactionFormProvider>
+              <EditTransactionFormProvider>
+                <RootLayout />
+              </EditTransactionFormProvider>
+            </AddTransactionFormProvider>
+          </AuthProvider>
         </QueryClientProvider>
       </ThemeProvider>
       {/* Default Portal Host (one per app) */}

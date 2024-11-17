@@ -49,6 +49,7 @@ export async function getTransactionsList(
         fund: docSnap.data().fund,
         nominal: docSnap.data().nominal,
         type: docSnap.data().type,
+        userId: docSnap.data().userId,
       } satisfies WithId<Transaction>)
   );
 }
@@ -69,6 +70,7 @@ export async function getTransactionDetails(
     fund: docSnap.data().fund,
     nominal: docSnap.data().nominal,
     type: docSnap.data().type,
+    userId: docSnap.data().userId,
   } satisfies WithId<Transaction>;
 }
 

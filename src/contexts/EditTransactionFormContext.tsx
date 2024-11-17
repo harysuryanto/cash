@@ -12,6 +12,7 @@ import { z } from "zod";
 import { DocumentData, DocumentReference, Timestamp } from "firebase/firestore";
 import type { Transaction } from "@/src/types/Transaction";
 import { updateTransaction } from "@/src/services/transaction";
+import { useAuth } from "./AuthContext";
 
 const optionSchema = z.object({
   label: z.string(),
@@ -58,6 +59,8 @@ export const useEditTransactionForm = () => {
 export const EditTransactionFormProvider = ({
   children,
 }: PropsWithChildren) => {
+  const { user } = useAuth();
+
   const [transactionId, setTransactionId] =
     useState<EditTransactionFormContextValue["transactionId"]>();
   const formMethods = useForm<FormFields>({ resolver: zodResolver(schema) });
@@ -73,6 +76,7 @@ export const EditTransactionFormProvider = ({
         fund: data.fund.value,
         date: Timestamp.fromDate(data.date),
         description: data.description ?? "",
+        userId: user!.id,
       });
     },
   });
