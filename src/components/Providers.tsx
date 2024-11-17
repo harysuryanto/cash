@@ -1,6 +1,5 @@
 import React, { PropsWithChildren, useEffect, useState } from "react";
 import { Platform } from "react-native";
-import { SplashScreen } from "expo-router";
 import { Theme, ThemeProvider } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -52,9 +51,7 @@ export default function Providers({ children }: PropsWithChildren) {
         return;
       }
       setIsColorSchemeLoaded(true);
-    })().finally(() => {
-      SplashScreen.hideAsync();
-    });
+    })();
   }, []);
 
   if (!isColorSchemeLoaded) {
