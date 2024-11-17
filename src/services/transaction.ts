@@ -16,6 +16,7 @@ import {
 } from "firebase/firestore";
 import { FIRESTORE_DB } from "@/firebaseConfig";
 import { Transaction } from "@/src/types/Transaction";
+import type { WithId } from "@/src/types/utlis";
 
 const PATH = "/transactions";
 
@@ -25,7 +26,7 @@ export interface getTransactionsListProps {
 
 export async function getTransactionsList(
   props?: getTransactionsListProps
-): Promise<Transaction[]> {
+): Promise<WithId<Transaction>[]> {
   const { type } = props || {};
 
   const col = collection(FIRESTORE_DB, PATH);
@@ -39,22 +40,22 @@ export async function getTransactionsList(
   const que = query(col, ...conditions);
   const querySnapshot = await getDocs(que);
   return querySnapshot.docs.map(
-    (doc) =>
+    (docSnap) =>
       ({
-        id: doc.id,
-        category: doc.data().category,
-        date: doc.data().date,
-        description: doc.data().description,
-        fund: doc.data().fund,
-        nominal: doc.data().nominal,
-        type: doc.data().type,
-      } satisfies Transaction)
+        id: docSnap.id,
+        category: docSnap.data().category,
+        date: docSnap.data().date,
+        description: docSnap.data().description,
+        fund: docSnap.data().fund,
+        nominal: docSnap.data().nominal,
+        type: docSnap.data().type,
+      } satisfies WithId<Transaction>)
   );
 }
 
 export async function getTransactionDetails(
   id: string
-): Promise<Transaction | null> {
+): Promise<WithId<Transaction> | null> {
   const docRef = doc(FIRESTORE_DB, `${PATH}/${id}`);
   const docSnap = await getDoc(docRef);
 
@@ -68,11 +69,11 @@ export async function getTransactionDetails(
     fund: docSnap.data().fund,
     nominal: docSnap.data().nominal,
     type: docSnap.data().type,
-  } satisfies Transaction;
+  } satisfies WithId<Transaction>;
 }
 
 export async function addTransaction(
-  transaction: Omit<Transaction, "id">
+  transaction: Transaction
 ): Promise<DocumentReference<DocumentData, DocumentData>> {
   const docRef = await addDoc(collection(FIRESTORE_DB, PATH), transaction);
   return docRef;
@@ -80,10 +81,10 @@ export async function addTransaction(
 
 export async function updateTransaction(
   id: string,
-  transaction: Omit<Transaction, "id">
+  transaction: Transaction
 ): Promise<DocumentReference<DocumentData, DocumentData>> {
   const docRef = doc(FIRESTORE_DB, `${PATH}/${id}`);
-  await updateDoc(docRef, transaction satisfies Omit<Transaction, "id">);
+  await updateDoc(docRef, transaction satisfies Transaction);
   return docRef;
 }
 

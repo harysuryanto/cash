@@ -22,9 +22,10 @@ import FormErrorText from "@/src/components/shared/FormErrorText";
 import { Controller } from "react-hook-form";
 import { useEditTransactionForm } from "@/src/contexts/EditTransactionFormContext";
 import { Transaction } from "@/src/types/Transaction";
+import { WithId } from "@/src/types/utlis";
 
 type EditTransactionFormProps = {
-  transaction: Transaction;
+  transaction: WithId<Transaction>;
 };
 
 export default function EditTransactionForm({
@@ -40,7 +41,7 @@ export default function EditTransactionForm({
 
   const {
     setTransactionId,
-    formMethods: { control, getValues, setValue, resetField },
+    formMethods: { control, getValues, setValue },
     reset,
   } = useEditTransactionForm();
   const type = getValues("type");
