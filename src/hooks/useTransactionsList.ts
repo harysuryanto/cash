@@ -3,6 +3,7 @@ import { removeNullishValuesFromObject } from "@/src/utils/utils/object";
 import { getTransactionsList } from "@/src/services/transaction";
 import useAnalytics from "@/src/hooks/useAnalytics";
 import { useEffect } from "react";
+import { useAuth } from "@/src/contexts/AuthContext";
 
 export const useTransactionsListQueryKey = "transactionsList";
 
@@ -23,8 +24,10 @@ interface useTransactionsListProps {
 
 const useTransactionsList = (filter?: useTransactionsListProps) => {
   const { capture } = useAnalytics();
+  const { user } = useAuth();
 
   const query = useQuery({
+    enabled: !!user,
     queryKey: createTransactionsListQueryKey(filter),
     queryFn: async () => await getTransactionsList(filter),
   });
