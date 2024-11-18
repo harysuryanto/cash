@@ -39,7 +39,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const isLoadingAuth = user === undefined;
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {
+    const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (latestUser) => {
+      if (latestUser === user) return;
       setUser(user);
     });
     return unsubscribe;
