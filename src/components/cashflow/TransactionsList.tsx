@@ -19,7 +19,9 @@ export default function TransactionsList() {
   }
 
   if (status === "error") {
-    return <Text>Error</Text>;
+    return (
+      <Text className="flex-1 text-center align-middle">{error.message}</Text>
+    );
   }
 
   if (data.length === 0) {
