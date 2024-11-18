@@ -24,7 +24,9 @@ export default function TransactionDetails({
   }
 
   if (status === "error") {
-    <Text className="flex-1 text-center align-middle">{error.message}</Text>;
+    return (
+      <Text className="flex-1 text-center align-middle">{error.message}</Text>
+    );
   }
 
   if (!data) {

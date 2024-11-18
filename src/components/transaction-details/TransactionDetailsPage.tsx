@@ -8,7 +8,7 @@ export default function TransactionDetailsPage() {
 
   return (
     <View className="flex-1 bg-background">
-      <TransactionDetails transactionId={transactionId} />;
+      <TransactionDetails transactionId={transactionId} />
     </View>
   );
 }
