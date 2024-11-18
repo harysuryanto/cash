@@ -77,6 +77,7 @@ export default function SignInForm() {
               onChangeText={onChange}
               onBlur={onBlur}
               keyboardType="email-address"
+              autoCapitalize="none"
             />
             {error && <FormErrorText>{error.message}</FormErrorText>}
           </View>
@@ -100,6 +101,7 @@ export default function SignInForm() {
               onChangeText={onChange}
               onBlur={onBlur}
               secureTextEntry
+              autoCapitalize="none"
             />
             {error && <FormErrorText>{error.message}</FormErrorText>}
           </View>
