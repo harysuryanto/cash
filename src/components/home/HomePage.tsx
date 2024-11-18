@@ -53,7 +53,7 @@ export default function HomePage() {
   usePageFocusAnalytic("home_page");
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView className="flex-1 bg-background">
       <ScrollView>
         <AppBar />
         <View style={styles.sectionContainer}>
@@ -113,10 +113,6 @@ export default function HomePage() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.white,
-    flex: 1,
-  },
   sectionContainer: {
     alignItems: "center",
     borderColor: colors.border,

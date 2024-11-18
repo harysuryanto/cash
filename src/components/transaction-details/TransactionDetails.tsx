@@ -1,6 +1,5 @@
 import {
   View,
-  Text,
   ActivityIndicator,
   ScrollView,
   RefreshControl,
@@ -8,6 +7,7 @@ import {
 import React from "react";
 import useTransactionDetails from "@/src/hooks/useTransactionDetails";
 import { formatCurrency } from "@/src/utils/utils/formatter";
+import { Text } from "@/src/components/shared/react-native-reusables/Text";
 
 type TransactionDetailsProps = {
   transactionId: string;
@@ -37,7 +37,7 @@ export default function TransactionDetails({
 
   return (
     <ScrollView
-      className="flex-1 bg-white"
+      className="flex-1"
       refreshControl={
         <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
       }

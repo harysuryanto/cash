@@ -35,7 +35,7 @@ export default function EditTransactionPage() {
 
   return (
     <ScrollView
-      className="flex-1 bg-white"
+      className="flex-1 bg-background"
       refreshControl={
         <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
       }

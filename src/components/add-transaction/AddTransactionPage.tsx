@@ -7,7 +7,7 @@ export default function AddTransactionPage() {
   usePageFocusAnalytic("add_transaction_page");
 
   return (
-    <ScrollView className="flex-1 bg-white">
+    <ScrollView className="flex-1 bg-background">
       <View className="px-4">
         <AddTransactionForm />
       </View>

@@ -6,7 +6,7 @@ export default function CashFlowPage() {
   usePageFocusAnalytic("cash_flow_page");
 
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1 bg-background">
       <TransactionsList />
     </View>
   );
