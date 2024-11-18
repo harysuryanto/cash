@@ -12,6 +12,7 @@ import {
 import FormErrorText from "@/src/components/shared/FormErrorText";
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/src/contexts/AuthContext";
+import { env } from "@/src/utils/utils/env";
 
 const schema = z.object({
   email: z.string().email(),
@@ -29,6 +30,13 @@ export default function SignInForm() {
     formState: { isValidating },
   } = useForm<FormFields>({
     resolver: zodResolver(schema),
+    defaultValues:
+      env.EXPO_PUBLIC_APP_ENV !== "production"
+        ? {
+            email: "hary.suryanto01@gmail.com",
+            password: "123456",
+          }
+        : undefined,
   });
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async ({ email, password }: FormFields) => {
@@ -102,7 +110,7 @@ export default function SignInForm() {
         onPress={handleSignInWithEmailAndPassword}
       >
         {isValidating || isPending ? (
-          <ActivityIndicator size="small" />
+          <ActivityIndicator className="text-background" size="small" />
         ) : (
           <Text>Sign In</Text>
         )}
@@ -113,7 +121,7 @@ export default function SignInForm() {
         onPress={() => handleSignInAnonymously()}
       >
         {isSignInAnonymouslyPending ? (
-          <ActivityIndicator size="small" />
+          <ActivityIndicator className="text-foreground" size="small" />
         ) : (
           <Text>Sign In Anonymously</Text>
         )}
