@@ -61,7 +61,7 @@ export const AddTransactionFormProvider = ({ children }: PropsWithChildren) => {
         fund: data.fund.value,
         date: Timestamp.fromDate(data.date),
         description: data.description ?? "",
-        userId: user!.id,
+        userId: user!.uid,
       });
     },
   });

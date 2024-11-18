@@ -1,5 +1,11 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import {
+  initializeAuth,
+  // @ts-expect-error
+  getReactNativePersistence, // See error details https://github.com/firebase/firebase-js-sdk/issues/8332
+} from "firebase/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCnDW1wh6_Lztl_Zk1pCQd5foePkgGtuiE",
@@ -13,6 +19,9 @@ const firebaseConfig = {
 
 const FIREBASE_APP = initializeApp(firebaseConfig);
 const FIRESTORE_DB = getFirestore(FIREBASE_APP);
+const FIREBASE_AUTH = initializeAuth(FIREBASE_APP, {
+  persistence: getReactNativePersistence(AsyncStorage),
+});
 // const FIREBASE_ANALYTICS = getAnalytics(FIREBASE_APP);
 
-export { FIRESTORE_DB };
+export { FIRESTORE_DB, FIREBASE_AUTH };

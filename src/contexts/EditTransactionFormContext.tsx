@@ -4,7 +4,7 @@ import {
   PropsWithChildren,
   createContext,
   useContext,
-  useEffect,
+  // useEffect,
   useState,
 } from "react";
 import { SubmitHandler, UseFormReturn, useForm } from "react-hook-form";
@@ -76,7 +76,7 @@ export const EditTransactionFormProvider = ({
         fund: data.fund.value,
         date: Timestamp.fromDate(data.date),
         description: data.description ?? "",
-        userId: user!.id,
+        userId: user!.uid,
       });
     },
   });

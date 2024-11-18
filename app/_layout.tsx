@@ -4,6 +4,7 @@ import { checkOtaUpdate } from "@/src/utils/utils/ota-update";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import Providers from "@/src/components/Providers";
+import useAuthRedirection from "@/src/hooks/useAuthRedirection";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -15,8 +16,11 @@ function Layout() {
     checkOtaUpdate();
   }, []);
 
+  useAuthRedirection();
+
   return (
     <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(public)" />
       <Stack.Screen name="(private)" />
     </Stack>
   );
