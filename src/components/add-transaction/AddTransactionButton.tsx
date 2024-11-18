@@ -50,7 +50,7 @@ export default function AddTransactionButton({
 
   return (
     <TouchableOpacity
-      hitSlop={{ left: 10, right: 100, top: 100, bottom: 100 }}
+      hitSlop={{ left: 16, right: 100, top: 100, bottom: 100 }}
       onPress={handleSubmit}
       disabled={isValidating || isPending}
       {...rest}
