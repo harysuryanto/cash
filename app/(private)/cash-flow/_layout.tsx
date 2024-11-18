@@ -22,10 +22,7 @@ export default function Layout() {
           title: "Cash Flow",
           headerRight: ({ tintColor }) => (
             <View className="flex flex-row gap-8">
-              <TouchableOpacity
-                hitSlop={{ left: 16, right: 16, top: 100, bottom: 100 }}
-                onPress={signOut}
-              >
+              <TouchableOpacity onPress={signOut} hitSlop={16}>
                 <Text className={`text-gray-500`}>Sign Out</Text>
               </TouchableOpacity>
               <AddTransactionButton color={tintColor} />

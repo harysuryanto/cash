@@ -24,9 +24,7 @@ export default function Layout() {
             <View className="flex flex-row gap-8">
               <DeleteTransactionButton transactionId={transactionId} />
               <Link href={`/(private)/cash-flow/${transactionId}/edit`} asChild>
-                <TouchableOpacity
-                  hitSlop={{ left: 16, right: 100, top: 100, bottom: 100 }}
-                >
+                <TouchableOpacity hitSlop={16}>
                   <Text className={`text-[${tintColor}]`}>Edit</Text>
                 </TouchableOpacity>
               </Link>

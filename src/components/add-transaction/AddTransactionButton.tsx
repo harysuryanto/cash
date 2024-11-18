@@ -50,9 +50,9 @@ export default function AddTransactionButton({
 
   return (
     <TouchableOpacity
-      hitSlop={{ left: 16, right: 100, top: 100, bottom: 100 }}
       onPress={handleSubmit}
       disabled={isValidating || isPending}
+      hitSlop={16}
       {...rest}
     >
       <Text className={`text-[${color}]`}>Save</Text>

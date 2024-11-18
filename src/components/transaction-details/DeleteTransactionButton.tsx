@@ -52,10 +52,7 @@ export default function DeleteTransactionButton({
 
   return (
     <>
-      <TouchableOpacity
-        hitSlop={{ left: 16, right: 16, top: 100, bottom: 100 }}
-        onPress={openModal}
-      >
+      <TouchableOpacity onPress={openModal} hitSlop={16}>
         <Text
           className={cn(
             `text-destructive`,
