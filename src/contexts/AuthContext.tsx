@@ -6,6 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import * as AuthService from "@/src/services/auth";
 import { FIREBASE_AUTH } from "@/firebaseConfig";
 
@@ -35,6 +36,8 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
+  const queryClient = useQueryClient();
+
   const [user, setUser] = useState<AuthContextValue["user"]>(undefined);
   const isLoadingAuth = user === undefined;
 
@@ -70,7 +73,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       return result;
     };
   const signOut: AuthContextValue["signOut"] = async () => {
-    return await AuthService.signOut();
+    await AuthService.signOut();
+    await queryClient.resetQueries();
   };
 
   const value: AuthContextValue = {
