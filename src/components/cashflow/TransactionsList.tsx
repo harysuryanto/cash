@@ -1,18 +1,17 @@
-import {
-  ActivityIndicator,
-  FlatList,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ActivityIndicator, FlatList, TouchableOpacity } from "react-native";
 import React from "react";
 import useTransactionsList from "@/src/hooks/useTransactionsList";
 import { formatCurrency } from "@/src/utils/utils/formatter";
 import TransactionCard from "@/src/components/cashflow/TransactionCard";
 import { Text } from "@/src/components/shared/react-native-reusables/Text";
 import { Link } from "expo-router";
+import { useAuth } from "@/src/contexts/AuthContext";
 
 export default function TransactionsList() {
-  const { status, data, refetch, isRefetching } = useTransactionsList();
+  const { user } = useAuth();
+  const { status, error, data, refetch, isRefetching } = useTransactionsList({
+    userId: user?.uid,
+  });
 
   if (status === "pending") {
     return <ActivityIndicator />;

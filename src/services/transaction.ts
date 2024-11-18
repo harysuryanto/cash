@@ -22,21 +22,21 @@ const PATH = "/transactions";
 
 export interface getTransactionsListProps {
   type?: "income" | "expense";
+  userId?: string;
 }
 
 export async function getTransactionsList(
   props?: getTransactionsListProps
 ): Promise<WithId<Transaction>[]> {
-  const { type } = props || {};
+  const { type, userId } = props || {};
 
   const col = collection(FIRESTORE_DB, PATH);
   const conditions: Array<QueryConstraint> = [
     orderBy("date", "desc"),
     limit(100),
   ];
-  if (type) {
-    conditions.push(where("type", "==", type));
-  }
+  if (type) conditions.push(where("type", "==", type));
+  if (userId) conditions.push(where("userId", "==", userId));
   const que = query(col, ...conditions);
   const querySnapshot = await getDocs(que);
   return querySnapshot.docs.map(
