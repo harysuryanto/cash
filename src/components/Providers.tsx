@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useEffect, useState } from "react";
+import React, { type PropsWithChildren, useEffect, useState } from "react";
 import { Platform } from "react-native";
 import { Theme, ThemeProvider } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
