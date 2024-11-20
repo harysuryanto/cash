@@ -1,12 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UseMutationResult, useMutation } from "@tanstack/react-query";
-import {
-  PropsWithChildren,
-  createContext,
-  useContext,
-  // useEffect,
-  useState,
-} from "react";
+import { PropsWithChildren, createContext, useContext, useState } from "react";
 import { SubmitHandler, UseFormReturn, useForm } from "react-hook-form";
 import { z } from "zod";
 import { DocumentData, DocumentReference, Timestamp } from "firebase/firestore";
@@ -92,13 +86,6 @@ export const EditTransactionFormProvider = ({
     formMethods.reset();
     mutation.reset();
   };
-
-  // const type = formMethods.getValues("type");
-  // useEffect(() => {
-  //   console.log("type changed", type);
-
-  //   formMethods.setValue("category", { label: "", value: "" });
-  // }, [type]);
 
   const value = {
     transactionId: transactionId!,
