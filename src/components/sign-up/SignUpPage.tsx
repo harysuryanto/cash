@@ -6,7 +6,7 @@ export default function SignUpPage() {
   return (
     <SafeAreaView className="flex-1">
       <KeyboardAvoidingView
-        className="flex-1 px-4"
+        className="flex-1 p-4"
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <SignUpForm />

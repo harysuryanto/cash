@@ -35,9 +35,10 @@ export default function TransactionsList() {
       refreshing={isRefetching}
       onRefresh={refetch}
       data={data}
+      contentContainerClassName="p-2"
       renderItem={({ item }) => (
         <Link href={`/(private)/cash-flow/${item.id}`} asChild>
-          <TouchableOpacity className="p-4 pt-0">
+          <TouchableOpacity className="m-2">
             <TransactionCard
               {...item}
               nominal={formatCurrency(item.nominal)}

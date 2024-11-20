@@ -44,7 +44,7 @@ export default function TransactionDetails({
         <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
       }
     >
-      <View className="flex-1 px-4 gap-4">
+      <View className="flex-1 p-4 gap-4">
         <View className="flex-row justify-between">
           <Text className="pr-6">Nominal</Text>
           <Text
