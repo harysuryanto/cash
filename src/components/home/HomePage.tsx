@@ -54,7 +54,7 @@ export default function HomePage() {
 
   return (
     <SafeAreaView className="flex-1 bg-background">
-      <ScrollView>
+      <ScrollView className="p-4">
         <AppBar />
         <View style={styles.sectionContainer}>
           {/* <Text style={styles.sectionContent}>{getBalance()}</Text> */}
