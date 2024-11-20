@@ -77,11 +77,6 @@ export const AddTransactionFormProvider = ({ children }: PropsWithChildren) => {
     mutation.reset();
   };
 
-  const type = formMethods.getValues("type");
-  useEffect(() => {
-    formMethods.resetField("category");
-  }, [type]);
-
   const value = {
     formMethods,
     mutation,

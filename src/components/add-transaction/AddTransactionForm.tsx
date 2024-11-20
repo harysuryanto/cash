@@ -1,11 +1,12 @@
 import { View } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import StyledDateTimePickerButton from "@/src/components/shared/StyledDateTimePickerButton";
 import { Input } from "@/src/components/shared/react-native-reusables/Input";
 import { Label } from "@/src/components/shared/react-native-reusables/Label";
 import { Textarea } from "@/src/components/shared/react-native-reusables/Textarea";
 import {
+  Option,
   Select,
   SelectContent,
   SelectGroup,
@@ -34,14 +35,20 @@ export default function AddTransactionForm() {
   };
 
   const {
-    formMethods: { control, getValues },
+    formMethods: { control, resetField },
     reset,
   } = useAddTransactionForm();
-  const type = getValues("type");
+
+  const [type, setType] = useState<Option>(undefined);
 
   useEffect(() => {
     return reset;
   }, []);
+
+  const handleOnChangeType = (option: Option) => {
+    setType(option);
+    resetField("category");
+  };
 
   return (
     <View className="gap-4">
@@ -56,7 +63,10 @@ export default function AddTransactionForm() {
             <Select
               aria-labelledby="type"
               value={value}
-              onValueChange={onChange}
+              onValueChange={(option) => {
+                onChange(option);
+                handleOnChangeType(option);
+              }}
             >
               <SelectTrigger>
                 <SelectValue
@@ -102,48 +112,50 @@ export default function AddTransactionForm() {
           </View>
         )}
       />
-      {!!type ? (
-        <Controller
-          control={control}
-          name="category"
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <View>
-              <Label nativeID="category" className="mb-2">
-                Category
-              </Label>
-              <Select
-                aria-labelledby="category"
-                key={type.value}
-                value={value}
-                onValueChange={onChange}
-              >
-                <SelectTrigger>
-                  <SelectValue
-                    className="text-foreground text-sm native:text-lg"
-                    placeholder="Select category"
-                  />
-                </SelectTrigger>
-                <SelectContent insets={contentInsets}>
-                  <SelectGroup>
-                    <SelectLabel>Select category</SelectLabel>
-                    {(type.value === "expense"
-                      ? EXPENSE_CATEGORY_OPTIONS
-                      : INCOME_CATEGORY_OPTIONS
-                    ).map(({ label, value }) => (
-                      <SelectItem key={value} label={label} value={value}>
-                        {label}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              {error && <FormErrorText>{error.message}</FormErrorText>}
-            </View>
-          )}
-        />
-      ) : (
-        <></>
-      )}
+      <Controller
+        control={control}
+        name="category"
+        render={({ field: { value, onChange }, fieldState: { error } }) => (
+          <View>
+            <Label nativeID="category" className="mb-2">
+              Category
+            </Label>
+            <Select
+              aria-labelledby="category"
+              key={type?.value ?? "category-pending"}
+              value={value}
+              onValueChange={onChange}
+            >
+              <SelectTrigger>
+                <SelectValue
+                  className="text-foreground text-sm native:text-lg"
+                  placeholder="Select category"
+                />
+              </SelectTrigger>
+              <SelectContent insets={contentInsets}>
+                <SelectGroup>
+                  {!type ? (
+                    <SelectLabel>Please select type first</SelectLabel>
+                  ) : (
+                    <>
+                      <SelectLabel>Select category</SelectLabel>
+                      {(type.value === "expense"
+                        ? EXPENSE_CATEGORY_OPTIONS
+                        : INCOME_CATEGORY_OPTIONS
+                      ).map(({ label, value }) => (
+                        <SelectItem key={value} label={label} value={value}>
+                          {label}
+                        </SelectItem>
+                      ))}
+                    </>
+                  )}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            {error && <FormErrorText>{error.message}</FormErrorText>}
+          </View>
+        )}
+      />
       <Controller
         control={control}
         name="fund"
