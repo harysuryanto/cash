@@ -11,12 +11,9 @@ import { createTransactionsListQueryKey } from "@/src/hooks/useTransactionsList"
 import { Text } from "@/src/components/shared/react-native-reusables/Text";
 import { useRouter } from "expo-router";
 
-interface AddTransactionButtonProps extends TouchableOpacityProps {
-  color?: string | undefined;
-}
+interface AddTransactionButtonProps extends TouchableOpacityProps {}
 
 export default function AddTransactionButton({
-  color,
   ...rest
 }: AddTransactionButtonProps) {
   const { capture } = useAnalytics();
@@ -55,7 +52,7 @@ export default function AddTransactionButton({
       hitSlop={16}
       {...rest}
     >
-      <Text className={`text-[${color}]`}>Save</Text>
+      <Text className="text-primary">Save</Text>
     </TouchableOpacity>
   );
 }

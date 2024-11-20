@@ -20,12 +20,12 @@ export default function Layout() {
         name="index"
         options={{
           title: "Cash Flow",
-          headerRight: ({ tintColor }) => (
+          headerRight: () => (
             <View className="flex flex-row gap-8">
               <TouchableOpacity onPress={signOut} hitSlop={16}>
                 <Text className={`text-muted-foreground`}>Sign Out</Text>
               </TouchableOpacity>
-              <AddTransactionButton color={tintColor} />
+              <AddTransactionButton />
             </View>
           ),
           headerShown: true,

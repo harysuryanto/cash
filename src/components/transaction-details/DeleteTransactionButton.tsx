@@ -9,17 +9,14 @@ import { deleteTransaction } from "@/src/services/transaction";
 import { createTransactionsListQueryKey } from "@/src/hooks/useTransactionsList";
 import { useDeleteConfirmationModal } from "@/src/hooks/useDeleteConfirmationModal";
 import { Text } from "@/src/components/shared/react-native-reusables/Text";
-import { cn } from "@/src/utils/utils/utils";
 import { useRouter } from "expo-router";
 
 interface DeleteTransactionButtonProps extends TouchableOpacityProps {
   transactionId: string;
-  color?: string | undefined;
 }
 
 export default function DeleteTransactionButton({
   transactionId,
-  color,
 }: DeleteTransactionButtonProps) {
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -53,14 +50,7 @@ export default function DeleteTransactionButton({
   return (
     <>
       <TouchableOpacity onPress={openModal} hitSlop={16}>
-        <Text
-          className={cn(
-            `text-destructive`,
-            color ? `text-[${color}]` : undefined
-          )}
-        >
-          Delete
-        </Text>
+        <Text className="text-destructive">Delete</Text>
       </TouchableOpacity>
       <DeleteConfirmationModal />
     </>

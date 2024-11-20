@@ -11,12 +11,9 @@ import { Text } from "@/src/components/shared/react-native-reusables/Text";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { createTransactionDetailsQueryKey } from "@/src/hooks/useTransactionDetails";
 
-interface EditTransactionButtonProps extends TouchableOpacityProps {
-  color?: string | undefined;
-}
+interface EditTransactionButtonProps extends TouchableOpacityProps {}
 
 export default function EditTransactionButton({
-  color,
   ...rest
 }: EditTransactionButtonProps) {
   const router = useRouter();
@@ -56,7 +53,7 @@ export default function EditTransactionButton({
       hitSlop={16}
       {...rest}
     >
-      <Text className={`text-[${color}]`}>Save</Text>
+      <Text className="text-primary">Save</Text>
     </TouchableOpacity>
   );
 }

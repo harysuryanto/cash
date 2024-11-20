@@ -16,9 +16,7 @@ export default function Layout() {
         options={{
           title: "Edit Transaction",
           headerShown: true,
-          headerRight: ({ tintColor }) => (
-            <EditTransactionButton color={tintColor} />
-          ),
+          headerRight: () => <EditTransactionButton />,
         }}
       />
     </Stack>

@@ -20,12 +20,12 @@ export default function Layout() {
         options={{
           title: "Details",
           headerShown: true,
-          headerRight: ({ tintColor }) => (
+          headerRight: () => (
             <View className="flex flex-row gap-8">
               <DeleteTransactionButton transactionId={transactionId} />
               <Link href={`/(private)/cash-flow/${transactionId}/edit`} asChild>
                 <TouchableOpacity hitSlop={16}>
-                  <Text className={`text-[${tintColor}]`}>Edit</Text>
+                  <Text className="text-primary">Edit</Text>
                 </TouchableOpacity>
               </Link>
             </View>

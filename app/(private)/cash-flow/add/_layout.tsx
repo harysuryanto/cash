@@ -9,9 +9,7 @@ export default function Layout() {
         name="index"
         options={{
           title: "Add Transaction",
-          headerRight: ({ tintColor }) => (
-            <AddTransactionButton color={tintColor} />
-          ),
+          headerRight: () => <AddTransactionButton />,
         }}
       />
     </Stack>
