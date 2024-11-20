@@ -2,7 +2,6 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import {
   initializeAuth,
-  // @ts-expect-error
   getReactNativePersistence, // See error details https://github.com/firebase/firebase-js-sdk/issues/8332
 } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
