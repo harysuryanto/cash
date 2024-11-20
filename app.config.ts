@@ -12,7 +12,7 @@ export default {
   slug: "cash",
   version: VERSION,
   scheme: `cash${SCHEME_POSTFIX}`,
-  orientation: "portrait",
+  orientation: "default",
   icon: "./assets/images/icon.png",
   userInterfaceStyle: "automatic",
   splash: {
