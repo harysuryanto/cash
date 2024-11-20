@@ -1,5 +1,5 @@
 import { ActivityIndicator, View } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,6 +13,7 @@ import FormErrorText from "@/src/components/shared/FormErrorText";
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/src/contexts/AuthContext";
 import { env } from "@/src/utils/utils/env";
+import { formatFirebaseAuthError } from "@/src/utils/utils/formatter";
 
 const schema = z.object({
   email: z.string().email(),
@@ -28,6 +29,7 @@ export default function SignInForm() {
     control,
     handleSubmit,
     formState: { isValidating },
+    reset: resetForm,
   } = useForm<FormFields>({
     resolver: zodResolver(schema),
     defaultValues:
@@ -38,15 +40,18 @@ export default function SignInForm() {
           }
         : undefined,
   });
-  const { mutateAsync, isPending } = useMutation({
+  const {
+    mutate,
+    isPending,
+    reset: resetMutation,
+  } = useMutation({
     mutationFn: async ({ email, password }: FormFields) => {
       return await signInWithEmailAndPassword(email, password);
     },
-    onError: (error) =>
-      console.log("🚀 signInWithEmailAndPassword error", error),
+    onError: (error) => alert(formatFirebaseAuthError(error)),
   });
   const handleSignInWithEmailAndPassword = async () => {
-    const submit: SubmitHandler<FormFields> = async (data) => mutateAsync(data);
+    const submit: SubmitHandler<FormFields> = async (data) => mutate(data);
     await handleSubmit(submit)();
   };
   const {
@@ -54,8 +59,15 @@ export default function SignInForm() {
     isPending: isSignInAnonymouslyPending,
   } = useMutation({
     mutationFn: signInAnonymously,
-    onError: (error) => console.log("🚀 handleSignInAnonymously error", error),
+    onError: (error) => alert(formatFirebaseAuthError(error)),
   });
+
+  useEffect(() => {
+    return () => {
+      resetForm();
+      resetMutation();
+    };
+  }, []);
 
   return (
     <View className="gap-4">
