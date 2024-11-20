@@ -46,8 +46,10 @@ export default function AddTransactionForm() {
   }, []);
 
   const handleOnChangeType = (option: Option) => {
-    setType(option);
-    resetField("category");
+    if (option?.value !== type?.value) {
+      setType(option);
+      resetField("category");
+    }
   };
 
   return (
