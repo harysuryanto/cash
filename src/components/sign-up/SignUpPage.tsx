@@ -1,4 +1,9 @@
-import { KeyboardAvoidingView, SafeAreaView, Platform } from "react-native";
+import {
+  KeyboardAvoidingView,
+  SafeAreaView,
+  Platform,
+  ScrollView,
+} from "react-native";
 import React from "react";
 import SignUpForm from "./SignUpForm";
 
@@ -6,10 +11,12 @@ export default function SignUpPage() {
   return (
     <SafeAreaView className="flex-1">
       <KeyboardAvoidingView
-        className="flex-1 p-4"
+        className="flex-1"
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <SignUpForm />
+        <ScrollView className="flex-1 p-4">
+          <SignUpForm />
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
