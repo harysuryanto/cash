@@ -15,11 +15,11 @@ export default function Layout() {
       <Stack.Screen
         name="index"
         options={{
-          title: "Sign In",
+          title: "Sign Up",
           headerRight: () => (
-            <Link href={"/(public)/sign-up"} replace asChild>
+            <Link href={"/(public)/sign-in"} replace asChild>
               <TouchableOpacity hitSlop={16}>
-                <Text className="text-gray-500">Sign Up</Text>
+                <Text className="text-gray-500">Sign In</Text>
               </TouchableOpacity>
             </Link>
           ),

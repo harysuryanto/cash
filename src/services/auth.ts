@@ -31,5 +31,18 @@ export async function signInWithEmailAndPassword(
 }
 
 export async function signOut() {
-  await Auth.signOut(FIREBASE_AUTH);
+  return await Auth.signOut(FIREBASE_AUTH);
+}
+
+export async function updateProfile({
+  displayName,
+  photoUrl,
+}: {
+  displayName?: string | null;
+  photoUrl?: string | null;
+}) {
+  return await Auth.updateProfile(FIREBASE_AUTH.currentUser!, {
+    displayName,
+    photoURL: photoUrl,
+  });
 }

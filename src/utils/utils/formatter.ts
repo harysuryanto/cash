@@ -67,4 +67,30 @@ const formatCurrency = (currency: number) => {
   }
 };
 
-export { formatDate, formatRelativeTime, formatCurrency };
+/**
+ * Takes a Firebase Authentication error and extracts the error code from it.
+ * The error code is then formatted into a user-friendly message.
+ * @param {Error} error The error message from Firebase Authentication
+ * @returns {string} A user-friendly error message
+ *
+ * @example
+ * const error = "[FirebaseError: Firebase: Error (auth/email-already-in-use).]";
+ * const userFriendlyMessage = formatFirebaseAuthError(error);
+ * console.log(userFriendlyMessage); // "Email already in use."
+ */
+function formatFirebaseAuthError(error: Error): string {
+  // Extract the error code
+  const match = error.message.match(/\(auth\/(.*?)\)/);
+  const errorCode = match ? match[1] : "unknown-error";
+
+  // Format the error code into a user-friendly message
+  const sentence = errorCode.replace(/-/g, " ").toLowerCase(); // Convert to lowercase and replace hyphens
+  return sentence.charAt(0).toUpperCase() + sentence.slice(1) + "."; // Capitalize the first letter
+}
+
+export {
+  formatDate,
+  formatRelativeTime,
+  formatCurrency,
+  formatFirebaseAuthError,
+};
