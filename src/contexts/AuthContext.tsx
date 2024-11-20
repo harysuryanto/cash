@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (latestUser) => {
       if (latestUser === user) return;
-      setUser(user);
+      setUser(latestUser);
     });
     return unsubscribe;
   }, []);
