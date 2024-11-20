@@ -19,7 +19,7 @@ export default function Layout() {
           headerRight: () => (
             <Link href={"/(public)/sign-up"} replace asChild>
               <TouchableOpacity hitSlop={16}>
-                <Text className="text-gray-500">Sign Up</Text>
+                <Text className="text-muted-foreground">Sign Up</Text>
               </TouchableOpacity>
             </Link>
           ),

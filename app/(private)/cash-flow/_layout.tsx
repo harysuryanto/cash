@@ -23,7 +23,7 @@ export default function Layout() {
           headerRight: ({ tintColor }) => (
             <View className="flex flex-row gap-8">
               <TouchableOpacity onPress={signOut} hitSlop={16}>
-                <Text className={`text-gray-500`}>Sign Out</Text>
+                <Text className={`text-muted-foreground`}>Sign Out</Text>
               </TouchableOpacity>
               <AddTransactionButton color={tintColor} />
             </View>
