@@ -1,9 +1,10 @@
 import { useState, useCallback } from "react";
-import { View, ActivityIndicator } from "react-native";
+import { View } from "react-native";
 import ModalComponent from "@/src/components/shared/Modal";
 import { Text } from "@/src/components/shared/react-native-reusables/Text";
 import { Button } from "@/src/components/shared/react-native-reusables/Button";
 import { cn } from "@/src/utils/utils/utils";
+import LoadingIndicator from "@/src/components/shared/LoadingIndicator";
 
 type UseDeleteConfirmationModalProps = {
   onDelete: () => Promise<any>;
@@ -74,7 +75,12 @@ export const useDeleteConfirmationModal = ({
     return (
       <ModalComponent visible={isModalOpen} onClose={closeModal}>
         {mutationResult.isLoading ? (
-          <ActivityIndicator className="accent" size="large" />
+          <LoadingIndicator
+            activityIndicatorProps={{
+              className: "accent",
+              size: "large",
+            }}
+          />
         ) : (
           <View
             className={cn(

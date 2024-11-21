@@ -1,8 +1,4 @@
-import {
-  ActivityIndicator,
-  TouchableOpacity,
-  TouchableOpacityProps,
-} from "react-native";
+import { TouchableOpacity, TouchableOpacityProps } from "react-native";
 import React from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteTransaction } from "@/src/services/transaction";
@@ -10,6 +6,7 @@ import { createTransactionsListQueryKey } from "@/src/hooks/useTransactionsList"
 import { useDeleteConfirmationModal } from "@/src/hooks/useDeleteConfirmationModal";
 import { Text } from "@/src/components/shared/react-native-reusables/Text";
 import { useRouter } from "expo-router";
+import LoadingIndicator from "@/src/components/shared/LoadingIndicator";
 
 interface DeleteTransactionButtonProps extends TouchableOpacityProps {
   transactionId: string;
@@ -44,7 +41,7 @@ export default function DeleteTransactionButton({
     });
 
   if (isPending) {
-    return <ActivityIndicator size="small" />;
+    return <LoadingIndicator activityIndicatorProps={{ size: "small" }} />;
   }
 
   return (

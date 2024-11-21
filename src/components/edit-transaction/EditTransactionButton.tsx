@@ -1,8 +1,4 @@
-import {
-  ActivityIndicator,
-  TouchableOpacity,
-  TouchableOpacityProps,
-} from "react-native";
+import { TouchableOpacity, TouchableOpacityProps } from "react-native";
 import React from "react";
 import { useEditTransactionForm } from "@/src/contexts/EditTransactionFormContext";
 import { useQueryClient } from "@tanstack/react-query";
@@ -10,6 +6,7 @@ import { createTransactionsListQueryKey } from "@/src/hooks/useTransactionsList"
 import { Text } from "@/src/components/shared/react-native-reusables/Text";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { createTransactionDetailsQueryKey } from "@/src/hooks/useTransactionDetails";
+import LoadingIndicator from "@/src/components/shared/LoadingIndicator";
 
 interface EditTransactionButtonProps extends TouchableOpacityProps {}
 
@@ -43,7 +40,7 @@ export default function EditTransactionButton({
   };
 
   if (isValidating || isPending) {
-    return <ActivityIndicator size={"small"} />;
+    return <LoadingIndicator activityIndicatorProps={{ size: "small" }} />;
   }
 
   return (

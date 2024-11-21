@@ -1,14 +1,10 @@
-import {
-  ActivityIndicator,
-  RefreshControl,
-  ScrollView,
-  View,
-} from "react-native";
+import { RefreshControl, ScrollView, View } from "react-native";
 import { Text } from "@/src/components/shared/react-native-reusables/Text";
 import React from "react";
 import EditTransactionForm from "./EditTransactionForm";
 import useTransactionDetails from "@/src/hooks/useTransactionDetails";
 import { useLocalSearchParams } from "expo-router";
+import LoadingIndicator from "@/src/components/shared/LoadingIndicator";
 
 export default function EditTransactionPage() {
   const { transactionId } = useLocalSearchParams<{ transactionId: string }>();
@@ -16,7 +12,7 @@ export default function EditTransactionPage() {
     useTransactionDetails(transactionId);
 
   if (status === "pending") {
-    return <ActivityIndicator />;
+    return <LoadingIndicator fullscreen />;
   }
 
   if (status === "error") {

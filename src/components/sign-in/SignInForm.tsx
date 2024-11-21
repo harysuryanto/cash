@@ -1,4 +1,4 @@
-import { ActivityIndicator, View } from "react-native";
+import { View } from "react-native";
 import React, { useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -14,6 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/src/contexts/AuthContext";
 import { env } from "@/src/utils/utils/env";
 import { formatFirebaseAuthError } from "@/src/utils/utils/formatter";
+import LoadingIndicator from "@/src/components/shared/LoadingIndicator";
 
 const schema = z.object({
   email: z.string().email(),
@@ -124,7 +125,12 @@ export default function SignInForm() {
         onPress={handleSignInWithEmailAndPassword}
       >
         {isValidating || isPending ? (
-          <ActivityIndicator className="text-background" size="small" />
+          <LoadingIndicator
+            activityIndicatorProps={{
+              className: "text-background",
+              size: "small",
+            }}
+          />
         ) : (
           <Text>Sign In</Text>
         )}
@@ -135,7 +141,12 @@ export default function SignInForm() {
         onPress={() => handleSignInAnonymously()}
       >
         {isSignInAnonymouslyPending ? (
-          <ActivityIndicator className="text-foreground" size="small" />
+          <LoadingIndicator
+            activityIndicatorProps={{
+              className: "text-foreground",
+              size: "small",
+            }}
+          />
         ) : (
           <Text>Sign In Anonymously</Text>
         )}

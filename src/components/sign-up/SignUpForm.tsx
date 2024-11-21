@@ -1,4 +1,4 @@
-import { ActivityIndicator, View } from "react-native";
+import { View } from "react-native";
 import React, { useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -15,6 +15,7 @@ import { useAuth } from "@/src/contexts/AuthContext";
 import { env } from "@/src/utils/utils/env";
 import { updateProfile } from "@/src/services/auth";
 import { formatFirebaseAuthError } from "@/src/utils/utils/formatter";
+import LoadingIndicator from "@/src/components/shared/LoadingIndicator";
 
 const schema = z.object({
   name: z.string(),
@@ -145,7 +146,12 @@ export default function SignUpForm() {
         onPress={handleSignUpWithEmailAndPassword}
       >
         {isValidating || isPending ? (
-          <ActivityIndicator className="text-background" size="small" />
+          <LoadingIndicator
+            activityIndicatorProps={{
+              className: "text-background",
+              size: "small",
+            }}
+          />
         ) : (
           <Text>Sign Up</Text>
         )}
