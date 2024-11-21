@@ -1,13 +1,10 @@
-import {
-  View,
-  ActivityIndicator,
-  ScrollView,
-  RefreshControl,
-} from "react-native";
+import { View, ScrollView, RefreshControl } from "react-native";
 import React from "react";
 import useTransactionDetails from "@/src/hooks/useTransactionDetails";
 import { formatCurrency } from "@/src/utils/utils/formatter";
 import { Text } from "@/src/components/shared/react-native-reusables/Text";
+import ErrorMessage from "@/src/components/shared/ErrorMessage";
+import LoadingIndicator from "@/src/components/shared/LoadingIndicator";
 
 type TransactionDetailsProps = {
   transactionId: string;
@@ -20,20 +17,28 @@ export default function TransactionDetails({
     useTransactionDetails(transactionId);
 
   if (status === "pending") {
-    return <ActivityIndicator />;
+    return <LoadingIndicator fullscreen />;
   }
 
   if (status === "error") {
     return (
-      <Text className="flex-1 text-center align-middle">{error.message}</Text>
+      <ErrorMessage
+        error={error}
+        fullscreen
+        refreshing={isRefetching}
+        onRefresh={refetch}
+      />
     );
   }
 
   if (!data) {
     return (
-      <Text className="flex-1 text-center align-middle">
-        Transaction not found.
-      </Text>
+      <ErrorMessage
+        error="no-data"
+        fullscreen
+        refreshing={isRefetching}
+        onRefresh={refetch}
+      />
     );
   }
 

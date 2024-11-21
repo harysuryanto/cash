@@ -1,11 +1,12 @@
-import { ActivityIndicator, FlatList, TouchableOpacity } from "react-native";
+import { FlatList, TouchableOpacity } from "react-native";
 import React from "react";
 import useTransactionsList from "@/src/hooks/useTransactionsList";
 import { formatCurrency } from "@/src/utils/utils/formatter";
 import TransactionCard from "@/src/components/cashflow/TransactionCard";
-import { Text } from "@/src/components/shared/react-native-reusables/Text";
 import { Link } from "expo-router";
 import { useAuth } from "@/src/contexts/AuthContext";
+import ErrorMessage from "@/src/components/shared/ErrorMessage";
+import LoadingIndicator from "@/src/components/shared/LoadingIndicator";
 
 export default function TransactionsList() {
   const { user } = useAuth();
@@ -14,18 +15,28 @@ export default function TransactionsList() {
   });
 
   if (status === "pending") {
-    return <ActivityIndicator />;
+    return <LoadingIndicator fullscreen />;
   }
 
   if (status === "error") {
     return (
-      <Text className="flex-1 text-center align-middle">{error.message}</Text>
+      <ErrorMessage
+        error={error}
+        fullscreen
+        refreshing={isRefetching}
+        onRefresh={refetch}
+      />
     );
   }
 
   if (data.length === 0) {
     return (
-      <Text className="flex-1 text-center align-middle">No transactions.</Text>
+      <ErrorMessage
+        error="no-data"
+        fullscreen
+        refreshing={isRefetching}
+        onRefresh={refetch}
+      />
     );
   }
 
