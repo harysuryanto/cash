@@ -1,4 +1,4 @@
-import { z } from "zod";
+// import { z } from "zod";
 
 // const activeEnv = process.env.EXPO_PUBLIC_APP_ENV || "development";
 
@@ -31,10 +31,16 @@ import { z } from "zod";
 //   prod: "production",
 // });
 
-const envSchema = z.object({
-  EXPO_PUBLIC_APP_ENV: z
-    .enum(["development", "staging", "production"])
-    .default("development"),
-});
+// const envSchema = z.object({
+//   EXPO_PUBLIC_APP_ENV: z
+//     .enum(["development", "staging", "production"])
+//     .default("development"),
+// });
 
-export const env = envSchema.parse(process.env);
+// See important env rules at https://docs.expo.dev/guides/environment-variables/#how-to-read-from-environment-variables.
+export const env = Object.freeze({
+  EXPO_PUBLIC_APP_ENV: (process.env.EXPO_PUBLIC_APP_ENV || "development") as
+    | "development"
+    | "staging"
+    | "production",
+});
