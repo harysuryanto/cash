@@ -6,6 +6,7 @@ import {
 } from "react-native";
 import React from "react";
 import SignInForm from "./SignInForm";
+import DevInfo from "@/src/components/shared/DevInfo";
 
 export default function SignInPage() {
   return (
@@ -16,6 +17,7 @@ export default function SignInPage() {
       >
         <ScrollView className="flex-1 p-4">
           <SignInForm />
+          <DevInfo className="mt-4" />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
