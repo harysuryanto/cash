@@ -32,7 +32,7 @@ export default function TransactionsList() {
   if (data.length === 0) {
     return (
       <ErrorMessage
-        error="no-data"
+        error="No transactions."
         fullscreen
         refreshing={isRefetching}
         onRefresh={refetch}

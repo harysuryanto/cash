@@ -29,7 +29,7 @@ export default function EditTransactionPage() {
   if (!data) {
     return (
       <ErrorMessage
-        error="no-data"
+        error="Transaction not found."
         fullscreen
         refreshing={isRefetching}
         onRefresh={refetch}

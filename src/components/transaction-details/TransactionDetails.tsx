@@ -34,7 +34,7 @@ export default function TransactionDetails({
   if (!data) {
     return (
       <ErrorMessage
-        error="no-data"
+        error="Transaction not found."
         fullscreen
         refreshing={isRefetching}
         onRefresh={refetch}
