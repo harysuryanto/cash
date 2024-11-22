@@ -51,6 +51,5 @@ export default {
     eas: {
       projectId: "4d491cde-a25d-41cc-8cf0-4304256de998",
     },
-    platform: process.env.EXPO_PUBLIC_PLATFORM,
   },
 } satisfies ExpoConfig;

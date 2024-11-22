@@ -8,8 +8,7 @@
       "distribution": "internal",
       "channel": "development",
       "env": {
-        "EXPO_PUBLIC_APP_ENV": "development",
-        "EXPO_PUBLIC_PLATFORM": "1"
+        "EXPO_PUBLIC_APP_ENV": "development"
       }
     },
     "staging": {
@@ -19,8 +18,7 @@
       },
       "channel": "staging",
       "env": {
-        "EXPO_PUBLIC_APP_ENV": "staging",
-        "EXPO_PUBLIC_PLATFORM": "2"
+        "EXPO_PUBLIC_APP_ENV": "staging"
       }
     },
     "production": {
@@ -30,8 +28,7 @@
       },
       "channel": "production",
       "env": {
-        "EXPO_PUBLIC_APP_ENV": "production",
-        "EXPO_PUBLIC_PLATFORM": "3"
+        "EXPO_PUBLIC_APP_ENV": "production"
       }
     },
     "productionAab": {
