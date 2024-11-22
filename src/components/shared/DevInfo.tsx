@@ -1,4 +1,4 @@
-import { View, ViewProps } from "react-native";
+import { Platform, View, ViewProps } from "react-native";
 import React from "react";
 import Constants from "expo-constants";
 import { Text } from "@/src/components/shared/react-native-reusables/Text";
@@ -10,8 +10,7 @@ type DevInfoProps = ViewProps & {
 };
 
 export default function DevInfo({
-  enabled = env.EXPO_PUBLIC_APP_ENV !== "production" &&
-    process.env.NODE_ENV !== "production",
+  enabled = env.EXPO_PUBLIC_APP_ENV !== "production" && Platform.OS !== "web",
   ...rest
 }: DevInfoProps) {
   if (!enabled) return null;
