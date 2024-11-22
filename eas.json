@@ -32,13 +32,9 @@
       }
     },
     "productionAab": {
-      "distribution": "internal",
+      "extends": "production",
       "android": {
         "buildType": "app-bundle"
-      },
-      "channel": "production",
-      "env": {
-        "EXPO_PUBLIC_APP_ENV": "production"
       }
     }
   },
