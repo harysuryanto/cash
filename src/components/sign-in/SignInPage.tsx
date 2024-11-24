@@ -8,6 +8,8 @@ import React from "react";
 import SignInForm from "./SignInForm";
 import DevInfo from "@/src/components/shared/DevInfo";
 
+const appEnv = process.env.EXPO_PUBLIC_APP_ENV;
+
 export default function SignInPage() {
   return (
     <SafeAreaView className="flex-1">
@@ -17,7 +19,10 @@ export default function SignInPage() {
       >
         <ScrollView className="flex-1 p-4">
           <SignInForm />
-          <DevInfo className="mt-4" />
+          <DevInfo
+            enabled={appEnv === "development" || appEnv === "staging"}
+            className="mt-4"
+          />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
