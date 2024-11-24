@@ -1,10 +1,8 @@
 import React from "react";
-// import HomePage from "@/src/components/home/HomePage";
-import { Redirect } from "expo-router";
+import HomePage from "@/src/components/home/HomePage";
 
 const HomeRoute = () => {
-  return <Redirect href="/(private)/cash-flow" />;
-  // return <HomePage />;
+  return <HomePage />;
 };
 
 export default HomeRoute;

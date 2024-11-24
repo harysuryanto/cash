@@ -21,7 +21,7 @@ export default function useAuthRedirection() {
     // }
 
     if (isSignedIn && !isInPrivateArea) {
-      router.replace("/(private)/cash-flow");
+      router.replace("/(private)");
     } else if (!isSignedIn && isInPrivateArea) {
       router.replace("/(public)/sign-in");
     }
