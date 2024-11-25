@@ -12,7 +12,6 @@ import {
 import FormErrorText from "@/src/components/shared/FormErrorText";
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/src/contexts/AuthContext";
-import { env } from "@/src/utils/utils/env";
 import { formatFirebaseAuthError } from "@/src/utils/utils/formatter";
 import LoadingIndicator from "@/src/components/shared/LoadingIndicator";
 
@@ -34,7 +33,7 @@ export default function SignInForm() {
   } = useForm<FormFields>({
     resolver: zodResolver(schema),
     defaultValues:
-      env.EXPO_PUBLIC_APP_ENV !== "production"
+      process.env.EXPO_PUBLIC_APP_ENV !== "production"
         ? {
             email: "hary.suryanto01@gmail.com",
             password: "123456",
