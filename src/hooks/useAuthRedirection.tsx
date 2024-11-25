@@ -9,20 +9,18 @@ export default function useAuthRedirection() {
   const { isLoadingAuth, user } = useAuth();
 
   useEffect(() => {
-    // const isInSplashScreen = segments[0] === "splash-screen";
+    const isOutsidePublicAndPrivateArea = segments[0] === undefined;
     const isInPrivateArea = segments[0] === "(private)";
     const isSignedIn = !!user;
 
     if (isLoadingAuth) return;
 
-    // if (isInSplashScreen) {
-    //   router.replace(isSignedIn ? "/(private)" : "/(public)/sign-in");
-    //   return;
-    // }
-
     if (isSignedIn && !isInPrivateArea) {
       router.replace("/(private)");
-    } else if (!isSignedIn && isInPrivateArea) {
+    } else if (
+      !isSignedIn &&
+      (isInPrivateArea || isOutsidePublicAndPrivateArea)
+    ) {
       router.replace("/(public)/sign-in");
     }
   }, [isLoadingAuth, user, segments]);
