@@ -4,9 +4,9 @@ import { UserCircle } from "@/src/utils/react-native-reusables/icons/UserCircle"
 import { useAuth } from "@/src/contexts/AuthContext";
 import { cn } from "@/src/utils/utils/utils";
 
-type AppBarProps = Omit<ViewProps, "children">;
+type HomePageHeaderProps = Omit<ViewProps, "children">;
 
-const AppBar = (props: AppBarProps) => {
+const HomePageHeader = (props: HomePageHeaderProps) => {
   const { user } = useAuth();
 
   return (
@@ -30,4 +30,4 @@ const AppBar = (props: AppBarProps) => {
   );
 };
 
-export default AppBar;
+export default HomePageHeader;
