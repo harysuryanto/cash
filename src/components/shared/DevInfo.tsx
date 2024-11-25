@@ -9,7 +9,8 @@ type DevInfoProps = ViewProps & {
 };
 
 export default function DevInfo({
-  enabled = env.EXPO_PUBLIC_APP_ENV !== "production" && Platform.OS !== "web",
+  enabled = process.env.EXPO_PUBLIC_APP_ENV !== "production" &&
+    Platform.OS !== "web",
   ...rest
 }: DevInfoProps) {
   if (!enabled) return null;
