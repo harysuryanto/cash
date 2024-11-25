@@ -1,35 +1,33 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Image, View, ViewProps } from "react-native";
+import { Text } from "@/src/components/shared/react-native-reusables/Text";
 import { UserCircle } from "@/src/utils/react-native-reusables/icons/UserCircle";
+import { useAuth } from "@/src/contexts/AuthContext";
+import { cn } from "@/src/utils/utils/utils";
 
-const AppBar = () => {
+type AppBarProps = Omit<ViewProps, "children">;
+
+const AppBar = (props: AppBarProps) => {
+  const { user } = useAuth();
+
   return (
-    <View style={styles.container}>
-      <View style={styles.greetingContainer}>
-        <Text className="font-bold text-sky-400" style={styles.greetingText}>
-          Have a great day,
-        </Text>
-        <Text style={styles.name}>Hary! 🌞🌞</Text>
+    <View
+      {...props}
+      className={cn("flex-row items-center justify-between", props.className)}
+    >
+      <View>
+        <Text className="text-lg">Have a great day,</Text>
+        <Text className="text-sm">{user?.displayName ?? user?.email}</Text>
       </View>
-      <UserCircle size={40} color="#808e9b" />
+      {user?.photoURL ? (
+        <Image
+          source={{ uri: user?.photoURL }}
+          className="h-8 w-8 rounded-full"
+        />
+      ) : (
+        <UserCircle size={32} className="text-secondary-foreground" />
+      )}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 30,
-    paddingVertical: 15,
-  },
-  greetingContainer: {},
-  greetingText: {
-    fontSize: 10,
-  },
-  name: {
-    fontSize: 12,
-  },
-});
 
 export default AppBar;

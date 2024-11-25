@@ -10,7 +10,7 @@ export default function HomePage() {
 
   return (
     <ScrollView className="flex-1 bg-background">
-      <SafeAreaView className="p-4 gap-4">
+      <SafeAreaView className="p-4 pt-8 gap-4">
         <AppBar />
         <HomePageBody />
         <HomePageFooter />

@@ -1,24 +1,28 @@
 // import { Cash, CashType } from "@/src/interfaces/cash";
-import { colors } from "@/src/utils/colors";
 // import { formatCurrency, formatDate } from "@/src/utils/utils/formatter";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Link } from "expo-router";
-import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React, { ComponentType } from "react";
+import { TouchableOpacity, View } from "react-native";
 // import uuid from "react-native-uuid";
-import { MenuGridTile } from "@/src/components/shared/MenuGridTile";
-import usePageFocusAnalytic from "@/src/hooks/usePageFocusAnalytic";
-import HttpErrorTest from "../shared/HttpErrorTest";
 import { ArrowDownUp } from "@/src/utils/react-native-reusables/icons/ArrowDownUp";
+import { Text } from "../shared/react-native-reusables/Text";
+import { Card } from "../shared/react-native-reusables/Card";
+import { cn } from "@/src/utils/utils/utils";
+import { formatCurrency } from "@/src/utils/utils/formatter";
+
+function withClassName<T extends { className?: string }>(
+  WrappedComponent: ComponentType<T>,
+  injectedClassName: string
+): ComponentType<T> {
+  return function WithClassNameComponent(props: T) {
+    const combinedClassName = cn(injectedClassName, props.className);
+    return <WrappedComponent {...props} className={combinedClassName} />;
+  };
+}
+const StyledCard = withClassName(Card, "rounded-2xl p-4");
 
 export default function HomePageBody() {
-  // const getBalance = () => {
-  // };
-
-  // const loadCashListFromStorage = async () => {
-  // };
-
   // const getAverageSpendingPermonthPrediction = (cashList: Cash[]): number => {
   // };
 
@@ -35,83 +39,47 @@ export default function HomePageBody() {
   // const getHighestSpending = (): [string, number] => {
   // };
 
-  // useEffect(() => {
-  //   loadCashListFromStorage();
-  //   // handleAppUpdates();
-  // }, []);
-
-  usePageFocusAnalytic("home_page");
-
   return (
-    <View>
-      <View style={styles.sectionContainer}>
-        {/* <Text style={styles.sectionContent}>{getBalance()}</Text> */}
-        <Text style={styles.sectionTitle}>Balance</Text>
-      </View>
-      <View style={styles.sectionContainer}>
-        {/* <Text style={styles.sectionContent}>
-            {formatCurrency(getHighestSpending()[1])}
-          </Text> */}
-        {/* <Text style={styles.sectionTitle}>
-            Highest spending month of all time is {getHighestSpending()[0]}
-          </Text> */}
-        <HttpErrorTest />
-      </View>
-      <View style={{ flexDirection: "row", marginHorizontal: 30, gap: 30 }}>
-        <View
-          style={[styles.sectionContainer, { flex: 1, marginHorizontal: 0 }]}
-        >
-          <Text>
-            🚧 Prediksi pengeluaran bulan depan berdasarkan rata-rata
-            pengeluaran perbulan dalam 12 bulan terakhir
+    <View className="gap-4">
+      <StyledCard>
+        <Text className="text-lg text-center">{formatCurrency(549000000)}</Text>
+        <Text className="text-sm text-center">Balance</Text>
+      </StyledCard>
+      <StyledCard>
+        <Text className="text-lg text-center">{formatCurrency(1890000)}</Text>
+        <Text className="text-sm text-center">
+          Highest spending month of all time
+        </Text>
+      </StyledCard>
+      <View className="flex-row gap-4">
+        <StyledCard className="flex-1">
+          <Text className="text-lg">{formatCurrency(1328000)}</Text>
+          <Text className="text-sm">
+            Average spending per month of last 12 months
           </Text>
-          {/* <Text>
-              {groupCashListByMonth()}
-              {formatCurrency(
-              // getAverageSpendingPermonthPrediction(cashListContext.cashList),
-              69000,
-            )}
-            </Text> */}
-        </View>
-        <View
-          style={[styles.sectionContainer, { flex: 1, marginHorizontal: 0 }]}
-        >
-          <Text>Cash flow charts here.</Text>
-          <Text>Has 3 filters: All, Spending, and Earning.</Text>
-        </View>
+        </StyledCard>
+        <StyledCard className="flex-1">
+          <Text className="text-lg">{formatCurrency(1328000)}</Text>
+          <Text className="text-sm">
+            Prediksi pengeluaran bulan depan berdasarkan rata-rata pengeluaran
+            perbulan dalam 12 bulan terakhir
+          </Text>
+        </StyledCard>
       </View>
-      <View style={{ flexDirection: "row", paddingHorizontal: 30 }}>
-        <Link href={"/cash-flow"} asChild>
-          <TouchableOpacity style={{ flex: 1, borderRadius: 20 }}>
-            <MenuGridTile
-              title="Track Cash Flow"
-              icon={({ size }) => <ArrowDownUp size={size} color="#808e9b" />}
-            />
-          </TouchableOpacity>
-        </Link>
-      </View>
+      <StyledCard className="flex-1">
+        <View className="w-full h-[100] rounded-xl bg-secondary" />
+        <Text className="text-sm">
+          Cash flow charts here (Has 3 filters: All, Spending, and Earning)
+        </Text>
+      </StyledCard>
+      <Link href={"/cash-flow"} asChild>
+        <TouchableOpacity>
+          <StyledCard className="gap-2 p-8">
+            <ArrowDownUp size={32} className="self-center text-primary" />
+            <Text className="text-center">Track Cash Flow</Text>
+          </StyledCard>
+        </TouchableOpacity>
+      </Link>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    alignItems: "center",
-    borderColor: colors.border,
-    borderRadius: 20,
-    borderWidth: 1,
-    justifyContent: "center",
-    marginBottom: 30,
-    marginHorizontal: 30,
-    paddingHorizontal: 10,
-    paddingVertical: 50,
-  },
-  sectionContent: {
-    // fontSize: theme.fonts.headlineLarge.fontSize,
-    // color: theme.colors.onPrimaryContainer,
-    // fontFamily: theme.fonts.bodyMedium.fontFamily,
-  },
-  sectionTitle: {
-    fontSize: 14,
-  },
-});
