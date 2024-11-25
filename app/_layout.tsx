@@ -27,7 +27,7 @@ function Layout() {
   if (isLoadingAuth) return null;
 
   return (
-    <Stack screenOptions={{ animation: "ios", headerShown: false }}>
+    <Stack screenOptions={{ animation: "none", headerShown: false }}>
       <Stack.Screen name="(public)" />
       <Stack.Screen name="(private)" />
     </Stack>
