@@ -36,6 +36,8 @@ export default {
     bundler: "metro",
     output: "static",
     favicon: "./assets/images/favicon.png",
+    name: "Cash - Log your cashflow easily",
+    shortName: "Cash",
   },
   plugins: ["expo-router", "expo-font"],
   experiments: {
