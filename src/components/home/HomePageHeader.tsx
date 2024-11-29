@@ -14,10 +14,7 @@ const HomePageHeader = (props: HomePageHeaderProps) => {
       {...props}
       className={cn("flex-row items-center justify-between", props.className)}
     >
-      <View>
-        <Text className="text-lg">Have a great day,</Text>
-        <Text className="text-sm">{user?.displayName ?? user?.email}</Text>
-      </View>
+      <Text className="text-2xl">Cash</Text>
       <View className="flex-row gap-4 items-center">
         <TouchableOpacity onPress={signOut} hitSlop={16}>
           <Text className={`text-muted-foreground`}>Sign Out</Text>
