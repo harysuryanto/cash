@@ -89,7 +89,10 @@ export async function updateTransaction(
   transaction: Transaction
 ): Promise<DocumentReference<DocumentData, DocumentData>> {
   const docRef = doc(FIRESTORE_DB, `${PATH}/${id}`);
-  await updateDoc(docRef, transaction satisfies Transaction);
+  await updateDoc(docRef, {
+    ...transaction,
+    updatedAt: Timestamp.now(),
+  } satisfies Transaction);
   return docRef;
 }
 
