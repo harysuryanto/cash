@@ -53,6 +53,9 @@ export async function getTransactionsList(
         nominal: docSnap.data().nominal,
         type: docSnap.data().type,
         uid: docSnap.data().uid,
+        createdAt: docSnap.data().createdAt,
+        updatedAt: docSnap.data().updatedAt,
+        deletedAt: docSnap.data().deletedAt,
       } satisfies WithId<Transaction>)
   );
 }
@@ -74,6 +77,9 @@ export async function getTransactionDetails(
     nominal: docSnap.data().nominal,
     type: docSnap.data().type,
     uid: docSnap.data().uid,
+    createdAt: docSnap.data().createdAt,
+    updatedAt: docSnap.data().updatedAt,
+    deletedAt: docSnap.data().deletedAt,
   } satisfies WithId<Transaction>;
 }
 
@@ -89,10 +95,12 @@ export async function addTransaction(
 
 export async function updateTransaction(
   id: string,
-  transaction: Transaction
+  transaction: Partial<Transaction>
 ): Promise<DocumentReference<DocumentData, DocumentData>> {
   const docRef = doc(FIRESTORE_DB, `${PATH}/${id}`);
+  const docSnap = await getDoc(docRef);
   await updateDoc(docRef, {
+    ...(docSnap.data() as Transaction),
     ...transaction,
     updatedAt: Timestamp.now(),
   } satisfies Transaction);

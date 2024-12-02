@@ -65,6 +65,7 @@ export const AddTransactionFormProvider = ({ children }: PropsWithChildren) => {
         date: Timestamp.fromDate(data.date),
         description: data.description ?? "",
         uid: user!.uid,
+        createdAt: Timestamp.now(),
       });
       const addTransactionIdsToUserResult = await addTransactionIdsToUser(
         user!.uid,

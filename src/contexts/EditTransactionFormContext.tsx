@@ -71,6 +71,7 @@ export const EditTransactionFormProvider = ({
         date: Timestamp.fromDate(data.date),
         description: data.description ?? "",
         uid: user!.uid,
+        updatedAt: Timestamp.now(),
       });
     },
   });
