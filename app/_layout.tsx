@@ -6,12 +6,13 @@ import { useEffect } from "react";
 import Providers from "@/src/components/Providers";
 import useAuthRedirection from "@/src/hooks/useAuthRedirection";
 import { useAuth } from "@/src/contexts/AuthContext";
+import { updateLastActiveTime } from "@/src/services/user";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 function Layout() {
-  const { isLoadingAuth } = useAuth();
+  const { isLoadingAuth, user } = useAuth();
 
   // Load all stuff here that needs to run only once at the beginning.
   useEffect(() => {
@@ -21,6 +22,10 @@ function Layout() {
   useEffect(() => {
     if (!isLoadingAuth) SplashScreen.hideAsync();
   }, [isLoadingAuth]);
+
+  useEffect(() => {
+    if (!isLoadingAuth && !!user) updateLastActiveTime(user.uid);
+  }, [isLoadingAuth, user]);
 
   useAuthRedirection();
 
