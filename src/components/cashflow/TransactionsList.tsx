@@ -11,7 +11,7 @@ import LoadingIndicator from "@/src/components/shared/LoadingIndicator";
 export default function TransactionsList() {
   const { user } = useAuth();
   const { status, error, data, refetch, isRefetching } = useTransactionsList({
-    userId: user?.uid,
+    uid: user?.uid,
   });
 
   if (status === "pending") {

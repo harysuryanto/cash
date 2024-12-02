@@ -22,13 +22,13 @@ const PATH = "/transactions";
 
 export interface getTransactionsListProps {
   type?: "income" | "expense";
-  userId?: string;
+  uid?: string;
 }
 
 export async function getTransactionsList(
   props?: getTransactionsListProps
 ): Promise<WithId<Transaction>[]> {
-  const { type, userId } = props || {};
+  const { type, uid } = props || {};
 
   const col = collection(FIRESTORE_DB, PATH);
   const conditions: Array<QueryConstraint> = [
@@ -36,7 +36,7 @@ export async function getTransactionsList(
     limit(100),
   ];
   if (type) conditions.push(where("type", "==", type));
-  if (userId) conditions.push(where("userId", "==", userId));
+  if (uid) conditions.push(where("uid", "==", uid));
   const que = query(col, ...conditions);
   const querySnapshot = await getDocs(que);
   return querySnapshot.docs.map(
@@ -49,7 +49,7 @@ export async function getTransactionsList(
         fund: docSnap.data().fund,
         nominal: docSnap.data().nominal,
         type: docSnap.data().type,
-        userId: docSnap.data().userId,
+        uid: docSnap.data().uid,
       } satisfies WithId<Transaction>)
   );
 }
@@ -70,7 +70,7 @@ export async function getTransactionDetails(
     fund: docSnap.data().fund,
     nominal: docSnap.data().nominal,
     type: docSnap.data().type,
-    userId: docSnap.data().userId,
+    uid: docSnap.data().uid,
   } satisfies WithId<Transaction>;
 }
 

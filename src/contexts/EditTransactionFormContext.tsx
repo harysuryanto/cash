@@ -70,7 +70,7 @@ export const EditTransactionFormProvider = ({
         fund: data.fund.value,
         date: Timestamp.fromDate(data.date),
         description: data.description ?? "",
-        userId: user!.uid,
+        uid: user!.uid,
       });
     },
   });

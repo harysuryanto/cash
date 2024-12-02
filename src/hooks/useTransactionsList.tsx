@@ -9,7 +9,7 @@ export const useTransactionsListQueryKey = "transactionsList";
 
 export const createTransactionsListQueryKey = (args?: {
   type?: "income" | "expense";
-  userId?: string;
+  uid?: string;
 }) => [
   removeNullishValuesFromObject({
     useTransactionsListQueryKey,
@@ -19,7 +19,7 @@ export const createTransactionsListQueryKey = (args?: {
 
 interface useTransactionsListProps {
   type?: "income" | "expense";
-  userId?: string;
+  uid?: string;
 }
 
 const useTransactionsList = (filter?: useTransactionsListProps) => {
