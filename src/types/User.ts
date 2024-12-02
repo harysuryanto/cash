@@ -1,8 +1,9 @@
 import type { Timestamp } from "firebase/firestore";
 
-export type User = {
-  // Required fields
-  id: string; // Same as auth uid, used as document ID
-  // Custom fields that aren't in Firebase Auth
+/**
+ * Custom fields that aren't in UserInfo from Firebase Auth.
+ */
+export type UserInfoExtension = {
+  transactionIds: Array<string>;
   lastActive?: Timestamp;
 };

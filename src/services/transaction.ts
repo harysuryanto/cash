@@ -11,12 +11,14 @@ import {
   orderBy,
   query,
   type QueryConstraint,
+  setDoc,
   updateDoc,
   where,
 } from "firebase/firestore";
 import { FIRESTORE_DB } from "@/firebaseConfig";
-import { Transaction } from "@/src/types/Transaction";
 import type { WithId } from "@/src/types/utlis";
+import type { Transaction } from "@/src/types/Transaction";
+import type { UserInfoExtension } from "@/src/types/User";
 
 const PATH = "/transactions";
 
@@ -96,4 +98,27 @@ export async function deleteTransaction(
   const docRef = doc(FIRESTORE_DB, `${PATH}/${id}`);
   await deleteDoc(docRef);
   return docRef;
+}
+
+export async function addTransactionIdsToUser(
+  uid: string,
+  transactionIds: Array<string>
+) {
+  const userDocRef = doc(FIRESTORE_DB, `/users/${uid}`);
+  const userDocSnap = await getDoc(userDocRef);
+
+  if (userDocSnap.exists()) {
+    const existingTransactionIds: UserInfoExtension["transactionIds"] =
+      userDocSnap.data().transactionIds || [];
+    const updatedTransactionIds = [
+      // Set removes duplicates
+      ...new Set([...existingTransactionIds, ...transactionIds]),
+    ];
+
+    await updateDoc(userDocRef, {
+      transactionIds: updatedTransactionIds,
+    } satisfies UserInfoExtension);
+  } else {
+    await setDoc(userDocRef, { transactionIds } satisfies UserInfoExtension);
+  }
 }

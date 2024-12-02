@@ -1,11 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UseMutationResult, useMutation } from "@tanstack/react-query";
-import { PropsWithChildren, createContext, useContext, useEffect } from "react";
+import { PropsWithChildren, createContext, useContext } from "react";
 import { SubmitHandler, UseFormReturn, useForm } from "react-hook-form";
 import { z } from "zod";
 import { DocumentData, DocumentReference, Timestamp } from "firebase/firestore";
 import type { Transaction } from "@/src/types/Transaction";
-import { addTransaction } from "@/src/services/transaction";
+import {
+  addTransaction,
+  addTransactionIdsToUser,
+} from "@/src/services/transaction";
 import { useAuth } from "./AuthContext";
 
 const optionSchema = z.object({
@@ -54,7 +57,7 @@ export const AddTransactionFormProvider = ({ children }: PropsWithChildren) => {
   const formMethods = useForm<FormFields>({ resolver: zodResolver(schema) });
   const mutation = useMutation({
     mutationFn: async (data: FormFields) => {
-      return await addTransaction({
+      const addTransactionResult = await addTransaction({
         type: data.type.value as Transaction["type"],
         nominal: parseInt(data.nominal) ?? 0,
         category: data.category.value,
@@ -63,6 +66,12 @@ export const AddTransactionFormProvider = ({ children }: PropsWithChildren) => {
         description: data.description ?? "",
         uid: user!.uid,
       });
+      const addTransactionIdsToUserResult = await addTransactionIdsToUser(
+        user!.uid,
+        [addTransactionResult.id]
+      );
+
+      return addTransactionResult;
     },
   });
   const onSubmit: AddTransactionFormContextValue["onSubmit"] = async (
