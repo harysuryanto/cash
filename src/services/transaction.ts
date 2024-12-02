@@ -1,7 +1,6 @@
 import {
   addDoc,
   collection,
-  deleteDoc,
   doc,
   type DocumentData,
   type DocumentReference,
@@ -12,6 +11,7 @@ import {
   query,
   type QueryConstraint,
   setDoc,
+  Timestamp,
   updateDoc,
   where,
 } from "firebase/firestore";
@@ -36,6 +36,7 @@ export async function getTransactionsList(
   const conditions: Array<QueryConstraint> = [
     orderBy("date", "desc"),
     limit(100),
+    where("deletedAt", "==", null),
   ];
   if (type) conditions.push(where("type", "==", type));
   if (uid) conditions.push(where("uid", "==", uid));
@@ -96,7 +97,9 @@ export async function deleteTransaction(
   id: string
 ): Promise<DocumentReference<DocumentData, DocumentData>> {
   const docRef = doc(FIRESTORE_DB, `${PATH}/${id}`);
-  await deleteDoc(docRef);
+  await updateDoc(docRef, {
+    deletedAt: Timestamp.now(),
+  } satisfies Partial<Transaction>);
   return docRef;
 }
 
