@@ -10,6 +10,6 @@ export type Transaction = {
   type: "income" | "expense";
   uid: UserInfo["uid"];
   createdAt: Timestamp;
-  updatedAt?: Timestamp;
-  deletedAt?: Timestamp;
+  updatedAt?: Timestamp | null;
+  deletedAt?: Timestamp | null;
 };
