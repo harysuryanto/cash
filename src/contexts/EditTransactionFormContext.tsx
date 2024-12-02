@@ -79,7 +79,7 @@ export const EditTransactionFormProvider = ({
     callback
   ) => {
     const submit: SubmitHandler<FormFields> = async (data) =>
-      mutation.mutateAsync(data, callback);
+      mutation.mutate(data, callback);
     await formMethods.handleSubmit(submit)();
   };
   const reset = () => {
