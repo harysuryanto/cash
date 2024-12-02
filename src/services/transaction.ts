@@ -80,7 +80,10 @@ export async function getTransactionDetails(
 export async function addTransaction(
   transaction: Transaction
 ): Promise<DocumentReference<DocumentData, DocumentData>> {
-  const docRef = await addDoc(collection(FIRESTORE_DB, PATH), transaction);
+  const docRef = await addDoc(collection(FIRESTORE_DB, PATH), {
+    ...transaction,
+    createdAt: Timestamp.now(),
+  } satisfies Transaction);
   return docRef;
 }
 

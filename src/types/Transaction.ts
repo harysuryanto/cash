@@ -9,6 +9,7 @@ export type Transaction = {
   nominal: number;
   type: "income" | "expense";
   uid: UserInfo["uid"];
+  createdAt?: Timestamp;
   updatedAt?: Timestamp;
   deletedAt?: Timestamp;
 };
