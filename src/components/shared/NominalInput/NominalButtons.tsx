@@ -93,10 +93,8 @@ export default function NominalButtons({
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
     const result = calculateResult();
-    router.push({
-      pathname: "/(private)/cash-flow/add",
-      params: { nominal: result },
-    });
+    router.back();
+    router.setParams({ nominal: result });
   };
 
   return (
