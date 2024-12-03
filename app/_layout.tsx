@@ -1,6 +1,6 @@
 import "expo-dev-client";
 import "@/src/global.css";
-import { checkOtaUpdate } from "@/src/utils/utils/ota-update";
+import { doOtaUpdateAndRestartApp } from "@/src/utils/utils/ota-update";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import Providers from "@/src/components/Providers";
@@ -16,7 +16,7 @@ function Layout() {
 
   // Load all stuff here that needs to run only once at the beginning.
   useEffect(() => {
-    checkOtaUpdate();
+    doOtaUpdateAndRestartApp();
   }, []);
 
   useEffect(() => {
