@@ -3,6 +3,7 @@ import { Link, LinkProps, useLocalSearchParams } from "expo-router";
 import { Text } from "./react-native-reusables/Text";
 import { cn } from "@/src/utils/utils/utils";
 import { TouchableOpacity, View } from "react-native";
+import { formatCurrency } from "@/src/utils/utils/formatter";
 
 type NominalInputButtonProps = Omit<LinkProps<{}>, "href"> & {
   value?: string;
@@ -43,7 +44,9 @@ export default function NominalInputButton({
               !(nominal || value) && "text-muted-foreground"
             )}
           >
-            {nominal || value || placeholder}
+            {formatCurrency(parseInt(nominal || "0")) ||
+              formatCurrency(parseInt(value || "0")) ||
+              placeholder}
           </Text>
         </View>
       </TouchableOpacity>
