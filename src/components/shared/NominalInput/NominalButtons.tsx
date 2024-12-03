@@ -5,6 +5,7 @@ import { useNominalInput } from "./NominalInputContext";
 import { cn } from "@/src/utils/utils/utils";
 import { Delete } from "@/src/utils/react-native-reusables/icons/Delete";
 import { useRouter } from "expo-router";
+import * as Haptics from "expo-haptics";
 
 type NominalButtonsProps = ViewProps;
 
@@ -47,6 +48,8 @@ export default function NominalButtons({
   };
 
   const handleDigit = (digit: string) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
     const currentValue = nominal.toString();
 
     switch (digit) {
