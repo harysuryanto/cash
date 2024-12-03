@@ -103,7 +103,11 @@ export default function AddTransactionForm() {
             <Label nativeID="nominal" className="mb-2">
               Nominal
             </Label>
-            <NominalInputButton value={value} onValueChange={onChange} />
+            <NominalInputButton
+              placeholder="Nominal"
+              value={value}
+              onValueChange={onChange}
+            />
             {error && <FormErrorText>{error.message}</FormErrorText>}
           </View>
         )}

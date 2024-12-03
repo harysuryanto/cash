@@ -86,7 +86,7 @@ export default function NominalButtons({
 
   const handleOnSave = () => {
     const result = calculateResult();
-    router.replace({
+    router.push({
       pathname: "/(private)/cash-flow/add",
       params: { nominal: result },
     });
