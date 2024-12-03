@@ -1,7 +1,7 @@
 import { View, ViewProps } from "react-native";
 import React from "react";
 import NominalButton from "./NominalButton";
-import { useNominalTyper } from "./NominalTyperContext";
+import { useNominalInput } from "./NominalInputContext";
 import { cn } from "@/src/utils/utils/utils";
 import { Delete } from "@/src/utils/react-native-reusables/icons/Delete";
 
@@ -18,7 +18,7 @@ export default function NominalButtons({
     setStoredValue,
     currentOperation,
     setCurrentOperation,
-  } = useNominalTyper();
+  } = useNominalInput();
 
   const calculateResult = () => {
     if (storedValue === null || currentOperation === null) return nominal;

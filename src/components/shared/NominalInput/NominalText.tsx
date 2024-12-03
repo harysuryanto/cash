@@ -1,14 +1,14 @@
 import { View, ViewProps } from "react-native";
 import React from "react";
 import { Text } from "@/src/components/shared/react-native-reusables/Text";
-import { useNominalTyper } from "./NominalTyperContext";
+import { useNominalInput } from "./NominalInputContext";
 import { formatCurrency } from "@/src/utils/utils/formatter";
 import { cn } from "@/src/utils/utils/utils";
 
 type NominalTextProps = ViewProps;
 
 export default function NominalText({ className, ...rest }: NominalTextProps) {
-  const { nominal, storedValue, currentOperation } = useNominalTyper();
+  const { nominal, storedValue, currentOperation } = useNominalInput();
 
   const formatOperation = () => {
     if (storedValue === null || currentOperation === null) return "";

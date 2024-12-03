@@ -1,6 +1,6 @@
-import NominalTyper from "@/src/components/shared/NominalTyper";
+import NominalInput from "@/src/components/shared/NominalInput";
 import React from "react";
 
 export default function NominalRoute() {
-  return <NominalTyper />;
+  return <NominalInput />;
 }

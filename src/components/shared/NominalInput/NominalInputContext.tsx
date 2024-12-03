@@ -5,7 +5,7 @@ import React, {
   useState,
 } from "react";
 
-interface NominalTyperContextValue {
+interface NominalInputContextValue {
   nominal: number;
   setNominal: React.Dispatch<React.SetStateAction<number>>;
   storedValue: number | null;
@@ -14,19 +14,19 @@ interface NominalTyperContextValue {
   setCurrentOperation: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-const NominalTyperContext = createContext<NominalTyperContextValue | undefined>(
+const NominalInputContext = createContext<NominalInputContextValue | undefined>(
   undefined
 );
 
-export const useNominalTyper = () => {
-  const context = useContext(NominalTyperContext);
+export const useNominalInput = () => {
+  const context = useContext(NominalInputContext);
   if (!context) {
-    throw new Error("useNominalTyper must be used within NominalTyperProvider");
+    throw new Error("useNominalInput must be used within NominalInputProvider");
   }
   return context;
 };
 
-export default function NominalTyperProvider({
+export default function NominalInputProvider({
   initialValue = 0,
   children,
 }: PropsWithChildren & { initialValue?: number }) {
@@ -35,7 +35,7 @@ export default function NominalTyperProvider({
   const [currentOperation, setCurrentOperation] = useState<string | null>(null);
 
   return (
-    <NominalTyperContext.Provider
+    <NominalInputContext.Provider
       value={{
         nominal,
         setNominal,
@@ -46,6 +46,6 @@ export default function NominalTyperProvider({
       }}
     >
       {children}
-    </NominalTyperContext.Provider>
+    </NominalInputContext.Provider>
   );
 }
