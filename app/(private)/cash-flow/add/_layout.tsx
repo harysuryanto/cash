@@ -17,10 +17,6 @@ export default function Layout() {
           headerRight: () => <AddTransactionButton />,
         }}
       />
-      <Stack.Screen
-        name="nominal"
-        options={{ title: "Nominal", presentation: "modal" }}
-      />
     </Stack>
   );
 }

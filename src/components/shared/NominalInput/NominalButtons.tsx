@@ -4,6 +4,7 @@ import NominalButton from "./NominalButton";
 import { useNominalInput } from "./NominalInputContext";
 import { cn } from "@/src/utils/utils/utils";
 import { Delete } from "@/src/utils/react-native-reusables/icons/Delete";
+import { useRouter } from "expo-router";
 
 type NominalButtonsProps = ViewProps;
 
@@ -11,6 +12,8 @@ export default function NominalButtons({
   className,
   ...rest
 }: NominalButtonsProps) {
+  const router = useRouter();
+
   const {
     nominal,
     setNominal,
@@ -81,7 +84,13 @@ export default function NominalButtons({
     }
   };
 
-  const handleOnSave = () => {};
+  const handleOnSave = () => {
+    const result = calculateResult();
+    router.replace({
+      pathname: "/(private)/cash-flow/add",
+      params: { nominal: result },
+    });
+  };
 
   return (
     <View className={cn("p-2", className)} {...rest}>
