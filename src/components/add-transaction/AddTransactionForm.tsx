@@ -2,7 +2,6 @@ import { View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import StyledDateTimePickerButton from "@/src/components/shared/StyledDateTimePickerButton";
-import { Input } from "@/src/components/shared/react-native-reusables/Input";
 import { Label } from "@/src/components/shared/react-native-reusables/Label";
 import { Textarea } from "@/src/components/shared/react-native-reusables/Textarea";
 import {
@@ -95,10 +94,7 @@ export default function AddTransactionForm() {
       <Controller
         control={control}
         name="nominal"
-        render={({
-          field: { value, onChange, onBlur },
-          fieldState: { error },
-        }) => (
+        render={({ field: { value, onChange }, fieldState: { error } }) => (
           <View>
             <Label nativeID="nominal" className="mb-2">
               Nominal
