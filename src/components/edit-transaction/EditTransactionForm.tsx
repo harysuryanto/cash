@@ -18,12 +18,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/src/components/shared/react-native-reusables/Select";
-import { Input, Label, Textarea } from "../shared/react-native-reusables";
+import {
+  Label,
+  Textarea,
+} from "@/src/components/shared/react-native-reusables";
 import FormErrorText from "@/src/components/shared/FormErrorText";
 import { Controller } from "react-hook-form";
 import { useEditTransactionForm } from "@/src/contexts/EditTransactionFormContext";
 import { Transaction } from "@/src/types/Transaction";
 import { WithId } from "@/src/types/utlis";
+import NominalInputButton from "@/src/components/shared/NominalInputButton";
 
 type EditTransactionFormProps = {
   transaction: WithId<Transaction>;
@@ -124,21 +128,15 @@ export default function EditTransactionForm({
       <Controller
         control={control}
         name="nominal"
-        render={({
-          field: { value, onChange, onBlur },
-          fieldState: { error },
-        }) => (
+        render={({ field: { value, onChange }, fieldState: { error } }) => (
           <View>
             <Label nativeID="nominal" className="mb-2">
               Nominal
             </Label>
-            <Input
-              aria-labelledby="nominal"
+            <NominalInputButton
               placeholder="Nominal"
               value={value}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              keyboardType="numeric"
+              onValueChange={onChange}
             />
             {error && <FormErrorText>{error.message}</FormErrorText>}
           </View>
