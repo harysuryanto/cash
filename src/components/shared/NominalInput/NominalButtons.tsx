@@ -73,6 +73,8 @@ export default function NominalButtons({
   };
 
   const handleOperation = (operation: string) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
     if (currentOperation !== null && storedValue !== null) {
       // If there's an existing operation, calculate the result
       const result = calculateResult();
@@ -88,6 +90,8 @@ export default function NominalButtons({
   };
 
   const handleOnSave = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
     const result = calculateResult();
     router.push({
       pathname: "/(private)/cash-flow/add",
