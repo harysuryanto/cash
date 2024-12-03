@@ -4,13 +4,22 @@ import React from "react";
 
 export default function Layout() {
   return (
-    <Stack screenOptions={{ headerShadowVisible: false }}>
+    <Stack
+      screenOptions={{
+        animation: "ios",
+        headerShadowVisible: false,
+      }}
+    >
       <Stack.Screen
         name="index"
         options={{
           title: "Add Transaction",
           headerRight: () => <AddTransactionButton />,
         }}
+      />
+      <Stack.Screen
+        name="nominal"
+        options={{ title: "Nominal", presentation: "modal" }}
       />
     </Stack>
   );

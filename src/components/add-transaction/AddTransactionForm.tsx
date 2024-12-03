@@ -24,6 +24,8 @@ import {
   INCOME_CATEGORY_OPTIONS,
   TYPE_OPTIONS,
 } from "@/src/constants";
+import { Button, Text } from "@/src/components/shared/react-native-reusables";
+import { router } from "expo-router";
 
 export default function AddTransactionForm() {
   const insets = useSafeAreaInsets();
@@ -91,6 +93,9 @@ export default function AddTransactionForm() {
           </View>
         )}
       />
+      <Button onPress={() => router.push("/(private)/cash-flow/add/nominal")}>
+        <Text>Set nominal</Text>
+      </Button>
       <Controller
         control={control}
         name="nominal"
