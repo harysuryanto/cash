@@ -54,7 +54,14 @@ export const useAddTransactionForm = () => {
 export const AddTransactionFormProvider = ({ children }: PropsWithChildren) => {
   const { user } = useAuth();
 
-  const formMethods = useForm<FormFields>({ resolver: zodResolver(schema) });
+  const formMethods = useForm<FormFields>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      type: { label: "Expense", value: "expense" },
+      fund: { label: "Cash", value: "cash" },
+      date: new Date(),
+    },
+  });
   const mutation = useMutation({
     mutationFn: async (data: FormFields) => {
       const addTransactionResult = await addTransaction({
