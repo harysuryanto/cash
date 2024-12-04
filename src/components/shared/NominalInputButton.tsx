@@ -44,9 +44,9 @@ export default function NominalInputButton({
               !(nominal || value) && "text-muted-foreground"
             )}
           >
-            {formatCurrency(parseInt(nominal || "0")) ||
-              formatCurrency(parseInt(value || "0")) ||
-              placeholder}
+            {!!(nominal || value)
+              ? formatCurrency(parseInt((nominal || value)!))
+              : placeholder}
           </Text>
         </View>
       </TouchableOpacity>
