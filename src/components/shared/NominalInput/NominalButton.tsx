@@ -22,7 +22,8 @@ export default function NominalButton({
   return (
     <TouchableOpacity
       className={cn(
-        "flex-1 aspect-square items-center justify-center m-1 rounded-2xl bg-secondary/50 active:bg-secondary/80",
+        "flex-1 items-center justify-center m-1 rounded-2xl bg-secondary/50 active:bg-secondary/80",
+        !className?.includes("aspect-") && "aspect-square",
         variant === "primary" && "bg-primary active:bg-primary/80",
         variant === "destructive" && "bg-destructive active:bg-destructive/80",
         className
