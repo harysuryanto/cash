@@ -17,6 +17,7 @@ import { FIREBASE_AUTH } from "@/firebaseConfig";
 import * as Google from "expo-auth-session/providers/google";
 import { signInWithCredential } from "@/src/services/auth";
 import { env } from "@/src/utils/utils/env";
+import { Platform } from "react-native";
 
 interface AuthContextValue {
   user?: User | null;
@@ -68,9 +69,26 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
           webClientId:
             // "59214547434392-knejs1im3t07pl48abjb0rqstks6hka1.apps.googleusercontent.com",
             "214547434392-knejs1im3t07pl48abjb0rqstks6hka1.apps.googleusercontent.com",
+          redirectUri: Platform.select({
+            native: "cash-development://sign-in",
+            web: "https://harycash.netlify.app/sign-in",
+          }),
         }
       : env.EXPO_PUBLIC_APP_ENV === "staging"
-      ? {}
+      ? // TODO: create clientIds for staging, this one here is from production
+        {
+          iosClientId:
+            "598165881469-vbsbk0m7chan4nlhk4abcq9dbk0aoal6.apps.googleusercontent.com",
+          androidClientId:
+            "598165881469-gc0pede2bai8lkn88ulh295a4t3cvh2f.apps.googleusercontent.com",
+          webClientId:
+            // "59214547434392-knejs1im3t07pl48abjb0rqstks6hka1.apps.googleusercontent.com",
+            "214547434392-knejs1im3t07pl48abjb0rqstks6hka1.apps.googleusercontent.com",
+          redirectUri: Platform.select({
+            native: "cash-staging://sign-in",
+            web: "https://harycash.netlify.app/sign-in",
+          }),
+        }
       : // production
         {
           iosClientId:
@@ -80,6 +98,10 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
           webClientId:
             // "59214547434392-knejs1im3t07pl48abjb0rqstks6hka1.apps.googleusercontent.com",
             "214547434392-knejs1im3t07pl48abjb0rqstks6hka1.apps.googleusercontent.com",
+          redirectUri: Platform.select({
+            native: "cash://sign-in",
+            web: "https://harycash.netlify.app/sign-in",
+          }),
         }
   );
 
@@ -117,7 +139,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     };
   const signInWithGoogle: AuthContextValue["signInWithGoogle"] = async () => {
     const result = await promptAsync();
-    console.log("signInWithGoogle", result);
+    console.log("signInWithGoogle", JSON.stringify(result, null, 2));
+    alert(JSON.stringify(result, null, 2));
     if (result?.type === "success") {
       const { id_token } = result.params;
       const credential = GoogleAuthProvider.credential(id_token);
