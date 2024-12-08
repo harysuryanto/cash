@@ -152,6 +152,8 @@ export default function NominalButtons({
           digit="="
           variant="primary"
           onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
             if (currentOperation !== null && storedValue !== null) {
               const result = calculateResult();
               setNominal(result);
