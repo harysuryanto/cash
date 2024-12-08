@@ -22,11 +22,13 @@
       }
     },
     "production": {
+      "bun": "1.1.38",
       "distribution": "internal",
       "android": {
         "buildType": "apk"
       },
       "channel": "production",
+      "environment": "production",
       "env": {
         "EXPO_PUBLIC_APP_ENV": "production"
       }
