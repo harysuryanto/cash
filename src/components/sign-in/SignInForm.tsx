@@ -23,7 +23,8 @@ const schema = z.object({
 type FormFields = z.infer<typeof schema>;
 
 export default function SignInForm() {
-  const { signInWithEmailAndPassword, signInAnonymously } = useAuth();
+  const { signInWithEmailAndPassword, signInAnonymously, signInWithGoogle } =
+    useAuth();
 
   const {
     control,
@@ -54,6 +55,13 @@ export default function SignInForm() {
     const submit: SubmitHandler<FormFields> = async (data) => mutate(data);
     await handleSubmit(submit)();
   };
+  const {
+    mutate: handleSignInWithGoogle,
+    isPending: isSignInWithGooglePending,
+  } = useMutation({
+    mutationFn: signInWithGoogle,
+    onError: (error) => alert(formatFirebaseAuthError(error)),
+  });
   const {
     mutate: handleSignInAnonymously,
     isPending: isSignInAnonymouslyPending,
@@ -132,6 +140,22 @@ export default function SignInForm() {
           />
         ) : (
           <Text>Sign In</Text>
+        )}
+      </Button>
+      <Button
+        variant="secondary"
+        disabled={isSignInWithGooglePending}
+        onPress={() => handleSignInWithGoogle()}
+      >
+        {isSignInWithGooglePending ? (
+          <LoadingIndicator
+            activityIndicatorProps={{
+              className: "text-foreground",
+              size: "small",
+            }}
+          />
+        ) : (
+          <Text>Sign In With Google</Text>
         )}
       </Button>
       <Button

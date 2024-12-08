@@ -30,6 +30,14 @@ export async function signInWithEmailAndPassword(
   return userCredential;
 }
 
+export async function signInWithCredential(credential: Auth.AuthCredential) {
+  const userCredential = await Auth.signInWithCredential(
+    FIREBASE_AUTH,
+    credential
+  );
+  return userCredential;
+}
+
 export async function signOut() {
   return await Auth.signOut(FIREBASE_AUTH);
 }

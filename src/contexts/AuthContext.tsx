@@ -1,4 +1,9 @@
-import { onAuthStateChanged, User, type UserCredential } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  type User,
+  type UserCredential,
+} from "firebase/auth";
 import {
   createContext,
   type PropsWithChildren,
@@ -9,6 +14,8 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 import * as AuthService from "@/src/services/auth";
 import { FIREBASE_AUTH } from "@/firebaseConfig";
+import * as Google from "expo-auth-session/providers/google";
+import { signInWithCredential } from "@/src/services/auth";
 
 interface AuthContextValue {
   user?: User | null;
@@ -22,6 +29,7 @@ interface AuthContextValue {
     email: string,
     password: string
   ) => Promise<UserCredential>;
+  signInWithGoogle: () => Promise<UserCredential | null>;
   signOut: () => Promise<void>;
 }
 
@@ -49,6 +57,25 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     return unsubscribe;
   }, []);
 
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    iosClientId:
+      "598165881469-6n51m0e246l9uj91ug2bpgt989ktk6rr.apps.googleusercontent.com",
+    androidClientId:
+      "598165881469-cnd0jpn5dm1qrpcto7gsik045b7ro8nn.apps.googleusercontent.com",
+    webClientId:
+      // "59214547434392-knejs1im3t07pl48abjb0rqstks6hka1.apps.googleusercontent.com",
+      "214547434392-knejs1im3t07pl48abjb0rqstks6hka1.apps.googleusercontent.com",
+  });
+
+  // useEffect(() => {
+  //   if (response?.type === "success") {
+  //     const { id_token } = response.params;
+  //     const credential = GoogleAuthProvider.credential(id_token);
+  //     const result = signInWithCredential(credential);
+  //     console.log("signInWithCredential", result);
+  //   }
+  // }, [response]);
+
   const signUpWithEmailAndPassword: AuthContextValue["signUpWithEmailAndPassword"] =
     async (email, password) => {
       const result = await AuthService.signUpWithEmailAndPassword(
@@ -72,6 +99,20 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       setUser(result.user);
       return result;
     };
+  const signInWithGoogle: AuthContextValue["signInWithGoogle"] = async () => {
+    const result = await promptAsync();
+    console.log("signInWithGoogle", result);
+    if (result?.type === "success") {
+      const { id_token } = result.params;
+      const credential = GoogleAuthProvider.credential(id_token);
+      const userCredential = await signInWithCredential(credential);
+      setUser(userCredential.user);
+      return userCredential;
+    } else {
+      return null;
+    }
+  };
+
   const signOut: AuthContextValue["signOut"] = async () => {
     await AuthService.signOut();
     await queryClient.resetQueries();
@@ -83,6 +124,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     signUpWithEmailAndPassword,
     signInAnonymously,
     signInWithEmailAndPassword,
+    signInWithGoogle,
     signOut,
   };
 
