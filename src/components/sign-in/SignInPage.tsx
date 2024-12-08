@@ -7,9 +7,6 @@ import {
 import React from "react";
 import SignInForm from "./SignInForm";
 import DevInfo from "@/src/components/shared/DevInfo";
-import * as WebBrowser from "expo-web-browser";
-
-WebBrowser.maybeCompleteAuthSession();
 
 export default function SignInPage() {
   // const [request, response, promptAsync] = Google.useAuthRequest({
